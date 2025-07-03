@@ -1,0 +1,53 @@
+# ===== GLOBAL =====
+.DS_Store
+Thumbs.db
+.env
+.env.* 
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.sublime-workspace
+.vscode/
+.idea/
+*.swp
+
+# ===== NODE BACKEND =====
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/coverage/
+backend/package-lock.json
+backend/*.env
+
+# Logs
+backend/logs/
+backend/debug.log
+
+# ===== ANGULAR + IONIC FRONTEND =====
+frontend/node_modules/
+frontend/dist/
+frontend/www/
+frontend/coverage/
+frontend/package-lock.json
+frontend/src/environments/environment.*.ts
+
+# Ionic Capacitor build outputs
+frontend/android/
+frontend/ios/
+frontend/plugins/
+frontend/capacitor.config.ts
+
+# Angular-specific build
+frontend/.angular/
+frontend/.output.js
+frontend/.turbo/
+frontend/.cache/
+
+# ===== OS / Misc =====
+*.bak
+*.tmp
+*.old
+*.log
+*.tgz
+
