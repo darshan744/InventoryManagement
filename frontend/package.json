@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^19.2.14",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
     "@angular/core": "^19.2.0",
@@ -21,6 +22,8 @@
     "@capacitor/angular": "^2.0.3",
     "@capacitor/core": "latest",
     "@capacitor/ios": "^7.4.0",
+    "@ng-icons/core": "^30.0.0",
+    "@ng-icons/heroicons": "^30.0.0",
     "@tailwindcss/postcss": "^4.1.4",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",

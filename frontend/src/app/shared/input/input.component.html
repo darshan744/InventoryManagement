@@ -1,0 +1,28 @@
+<div class="w-full space-y-1">
+  <label class="block text-sm font-medium text-foreground">{{ label() }}</label>
+
+  <div
+    class="relative rounded-lg border border-input bg-background flex items-center px-3 py-2 focus-within:ring-2 focus-within:ring-primary transition"
+  >
+    <!-- Icon (Left) -->
+    <ng-container *ngIf="icon">
+      <span class="mr-2 text-muted-foreground">
+        <ng-icon [name]="icon()" />
+      </span>
+    </ng-container>
+
+    <!-- Input -->
+    <input
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [(ngModel)]="value"
+      (ngModelChange)="onValueChange($event)"
+      class="w-full bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
+    />
+
+    <!-- Right Icon Slot (Toggle) -->
+    <ng-container *ngIf="rightSlot">
+      <ng-template [ngTemplateOutlet]="rightSlot"></ng-template>
+    </ng-container>
+  </div>
+</div>
