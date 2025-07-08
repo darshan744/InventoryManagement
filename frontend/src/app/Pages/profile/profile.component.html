@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-background text-foreground p-4 max-w-md mx-auto space-y-6">
+  <!-- 👤 Profile Header -->
+  <div class="text-center space-y-2">
+    <div class="text-5xl">👤</div>
+    <h1 class="text-xl font-semibold">Your Profile</h1>
+    <p class="text-sm text-muted-foreground">
+      Manage your personal details and settings
+    </p>
+  </div>
+
+  <!-- 👨‍💼 Name (Editable) -->
+  <input-component label="Full Name" type="text" [defaultValue]="name" placeholder="Enter your full name"
+    icon="heroUser" />
+
+  <!-- ✉️ Email (Read-only) -->
+  <input-component label="Email" type="email" [defaultValue]="email" [isReadOnly]="true" icon="heroEnvelope" />
+
+  <!-- 🔐 Change Password Section -->
+  <div class="space-y-4 border-t mt-3 pt-4">
+    <h2 class="text-sm font-medium text-muted-foreground">
+      <strong> Change Password </strong>
+    </h2>
+    <input-component label="Current Password" placeholder="Current password" type="password" icon="heroLockClosed" />
+
+    <input-component label="New Password" type="password" placeholder="New Password" icon="heroLockClosed" />
+
+    <input-component label="Confirm New Password" type="password" placeholder="Confirm Password"
+      icon="heroLockClosed" />
+
+    <button-component class="w-full mt-3" variant="primary">
+      Update Password
+    </button-component>
+  </div>
+
+  <!-- 🔔 Notification Preferences -->
+  <div class="space-y-2 border-t pt-4">
+    <h2 class="text-sm font-medium text-muted-foreground">Notifications</h2>
+
+    <label class="flex items-center justify-between">
+      <span class="text-sm">Low Stock Alerts</span>
+      <input type="checkbox" [(ngModel)]="lowStockAlerts" class="accent-primary w-4 h-4" />
+    </label>
+
+    <label class="flex items-center justify-between">
+      <span class="text-sm">Forecast Alerts</span>
+      <input type="checkbox" [(ngModel)]="forecastAlerts" class="accent-primary w-4 h-4" />
+    </label>
+  </div>
+
+  <!-- 🔓 Logout Button -->
+  <div class="pt-6">
+    <button-component variant="danger" class="w-full" (click)="logout()">
+      Logout
+    </button-component>
+  </div>
+</div>
