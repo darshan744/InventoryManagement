@@ -24,21 +24,21 @@
 
       <!-- Forgot Password -->
       <div class="text-right">
-        <a class="text-sm text-primary hover:underline" routerLink="/forgot-password">
+        <a class="text-blue-600 cursor-pointer text-sm text-primary hover:underline" routerLink="/forgot-password">
           Forgot password?
         </a>
       </div>
 
       <!-- Login Button -->
-      <button-component type="submit" [disabled]="loginForm.invalid || loading" [loading]="loading">
-        Login
+      <button-component type="submit" variant="primary" size="md" class="w-full">
+        Sign In
       </button-component>
     </form>
 
     <!-- Register Link -->
     <div class="text-center text-sm">
       Don’t have an account?
-      <a class="text-primary hover:underline" routerLink="/register">
+      <a class="text-blue-600 cursor-pointer hover:underline" routerLink="/register">
         Register
       </a>
     </div>
