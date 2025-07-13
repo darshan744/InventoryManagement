@@ -17,6 +17,8 @@
       [placeholder]="placeholder()"
       [(ngModel)]="value"
       (ngModelChange)="onValueChange($event)"
+      [value]="defaultValue()"
+      [readOnly]="isReadOnly()"
       class="w-full bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
     />
 

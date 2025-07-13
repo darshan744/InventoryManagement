@@ -1,1 +1,18 @@
 <p>dashboard works!</p>
+<div class="flex space-y-4 overflow-x-auto snap-x flex-col pb-2">
+  <div (click)="goToInventory()">
+    <dashboard-card icon="📦" label="Total Items" [count]="totalItems" colorClass="bg-primary" />
+  </div>
+
+  <div (click)="goToLowStock()">
+    <dashboard-card icon="⚠️" label="Low Stock" [count]="lowStockCount" colorClass="bg-yellow-500" />
+  </div>
+
+  <div (click)="goToAlerts()">
+    <dashboard-card icon="🚨" label="Critical Alerts" [count]="criticalAlerts" colorClass="bg-red-600" />
+  </div>
+
+  <div (click)="goToForecast()">
+    <dashboard-card icon="📈" label="Forecast Ready" [count]="forecastReports" colorClass="bg-indigo-500" />
+  </div>
+</div>

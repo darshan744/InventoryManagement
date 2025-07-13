@@ -15,7 +15,7 @@ export class ButtonComponent {
   loading = input<boolean>(false);
   size = input<UiButtonSize>('sm');
 
-    get classes(): string {
+  get classes(): string {
     const variants: Record<string, string> = {
       primary: 'bg-blue-600 hover:bg-blue-700 text-white',
       danger: 'bg-red-600 text-white hover:bg-red-700',
@@ -34,7 +34,6 @@ export class ButtonComponent {
     const variantResult = variants[this.variant()];
     const sizeResult = size[this.size()];
     const result = ` ${variantResult} ${sizeResult}`;
-    console.log(result);
     return result;
   }
 }
