@@ -1,56 +1,145 @@
-<div class="min-h-screen bg-background text-foreground p-4 max-w-md mx-auto space-y-6">
-  <!-- 👤 Profile Header -->
-  <div class="text-center space-y-2">
-    <div class="text-5xl">👤</div>
-    <h1 class="text-xl font-semibold">Your Profile</h1>
-    <p class="text-sm text-muted-foreground">
-      Manage your personal details and settings
-    </p>
+<div
+  class="min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16"
+>
+  <div class="flex items-center mb-6 animate-fade-in">
+    <span class="text-4xl text-teal-800">👤</span>
+    <h1 class="text-2xl font-semibold text-gray-900 ml-2">{{ userName }}</h1>
   </div>
+  <div class="w-full max-w-md">
+    <!-- Profile Info -->
+    <div class="mb-6">
+      <h2 class="text-lg font-medium text-gray-900 mb-3">Profile Info</h2>
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center">
+          <span class="text-3xl text-gray-400 mr-3">📷</span>
+          <p class="text-sm text-gray-700">Upload Photo</p>
+        </div>
+        <button
+          class="text-teal-600 text-xs hover:underline"
+          (click)="onUploadPhoto()"
+        >
+          Change
+        </button>
+      </div>
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <label class="block text-sm font-medium text-gray-900">Name</label>
+          <input
+            [(ngModel)]="userName"
+            class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            [disabled]="!isEditingName"
+            placeholder="Enter your name"
+          />
+        </div>
+        <button
+          class="text-teal-600 text-xs hover:underline"
+          (click)="toggleEditName()"
+        >
+          {{ isEditingName ? "Cancel" : "Edit" }}
+        </button>
+      </div>
+      <div class="flex items-center justify-between">
+        <div>
+          <label class="block text-sm font-medium text-gray-900">Email</label>
+          <input
+            [disabled]="!isEditingEmail"
+            [(ngModel)]="userEmail"
+            type="email"
+            class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            placeholder="Enter your email"
+          />
+        </div>
+        <button
+          class="text-teal-600 text-xs hover:underline"
+          (click)="toggleEditEmail()"
+        >
+          {{ isEditingEmail ? "Cancel" : "Edit" }}
+        </button>
+      </div>
+      <div class="mt-4">
+        <p class="text-sm text-gray-700">
+          Total Products Managed: {{ totalProducts }}
+        </p>
+      </div>
+    </div>
 
-  <!-- 👨‍💼 Name (Editable) -->
-  <input-component label="Full Name" type="text" [defaultValue]="name" placeholder="Enter your full name"
-    icon="heroUser" />
+    <!-- Preferences -->
+    <div class="mb-6">
+      <h2 class="text-lg font-medium text-gray-900 mb-3">Preferences</h2>
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium text-gray-900"
+            >Low Stock Threshold : <strong>{{ lowStockThreshold }}</strong>
+          </label>
+          <button
+            class="text-teal-600 text-xs hover:underline"
+            (click)="toggleEditThreshold()"
+          >
+            {{ isEditingThreshold ? "Cancel" : "Edit" }}
+          </button>
+        </div>
+        <input
+          *ngIf="isEditingThreshold"
+          [(ngModel)]="lowStockThreshold"
+          type="number"
+          class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+          placeholder="Enter threshold"
+        />
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium text-gray-900">Auto-Reorder</label>
+          <input
+            type="checkbox"
+            [(ngModel)]="autoReorder"
+            class="h-4 w-4 text-teal-600 focus:ring-teal-500"
+            (change)="onToggleAutoReorder()"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium text-gray-900">Notifications</label>
+          <select
+            [(ngModel)]="notificationPreference"
+            class="p-2 border-0 border-b border-gray-300 bg-transparent text-sm focus:border-teal-500"
+            (change)="onChangeNotification()"
+          >
+            <option value="email">Email</option>
+            <option value="push">Push</option>
+            <option value="both">Both</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
-  <!-- ✉️ Email (Read-only) -->
-  <input-component label="Email" type="email" [defaultValue]="email" [isReadOnly]="true" icon="heroEnvelope" />
+    <!-- Appearance -->
+    <div class="mb-6">
+      <h2 class="text-lg font-medium text-gray-900 mb-3">Appearance</h2>
+      <div class="flex items-center justify-between">
+        <label class="text-sm font-medium text-gray-900">Theme</label>
+        <select
+          [(ngModel)]="theme"
+          class="p-2 border-0 border-b border-gray-300 bg-transparent text-sm focus:border-teal-500"
+          (change)="onChangeTheme()"
+        >
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+    </div>
 
-  <!-- 🔐 Change Password Section -->
-  <div class="space-y-4 border-t mt-3 pt-4">
-    <h2 class="text-sm font-medium text-muted-foreground">
-      <strong> Change Password </strong>
-    </h2>
-    <input-component label="Current Password" placeholder="Current password" type="password" icon="heroLockClosed" />
-
-    <input-component label="New Password" type="password" placeholder="New Password" icon="heroLockClosed" />
-
-    <input-component label="Confirm New Password" type="password" placeholder="Confirm Password"
-      icon="heroLockClosed" />
-
-    <button-component class="w-full mt-3" variant="primary">
-      Update Password
-    </button-component>
-  </div>
-
-  <!-- 🔔 Notification Preferences -->
-  <div class="space-y-2 border-t pt-4">
-    <h2 class="text-sm font-medium text-muted-foreground">Notifications</h2>
-
-    <label class="flex items-center justify-between">
-      <span class="text-sm">Low Stock Alerts</span>
-      <input type="checkbox" [(ngModel)]="lowStockAlerts" class="accent-primary w-4 h-4" />
-    </label>
-
-    <label class="flex items-center justify-between">
-      <span class="text-sm">Forecast Alerts</span>
-      <input type="checkbox" [(ngModel)]="forecastAlerts" class="accent-primary w-4 h-4" />
-    </label>
-  </div>
-
-  <!-- 🔓 Logout Button -->
-  <div class="pt-6">
-    <button-component variant="danger" class="w-full" (click)="logout()">
-      Logout
-    </button-component>
+    <!-- Account Actions -->
+    <div>
+      <h2 class="text-lg font-medium text-gray-900 mb-3">Account</h2>
+      <button
+        class="w-full bg-teal-600 text-white py-2 px-4 rounded-full hover:bg-teal-700 transition text-sm mb-2"
+        (click)="onChangePassword()"
+      >
+        Change Password
+      </button>
+      <button
+        class="w-full bg-pink-500 text-white py-2 px-4 rounded-full hover:bg-pink-600 transition text-sm"
+        (click)="onLogout()"
+      >
+        Log Out
+      </button>
+    </div>
   </div>
 </div>

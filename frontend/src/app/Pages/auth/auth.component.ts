@@ -7,19 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToggleIconComponent } from '../../shared/toggle-icon/toggle-icon.component';
-import { ButtonComponent } from '../../shared/button/button.component';
-import { InputComponent } from '../../shared/input/input.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-auth',
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputComponent,
-    ToggleIconComponent,
-    ButtonComponent,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -28,7 +19,10 @@ export class AuthComponent {
   showPassword = false;
   loading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -69,13 +63,14 @@ export class AuthComponent {
 
   showError = false; // Placeholder for error state
 
-   email: string = '';
+  email: string = '';
   password: string = '';
   errorMessage: string = 'Invalid email or password';
 
   // Boilerplate function for login
   onLogin() {
     // Placeholder for login logic (to be implemented later)
+    this.router.navigateByUrl('user/dashboard');
     this.showError = false;
     if (!this.email || !this.password) {
       this.showError = true;

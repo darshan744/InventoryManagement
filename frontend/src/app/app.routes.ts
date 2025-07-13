@@ -3,6 +3,8 @@ import { AuthComponent } from './Pages/auth/auth.component';
 import { InventoryComponent } from './Pages/inventory/inventory.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
+import { MainComponent } from './Pages/main/main.component';
+import { OrdersComponent } from './Pages/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'user',
+    component: MainComponent,
     children: [
       {
         path: 'inventory',
@@ -24,6 +27,10 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
+      {
+        path:"orders",
+        component:OrdersComponent
+      }
     ],
   },
 ];

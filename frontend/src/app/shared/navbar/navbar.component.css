@@ -1,0 +1,45 @@
+/* Active state styling for the anchor tag */
+a.active {
+  position: relative;
+  min-height: 2rem;
+  /* Ensures space for the dot */
+}
+
+/* Teal dot below the active icon */
+a.active::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  /* Increased for visibility */
+  height: 2px;
+  /* Increased for visibility */
+  background-color: #f43f5e;
+  /* rose-600 */
+  border-radius: 50%;
+  content: "";
+  /* Required for ::after to render */
+}
+
+/* Active icon color styling (now handled by [ngClass] in HTML) */
+/* .active-icon is no longer needed, but kept for reference if reused */
+.active-icon {
+  color: #e11d48;
+  /* rose-500, optional if you revert to class-based styling */
+}
+
+/* Cursor pointer with scale animations */
+.cursor-pointer {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.cursor-pointer:hover {
+  transform: scale(1.1);
+}
+
+.cursor-pointer:active {
+  transform: scale(0.95);
+}

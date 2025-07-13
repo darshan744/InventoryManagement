@@ -7,6 +7,8 @@ import {
   heroUserCircle,
   heroChartPie,
   heroHome,
+  heroListBullet,
+  heroTruck,
 } from '@ng-icons/heroicons/outline';
 import {
   heroUserSolid,
@@ -28,6 +30,8 @@ import {
       heroUserSolid,
       heroChartPieSolid,
       heroHomeSolid,
+      heroListBullet,
+      heroTruck
     }),
   ],
 })
@@ -40,5 +44,8 @@ export class NavbarComponent {
   ];
   navigate(url: string): void {
     this.router.navigateByUrl('user/' + url);
+  }
+  isActive(route: string): boolean {
+    return this.router.url === route;
   }
 }

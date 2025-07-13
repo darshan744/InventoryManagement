@@ -1,40 +1,60 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../../shared/button/button.component';
-import { DashboardCardComponent } from '../../shared/dashboard-card/dashboard-card.component';
-
+import { CommonModule } from '@angular/common';
+interface Product {
+  id: number;
+  name: string;
+  quantity: number;
+  minStockThreshold: number;
+  prediction: string;
+}
 @Component({
   selector: 'app-dashboard',
-  imports: [ButtonComponent, DashboardCardComponent],
+  imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  totalItems = 85;
-  lowStockCount = 7;
-  criticalAlerts = 3;
-  forecastReports = 2;
+  totalProducts: number = 50; // Mock data
+  lowStockCount: number = 3; // Mock data
+  salesToday: number = 10; // Mock data
+  lowStockProducts: Product[] = [
+    {
+      id: 1,
+      name: 'Laptop',
+      quantity: 5,
+      minStockThreshold: 10,
+      prediction: 'Restock 50',
+    },
+    {
+      id: 2,
+      name: 'T-Shirt',
+      quantity: 2,
+      minStockThreshold: 5,
+      prediction: 'Restock 30',
+    },
+    {
+      id: 3,
+      name: 'Phone',
+      quantity: 8,
+      minStockThreshold: 15,
+      prediction: 'Restock 40',
+    },
+  ];
 
-  goToInventory() {
-    // route to inventory list
+  ngOnInit() {
+    // Placeholder for fetching real data later
+    console.log('Dashboard initialized');
   }
 
-  goToLowStock() {
-    // optional filter view
+  // Boilerplate function for reordering
+  onReorder(product: Product) {
+    // Placeholder for reorder logic
+    console.log(`Reorder initiated for ${product.name}: ${product.prediction}`);
   }
 
-  goToAlerts() {
-    // route to alerts page
-  }
-
-  goToForecast() {
-    // route to forecast reports
-  }
-
-  goToAddItem() {
-    // route to add item page
-  }
-
-  goToRestock() {
-    // route to restock item page
+  // Boilerplate function for adding product
+  onAddProduct() {
+    // Placeholder for navigation to Add Product page
+    console.log('Add Product clicked');
   }
 }
