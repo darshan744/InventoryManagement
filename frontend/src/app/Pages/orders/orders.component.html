@@ -1,3 +1,163 @@
-<div class="p-4">
-  <h2 class="text-xl font-semibold text-gray-900">Orders (Placeholder)</h2>
+<div
+  class="animate-fade-in min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16"
+>
+  <div
+    class="w-full max-w-md sticky top-0 bg-purple-100 p-2 mb-4 rounded-lg shadow-sm z-10 .animate-fade-in"
+  >
+    <select
+      [(ngModel)]="filterStatus"
+      (ngModelChange)="filterOrders()"
+      class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+    >
+      <option value="">All</option>
+      <option value="pending">Pending</option>
+      <option value="in-transit">In Transit</option>
+      <option value="delivered">Delivered</option>
+    </select>
+  </div>
+  <div class="w-full max-w-md">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">Orders</h2>
+    <div class="space-y-4">
+      <div
+        *ngFor="let order of filteredOrders"
+        class="bg-white p-3 rounded-lg shadow-sm flex justify-between items-center"
+        [ngClass]="{ 'border-l-4 border-pink-500': order.status === 'pending' }"
+      >
+        <div>
+          <p class="text-sm font-medium text-gray-900">
+            {{ order.productName }}
+          </p>
+          <p class="text-xs text-gray-600">
+            Qty: {{ order.quantity }} | Status: {{ order.status }} | Date:
+            {{ order.date }}
+          </p>
+          <span *ngIf="order.status === 'pending'" class="text-pink-500 text-xs"
+            >⚠️ Overdue</span
+          >
+        </div>
+        <div class="flex space-x-2">
+          <button
+            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="openEditModal(order)"
+          >
+            Edit
+          </button>
+          <button
+            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="completeOrder(order)"
+          >
+            Complete
+          </button>
+          <button
+            class="bg-pink-500 text-white py-1 px-2 rounded-full text-xs hover:bg-pink-600 transition"
+            (click)="deleteOrder(order)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+      <button
+        class="w-full bg-teal-600 text-white py-2 px-4 rounded-full hover:bg-teal-700 transition text-sm mt-4"
+        (click)="openAddModal()"
+      >
+        Add Order 🚚
+      </button>
+    </div>
+
+    <!-- Add Modal -->
+    <div
+      *ngIf="isAddModalOpen"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Add Order</h3>
+        <input
+          [(ngModel)]="newOrder.productName"
+          placeholder="Product Name"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <input
+          [(ngModel)]="newOrder.quantity"
+          type="number"
+          placeholder="Quantity"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <select
+          [(ngModel)]="newOrder.status"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        >
+          <option value="pending">Pending</option>
+          <option value="in-transit">In Transit</option>
+          <option value="delivered">Delivered</option>
+        </select>
+        <input
+          [(ngModel)]="newOrder.date"
+          type="date"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <div class="flex justify-end space-x-2">
+          <button
+            class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs hover:bg-gray-600 transition"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="addOrder()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div
+      *ngIf="isEditModalOpen"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Edit Order</h3>
+        <input
+          [(ngModel)]="selectedOrder.productName"
+          placeholder="Product Name"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <input
+          [(ngModel)]="selectedOrder.quantity"
+          type="number"
+          placeholder="Quantity"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <select
+          [(ngModel)]="selectedOrder.status"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        >
+          <option value="pending">Pending</option>
+          <option value="in-transit">In Transit</option>
+          <option value="delivered">Delivered</option>
+        </select>
+        <input
+          [(ngModel)]="selectedOrder.date"
+          type="date"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        />
+        <div class="flex justify-end space-x-2">
+          <button
+            class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs hover:bg-gray-600 transition"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="saveOrder()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

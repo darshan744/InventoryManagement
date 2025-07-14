@@ -1,3 +1,88 @@
-<div class="p-4">
-  <h2 class="text-xl font-semibold text-gray-900">Inventory (Placeholder)</h2>
+<div
+  class="animate-fade-in min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16">
+  <div class="w-full max-w-md sticky top-0 bg-purple-100 p-2 mb-4 rounded-lg shadow-sm z-10">
+    <input [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" placeholder="Search products..."
+      class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+  </div>
+  <div class="w-full max-w-md">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">Inventory</h2>
+    <div class="space-y-4">
+      <div *ngFor="let product of filteredProducts"
+        class="bg-white p-3 rounded-lg shadow-sm flex justify-between items-center" [ngClass]="{
+          'border-l-4 border-pink-500': product.quantity < product.threshold,
+        }">
+        <div>
+          <p class="text-sm font-medium text-gray-900">{{ product.name }}</p>
+          <p class="text-xs text-gray-600">
+            Qty: {{ product.quantity }} / Threshold: {{ product.threshold }}
+          </p>
+          <span *ngIf="product.quantity < product.threshold" class="text-pink-500 text-xs">⚠️ Low Stock</span>
+        </div>
+        <div class="flex space-x-2">
+          <button class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="openEditModal(product)">
+            Edit
+          </button>
+          <button class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="reorderProduct(product)">
+            Reorder
+          </button>
+          <button class="bg-pink-500 text-white py-1 px-2 rounded-full text-xs hover:bg-pink-600 transition"
+            (click)="deleteProduct(product)">
+            Delete
+          </button>
+        </div>
+      </div>
+      <button class="w-full bg-teal-600 text-white py-2 px-4 rounded-full hover:bg-teal-700 transition text-sm mt-4"
+        (click)="openAddModal()">
+        Add Product 📦
+      </button>
+    </div>
+
+    <!-- Add Modal -->
+    <div *ngIf="isAddModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Add Product</h3>
+        <input [(ngModel)]="newProduct.name" placeholder="Product Name"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <input [(ngModel)]="newProduct.quantity" type="number" placeholder="Quantity"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <input [(ngModel)]="newProduct.threshold" type="number" placeholder="Threshold"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <div class="flex justify-end space-x-2">
+          <button class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs hover:bg-gray-600 transition"
+            (click)="closeModal()">
+            Cancel
+          </button>
+          <button class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="addProduct()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div *ngIf="isEditModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Edit Product</h3>
+        <input [(ngModel)]="selectedProduct.name" placeholder="Product Name"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <input [(ngModel)]="selectedProduct.quantity" type="number" placeholder="Quantity"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <input [(ngModel)]="selectedProduct.threshold" type="number" placeholder="Threshold"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm" />
+        <div class="flex justify-end space-x-2">
+          <button class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs hover:bg-gray-600 transition"
+            (click)="closeModal()">
+            Cancel
+          </button>
+          <button class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
+            (click)="saveProduct()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
