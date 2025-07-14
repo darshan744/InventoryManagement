@@ -68,13 +68,13 @@
         </div>
         <div class="flex items-center justify-between">
           <label class="text-sm font-medium text-gray-900">Notifications</label>
-          <select [(ngModel)]="notificationPreference"
+          <ng-select [(ngModel)]="notificationPreference"
             class="p-2 border-0 border-b border-gray-300 bg-transparent text-sm focus:border-teal-500"
             (change)="onChangeNotification()">
-            <option value="email">Email</option>
-            <option value="push">Push</option>
-            <option value="both">Both</option>
-          </select>
+            <ng-option value="email">Email</ng-option>
+            <ng-option value="push">Push</ng-option>
+            <ng-option value="both">Both</ng-option>
+          </ng-select>
         </div>
       </div>
     </div>
@@ -84,12 +84,12 @@
       <h2 class="text-lg font-medium text-gray-900 mb-3">Appearance</h2>
       <div class="flex items-center justify-between">
         <label class="text-sm font-medium text-gray-900">Theme</label>
-        <select [(ngModel)]="theme"
+        <ng-select [(ngModel)]="theme"
           class="p-2 border-0 border-b border-gray-300 bg-transparent text-sm focus:border-teal-500"
           (change)="onChangeTheme()">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
+          <ng-option value="light">Light</ng-option>
+          <ng-option value="dark">Dark</ng-option>
+        </ng-select>
       </div>
     </div>
 
