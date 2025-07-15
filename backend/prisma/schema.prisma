@@ -1,0 +1,66 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+enum OrderType {
+  RESTOCK
+  ISSUE
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+}
+
+enum UnitType {
+  PCS
+  KG
+  LITERS
+  BOX
+  OTHER
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  quantity      Int      @default(0)
+  threshold     Int      @default(0)
+  unit          UnitType @default(PCS)
+  category      String?
+  lastRestocked DateTime @default(now())
+  orders        Order[]
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  product   Product     @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int         @default(0)
+  type      OrderType   @default(RESTOCK)
+  status    OrderStatus @default(PENDING)
+  date      DateTime    @default(now())
+  notes     String?
+  user      User?       @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  role        UserRole @default(STAFF)
+  preferences Json?
+  orders      Order[]
+}

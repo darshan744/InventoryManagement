@@ -19,6 +19,8 @@ backend/build/
 backend/coverage/
 backend/package-lock.json
 backend/*.env
+backend/generated/
+backend/prisma/migrations/
 
 # Logs
 backend/logs/
