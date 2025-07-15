@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "p:g": "npx prisma generate",
+    "p:m": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
