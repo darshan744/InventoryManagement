@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16">
+  <div class="w-full max-w-md">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">Reports</h2>
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Stock Summary</h3>
+      <p class="text-sm text-gray-600">Total Products: {{ products.length }}</p>
+      <p class="text-sm text-gray-600">Low Stock Items: {{ getLowStockCount() }} <span class="text-pink-500">⚠️</span></p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Order Status</h3>
+      <p class="text-sm text-gray-600">Pending: {{ getOrderStatusCount('pending') }} <span *ngIf="getOrderStatusCount('pending')" class="text-pink-500">⚠️</span></p>
+      <p class="text-sm text-gray-600">In Transit: {{ getOrderStatusCount('in-transit') }}</p>
+      <p class="text-sm text-gray-600">Delivered: {{ getOrderStatusCount('delivered') }}</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-sm">
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Recent Orders</h3>
+      <div class="space-y-2">
+        <div *ngFor="let order of orders.slice(0, 5)" class="flex justify-between text-sm text-gray-600">
+          <span>{{ order.productName }}</span>
+          <span>{{ order.status }} ({{ order.date }})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

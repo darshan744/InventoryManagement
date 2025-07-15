@@ -5,6 +5,7 @@ import { ProfileComponent } from './Pages/profile/profile.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { MainComponent } from './Pages/main/main.component';
 import { OrdersComponent } from './Pages/orders/orders.component';
+import { ReportsComponent } from './Pages/reports/reports.component';
 
 export const routes: Routes = [
   {
@@ -28,9 +29,13 @@ export const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path:"orders",
-        component:OrdersComponent
-      }
+        path: 'orders',
+        component: OrdersComponent,
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+      },
     ],
   },
 ];
