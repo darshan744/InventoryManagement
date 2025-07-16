@@ -4,6 +4,7 @@ import { comparePassword } from "../utils/Hash";
 import AppError from "../utils/AppError";
 import { getUserByEmail, createUser } from "../Database";
 import environtments from "../environtments";
+import logger from "../utils/Logger";
 
 export const login = async (
   req: Request,
@@ -28,10 +29,13 @@ export const login = async (
         next(new AppError("Invalid password", 401));
         return;
       }
-
-      const encryptedToken = jwt.sign(email, environtments.jwtKey as string, {
-        expiresIn: "1h",
-      });
+      const encryptedToken = jwt.sign(
+        { email },
+        environtments.jwtKey as string,
+        {
+          expiresIn: 3600000,
+        },
+      );
       // Respond with success
       res
         .status(200)
@@ -47,7 +51,8 @@ export const login = async (
           },
         });
     })
-    .catch((_error) => {
+    .catch((error) => {
+      console.log(error);
       next(new AppError("Database error", 500));
     });
 };

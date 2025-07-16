@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(loggerMiddleware);
 // Endpoint to check if the server is running
 app.get("/ping", (_req, res) => {
-  res.status(200).send("pong");
+  res.json("pong");
 });
 app.use("/api", authRoutes);
 

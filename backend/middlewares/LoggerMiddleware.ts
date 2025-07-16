@@ -6,9 +6,6 @@ export default function loggerMiddleware(
   _: Response,
   next: NextFunction,
 ) {
-  logger.info({
-    method: req.method,
-    url: req.originalUrl,
-  });
+  logger.info(`Request Method: ${req.method}, URL: ${req.url}`);
   next();
 }
