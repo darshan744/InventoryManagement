@@ -30,7 +30,7 @@ export const login = async (
         return;
       }
       const encryptedToken = jwt.sign(
-        { email },
+        { email, id: user.id },
         environtments.jwtKey as string,
         {
           expiresIn: 3600000,
@@ -58,7 +58,7 @@ export const login = async (
 };
 
 export async function signUp(req: Request, res: Response, next: NextFunction) {
-  const { email, password, name } = req.body;
+  let { email, password, name, role } = req.body;
   if (!email || !password || !name) {
     next(new AppError("Email, password and name are required", 400));
     return;
@@ -67,6 +67,9 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
     if (await getUserByEmail(email)) {
       next(new AppError("User already exists", 409));
       return;
+    }
+    if (!role) {
+      role = "STAFF"; // Default role if not provided
     }
     const newUser = await createUser(email, password, name);
     res.status(201).json({
