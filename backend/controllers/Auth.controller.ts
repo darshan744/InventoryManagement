@@ -52,7 +52,7 @@ export const login = async (
     });
 };
 
-export function signUp = async (req: Request, res: Resonse, next: NextFunction) => {
+export async function signUp(req: Request, res: Response, next: NextFunction) {
   const { email, password, name } = req.body;
   if (!email || !password || !name) {
     next(new AppError("Email, password and name are required", 400));
@@ -75,6 +75,7 @@ export function signUp = async (req: Request, res: Resonse, next: NextFunction) 
     next(new AppError("Database error", 500));
   }
 }
+
 export const logout = async (_req: Request, res: Response) => {
   res.status(200).json({
     message: "Logout successful",
