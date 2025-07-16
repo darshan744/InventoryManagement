@@ -4,4 +4,5 @@ config();
 export default {
   port: process.env.PORT,
   dbUrl: process.env.DB_URL,
+  jwtKey: process.env.JWT_SECRET,
 };
