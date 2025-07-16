@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { comparePassword } from "../utils/Hash";
 import AppError from "../utils/AppError";
-import { getUserByEmail } from "../Database";
+import { getUserByEmail, createUser } from "../Database";
 import environtments from "../environtments";
 
 export const login = async (
@@ -37,6 +37,7 @@ export const login = async (
         .status(200)
         .cookie("token", encryptedToken, {
           expires: new Date(Date.now() + 3600000), // 1 hour
+          httpOnly: true, // Prevents client-side access to the cookie
         })
         .json({
           message: "Login successful",
@@ -51,6 +52,29 @@ export const login = async (
     });
 };
 
+export function signUp = async (req: Request, res: Resonse, next: NextFunction) => {
+  const { email, password, name } = req.body;
+  if (!email || !password || !name) {
+    next(new AppError("Email, password and name are required", 400));
+    return;
+  }
+  try {
+    if (await getUserByEmail(email)) {
+      next(new AppError("User already exists", 409));
+      return;
+    }
+    const newUser = await createUser(email, password, name);
+    res.status(201).json({
+      message: "User created successfully",
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+      },
+    });
+  } catch (error) {
+    next(new AppError("Database error", 500));
+  }
+}
 export const logout = async (_req: Request, res: Response) => {
   res.status(200).json({
     message: "Logout successful",
