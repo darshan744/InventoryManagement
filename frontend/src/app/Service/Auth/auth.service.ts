@@ -16,9 +16,11 @@ export class AuthService {
   login(email: string, password: string) {
     const url = `${environment.apiUrl}/auth/login`;
     this.http
-      .post<IBaseResponse<LoginResponse>>(url, { email, password })
+      .post<
+        IBaseResponse<LoginResponse>
+      >(url, { email, password }, { withCredentials: true })
       .subscribe({
-        next : (value)=> {
+        next: (value) => {
           localStorage.setItem('user', JSON.stringify(value.data.user));
           this.router.navigateByUrl('/user/dashboard');
         },

@@ -40,8 +40,8 @@ model Product {
   unit          UnitType @default(PCS)
   category      String?
   lastRestocked DateTime @default(now())
-  user          User?    @relation(fields: [userId], references: [id])
-  userId        String?
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
   orders        Order[]
 }
 

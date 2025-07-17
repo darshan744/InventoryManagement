@@ -9,7 +9,12 @@ import authMiddleware from "./middlewares/AuthMiddleware";
 import productRoutes from "./routes/Product.routes";
 const app = Express();
 // Middleware to handle CORS and JSON parsing
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:4200",
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use(Express.json());
 app.use("/api", authMiddleware);

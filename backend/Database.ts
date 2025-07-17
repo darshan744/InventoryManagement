@@ -24,17 +24,17 @@ export const createUser = async (
   });
 };
 
-export const getProducts = async (userId: string) => {
-  return await Prisma.product.findMany({
-    where: {
-      userId: userId,
-    },
-  });
-};
+export async function getProducts(userId: string) {
+  if (!userId) {
+    throw new Error("User ID is required");
+  }
+  const product = await Prisma.product.findMany({
+    where: { userId },
+  })
 
-export const createProduct = async (
-  name: string,
-  quantity: number,
+  return product;
+}
+export const createProduct = async (name: string, quantity: number,
   threshold: number,
   unit: UnitType,
   category: string,

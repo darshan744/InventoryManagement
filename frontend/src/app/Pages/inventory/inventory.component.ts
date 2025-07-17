@@ -1,40 +1,68 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../Service/data.service';
+import { ProductService } from '../../Service/Product/product.service';
+import { Subscription } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ProductResponse } from '../../Types/Response';
 
 @Component({
   selector: 'app-inventory',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgSelectModule],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css',
 })
-export class InventoryComponent {
-  products: any;
-  filteredProducts: any;
+export class InventoryComponent implements OnInit {
+  unitTypes = ['PCS', 'KG', 'LITERS', 'BOX', 'OTHER'];
+  products = new Array<ProductResponse>();
+  filteredProducts = new Array<ProductResponse>();
   searchTerm: string = '';
-  newProduct = { name: '', quantity: 0, threshold: 0 };
+  newProduct = {
+    name: '',
+    quantity: 0,
+    threshold: 0,
+    unit: 'PCS',
+    category: '',
+  };
   selectedProduct = { name: '', quantity: 0, threshold: 0 };
   isAddModalOpen: boolean = false;
   isEditModalOpen: boolean = false;
   errorMessage: string = '';
   isValid: boolean = true;
+  subscriptions = new Array<Subscription>();
 
-  constructor(private dataService: DataService) {
-    this.products = this.dataService.getProducts();
-    this.filteredProducts = [...this.products];
+  constructor(
+    private dataService: DataService,
+    private productService: ProductService,
+  ) { }
+
+  ngOnInit() {
+    const subscription = this.productService.getProducts().subscribe((res) => {
+      if (!res || !res.data) {
+        console.error('Failed to fetch products:', res);
+        return;
+      }
+      this.products = res.data;
+      this.filteredProducts = this.products;
+    });
+    this.subscriptions.push(subscription);
   }
 
   filterProducts() {
-    this.filteredProducts = this.dataService
-      .getProducts()
-      .filter((product) =>
-        product.name.toLowerCase().includes(this.searchTerm.toLowerCase()),
-      );
+    this.filteredProducts = this.products.filter((product) =>
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase()),
+    );
   }
 
   openAddModal() {
-    this.newProduct = { name: '', quantity: 0, threshold: 0 };
+    this.newProduct = {
+      name: '',
+      quantity: 0,
+      threshold: 0,
+      unit: 'PCS',
+      category: '',
+    };
     this.errorMessage = '';
     this.isAddModalOpen = true;
   }
@@ -119,5 +147,9 @@ export class InventoryComponent {
     product.quantity += order.quantity;
     this.dataService.updateProduct(product);
     this.filterProducts();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

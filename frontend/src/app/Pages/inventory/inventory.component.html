@@ -88,10 +88,17 @@
           class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
           (ngModelChange)="validateInput()"
         />
+        <input
+          [(ngModel)]="newProduct.category"
+          placeholder="Category"
+          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+          (ngModelChange)="validateInput()"
+        />
+        <ng-select [items]="unitTypes" placeholder="Units"> </ng-select>
         <p *ngIf="errorMessage" class="text-pink-500 text-xs">
           {{ errorMessage }}
         </p>
-        <div class="flex justify-end space-x-2">
+        <div class="flex justify-end mt-5 space-x-2">
           <button
             class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs hover:bg-gray-600 transition"
             (click)="closeModal()"
