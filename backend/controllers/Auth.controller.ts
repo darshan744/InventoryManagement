@@ -57,10 +57,13 @@ export const login = async (
         httpOnly: true, // Prevents client-side access to the cookie
       })
       .json({
+
         message: "Login successful",
-        user: {
-          id: user.id,
-          email: user.email,
+        data: {
+          user: {
+            id: user.id,
+            email: user.email,
+          }
         },
       });
   } catch (error: any) {
@@ -133,15 +136,15 @@ export const logout = async (
  * */
 export function refreshToken(req: Request, res: Response, next: NextFunction) {
   try {
-    const token = req.cookies.refreshToken;
-    if (!token) {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
       throw new AppError("Refresh token is missing", 401);
     }
-    if (!refreshTokens.includes(token)) {
+    if (!refreshTokens.includes(refreshToken)) {
       throw new AppError("Invalid refresh token", 401);
     }
     // Verify the refresh token and generate a new access token
-    const payload: any = verifyToken(token);
+    const payload: any = verifyToken(refreshToken);
     const newAccessToken = signToken({ email: payload.email, id: payload.id });
     res
       .status(200)

@@ -1,28 +1,68 @@
-<div class="min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center justify-center px-4">
+<div
+  class="min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center justify-center px-4"
+>
   <div class="flex items-center mb-6 animate-fade-in">
     <span class="text-4xl text-teal-800">📦</span>
     <h1 class="text-2xl font-semibold text-gray-900 ml-2">Smart Stock</h1>
   </div>
-  <form class="w-full max-w-xs flex flex-col gap-4" (ngSubmit)="onLogin()">
+  <form
+    class="w-full max-w-xs flex flex-col gap-4"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div>
-      <label for="email" class="block text-base font-medium text-gray-900">Email</label>
-      <input id="email" type="email" [(ngModel)]="email" name="email"
+      <label for="email" class="block text-base font-medium text-gray-900"
+        >Email</label
+      >
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        name="email"
         class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 focus:outline-none text-sm transition-colors"
-        placeholder="Enter your email" required />
+        placeholder="Enter your email"
+        required
+      />
     </div>
-    <div>
-      <label for="password" class="block text-base font-medium text-gray-900">Password</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password"
-        class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 focus:outline-none text-sm transition-colors"
-        placeholder="Enter your password" required />
+    <div class="relative flex flex-col">
+      <label for="password" class="block text-base font-medium text-gray-900">
+        Password
+      </label>
+
+      <div class="relative">
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          name="password"
+          class="w-full pr-10 p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 focus:outline-none text-sm transition-colors"
+          placeholder="Enter your password"
+          required
+        />
+
+        <button
+          type="button"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-teal-600 focus:outline-none"
+          (click)="togglePasswordVisibility()"
+        >
+          {{ showPassword ? "🙈" : "👁️" }}
+        </button>
+      </div>
     </div>
     <p class="text-pink-500 text-xs text-center" *ngIf="showError">
       {{ errorMessage }}
     </p>
-    <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-full hover:bg-teal-700 transition text-sm">
+    <button
+      type="submit"
+      class="w-full bg-teal-600 text-white py-2 rounded-full hover:bg-teal-700 transition text-sm"
+    >
       Log In
     </button>
-    <a href="#" class="text-teal-600 text-xs text-center hover:underline" (click)="onForgotPassword()">
+    <a
+      href="#"
+      class="text-teal-600 text-xs text-center hover:underline"
+      (click)="onForgotPassword()"
+    >
       Forgot Password?
     </a>
   </form>
