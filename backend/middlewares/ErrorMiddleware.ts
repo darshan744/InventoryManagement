@@ -6,10 +6,10 @@ export default function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
-  logger.error(err.message)
+  logger.error(err.message);
   res
     .status(
-      "statuscode" in err ? Number(err.statuscode) : 500, // Use 'statuscode' if available, otherwise default to 500
+      "statusCode" in err ? Number(err.statusCode) : 500, // Use 'statuscode' if available, otherwise default to 500
     )
     .json({
       message: err.message,

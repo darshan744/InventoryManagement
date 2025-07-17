@@ -10,6 +10,11 @@ import { ReportsComponent } from './Pages/reports/reports.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
     component: AuthComponent,
   },
   {

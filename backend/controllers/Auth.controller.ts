@@ -3,6 +3,7 @@ import { comparePassword } from "../utils/Hash";
 import AppError from "../utils/AppError";
 import { getUserByEmail, createUser } from "../Database";
 import { signToken, verifyToken } from "../utils/Token";
+import logger from "../utils/Logger";
 
 // TODO : Implement using Redis or any other storage mechanism
 let refreshTokens = new Array<string>();
@@ -57,13 +58,12 @@ export const login = async (
         httpOnly: true, // Prevents client-side access to the cookie
       })
       .json({
-
         message: "Login successful",
         data: {
           user: {
             id: user.id,
             email: user.email,
-          }
+          },
         },
       });
   } catch (error: any) {
@@ -78,7 +78,11 @@ export const login = async (
  * @description Handles user registration by creating a new user and returning a success message.
  * @Route POST /api/auth/signup
  * */
-export async function signUp(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function signUp(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
   try {
     let { email, password, name, role } = req.body;
     if (!email || !password || !name) {
@@ -136,6 +140,7 @@ export const logout = async (
  * */
 export function refreshToken(req: Request, res: Response, next: NextFunction) {
   try {
+    console.log(refreshTokens);
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
       throw new AppError("Refresh token is missing", 401);
@@ -144,8 +149,13 @@ export function refreshToken(req: Request, res: Response, next: NextFunction) {
       throw new AppError("Invalid refresh token", 401);
     }
     // Verify the refresh token and generate a new access token
-    const payload: any = verifyToken(refreshToken);
-    const newAccessToken = signToken({ email: payload.email, id: payload.id });
+    const payload: any = verifyToken(refreshToken, "refresh");
+    const newAccessToken = signToken(
+      { email: payload.email, id: payload.id },
+      { expiresIn: "30s" },
+      "access",
+    );
+    logger.info("New access token generated for user:", payload.email);
     res
       .status(200)
       .cookie("token", newAccessToken, {

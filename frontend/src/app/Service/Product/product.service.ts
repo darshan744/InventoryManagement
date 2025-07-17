@@ -15,4 +15,14 @@ export class ProductService {
       withCredentials: true,
     });
   }
+  updateProduct(product: ProductResponse) {
+    const url = `${environment.apiUrl}/api/product`;
+  }
+  addProduct(product: ProductResponse) {
+    const url = `${environment.apiUrl}/api/product`;
+
+    return this.http.post<IBaseResponse<ProductResponse>>(url, product, {
+      withCredentials: true,
+    });
+  }
 }

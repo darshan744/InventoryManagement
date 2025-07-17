@@ -22,6 +22,7 @@ export function signToken(
       break;
     case "refresh":
       secretKey = environtments.refreshTokenKey;
+      break
     default:
       break;
   }
