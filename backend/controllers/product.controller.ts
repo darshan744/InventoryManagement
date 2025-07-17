@@ -9,6 +9,7 @@ export function getUserProducts(
   res: Response,
   next: NextFunction,
 ) {
+  res.json({Message : "This endpoint is not implemented yet."});
   try {
     const userId = req.user?.id; // Assuming user ID is stored in req.user
     if (!userId) {
@@ -34,7 +35,6 @@ export function getUserProducts(
     next(new AppError(error.message, 500));
   }
 }
-
 export async function createProduct(
   req: Request,
   res: Response,

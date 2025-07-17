@@ -32,7 +32,7 @@ frontend/dist/
 frontend/www/
 frontend/coverage/
 frontend/package-lock.json
-frontend/src/environments/environment.*.ts
+frontend/src/environments/environment.ts
 
 # Ionic Capacitor build outputs
 frontend/android/

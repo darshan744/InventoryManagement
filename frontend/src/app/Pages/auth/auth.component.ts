@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../Service/Auth/auth.service';
 @Component({
   selector: 'app-auth',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -22,6 +23,7 @@ export class AuthComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private authService: AuthService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,20 +39,8 @@ export class AuthComponent {
     if (this.loginForm.invalid) return;
 
     this.loading = true;
-
-    // 🔧 Simulate fake login delay
-    setTimeout(() => {
-      this.loading = false;
-      const { email, password } = this.loginForm.value;
-
-      if (email === 'admin@example.com' && password === 'admin123') {
-        // Show toast and navigate (after adding toast system)
-        console.log('✅ Login success');
-      } else {
-        // Show error toast
-        console.log('❌ Invalid credentials');
-      }
-    }, 1200);
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password);
   }
 
   onEmailChange(event: string) {

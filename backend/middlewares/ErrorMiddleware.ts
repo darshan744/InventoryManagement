@@ -6,11 +6,7 @@ export default function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
-  logger.error({
-    message: err.message,
-    stack: err.stack,
-    statuscode: "statuscode" in err ? err.statuscode : 500, // Use 'statuscode' if available, otherwise default to 500
-  });
+  logger.error(err.message)
   res
     .status(
       "statuscode" in err ? Number(err.statuscode) : 500, // Use 'statuscode' if available, otherwise default to 500

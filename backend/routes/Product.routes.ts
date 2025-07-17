@@ -7,3 +7,5 @@ const router = Router();
 
 router.get("/products", getUserProducts);
 router.post("/products", createProduct);
+
+export default router;
