@@ -5,8 +5,6 @@ import { getUserByEmail, createUser } from "../Database";
 import { signToken, verifyToken } from "../utils/Token";
 import logger from "../utils/Logger";
 
-// TODO : Implement using Redis or any other storage mechanism
-let refreshTokens = new Array<string>();
 /**
  * @description Handles user login by verifying credentials and returning a JWT token.
  * @Route POST /api/auth/login
@@ -45,7 +43,6 @@ export const login = async (
       { expiresIn: "7d" }, // 7 days
       "refresh",
     );
-    refreshTokens.push(refreshToken); // Store the refresh token in memory (or use a database)
     // Respond with success
     res
       .status(200)
@@ -124,7 +121,6 @@ export const logout = async (
     if (!refToken) {
       throw new AppError("No refresh token found", 401);
     }
-    refreshTokens = refreshTokens.filter((token) => token !== refToken);
     res
       .status(200)
       .clearCookie("token", { httpOnly: true })
@@ -144,9 +140,6 @@ export function refreshToken(req: Request, res: Response, next: NextFunction) {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
       throw new AppError("Refresh token is missing", 401);
-    }
-    if (!refreshTokens.includes(refreshToken)) {
-      throw new AppError("Invalid refresh token", 401);
     }
     // Verify the refresh token and generate a new access token
     const payload: any = verifyToken(refreshToken, "refresh");
