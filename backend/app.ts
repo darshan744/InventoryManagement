@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/ErrorMiddleware";
 import loggerMiddleware from "./middlewares/LoggerMiddleware";
 import authMiddleware from "./middlewares/AuthMiddleware";
 import productRoutes from "./routes/Product.routes";
+import orderRoutes from "./routes/Order.routes";
 const app = Express();
 // Middleware to handle CORS and JSON parsing
 app.use(
@@ -26,6 +27,7 @@ app.get("/ping", (_req, res) => {
 });
 app.use(authRoutes);
 app.use("/api", productRoutes);
+app.use("/api", orderRoutes);
 
 app.use(errorHandler);
 export default app;

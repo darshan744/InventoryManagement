@@ -72,3 +72,12 @@ export async function deleteProduct(productId: string) {
     where: { id: productId },
   });
 }
+
+export async function getOrders(userId: string) {
+  return await Prisma.order.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+}
+export async function createOrder() { }
