@@ -34,6 +34,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   isAddModalOpen = false;
   isAddModalLoading = false;
   isEditModalOpen = false;
+  isEditModalLoading = false;
   errorMessage = '';
   isValid = true;
 
@@ -113,18 +114,23 @@ export class InventoryComponent implements OnInit, OnDestroy {
       (p) => p.id === this.selectedProduct.id,
     );
     if (index !== -1) {
-      this.products[index] = { ...this.selectedProduct };
-      this.dataService.updateProduct(this.selectedProduct);
-      this.filterProducts();
+      this.isEditModalLoading = true;
+      this.productService
+        .updateProduct(this.selectedProduct)
+        .subscribe((res) => {
+          this.products[index] = res.data;
+          this.filterProducts();
+          this.isEditModalLoading = false;
+          this.closeModal();
+        });
     }
-    this.closeModal();
   }
 
-  validateInput() {
+  validateInput(newOrEdit: 'new' | 'edit' = 'new') {
     this.isValid = true;
     this.errorMessage = '';
     if (
-      !this.newProduct.name ||
+      (newOrEdit === 'new' && !this.newProduct.name) ||
       this.newProduct.quantity < 0 ||
       this.newProduct.threshold < 0
     ) {
@@ -146,9 +152,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   deleteProduct(product: ProductResponse): void {
     const index = this.products.findIndex((p) => p.id === product.id);
     if (index !== -1) {
-      this.products.splice(index, 1);
-      this.dataService.getProducts().splice(index, 1); // Assumes dataService holds local copy
-      this.filterProducts();
+      this.productService.deleteProduct(product.id).subscribe((res) => {
+        this.products.splice(index, 1);
+        this.filterProducts();
+      });
     }
   }
 

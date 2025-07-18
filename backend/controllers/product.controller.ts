@@ -54,3 +54,47 @@ export async function createProduct(
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
 }
+
+export async function updateProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const productId = req.params.id;
+    const productData: Product = req.body;
+
+    const updatedProduct = await db.updateProduct(productId, productData);
+    if (!updatedProduct) {
+      throw new AppError("Product not found", 404);
+    }
+
+    res.status(200).json({
+      message: "Product updated successfully",
+      data: updatedProduct,
+    });
+  } catch (err: any) {
+    next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}
+
+export async function deleteProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await db.deleteProduct(productId);
+
+    if (!deletedProduct) {
+      throw new AppError("Product not found", 404);
+    }
+    res.status(200).json({
+      message: "Product deleted successfully",
+      data: deletedProduct,
+    })
+  } catch (err: any) {
+    next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}

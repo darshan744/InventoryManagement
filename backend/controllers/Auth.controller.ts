@@ -136,7 +136,6 @@ export const logout = async (
  * */
 export function refreshToken(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log(refreshTokens);
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
       throw new AppError("Refresh token is missing", 401);

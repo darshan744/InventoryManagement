@@ -16,12 +16,22 @@ export class ProductService {
     });
   }
   updateProduct(product: ProductResponse) {
-    const url = `${environment.apiUrl}/api/product`;
+    const url = `${environment.apiUrl}/api/product/${product.id}`;
+    return this.http.patch<IBaseResponse<ProductResponse>>(url, product, {
+      withCredentials: true,
+    });
   }
   addProduct(product: ProductResponse) {
     const url = `${environment.apiUrl}/api/product`;
 
     return this.http.post<IBaseResponse<ProductResponse>>(url, product, {
+      withCredentials: true,
+    });
+  }
+  deleteProduct(productId: string) {
+    const url = `${environment.apiUrl}/api/product/${productId}`;
+
+    return this.http.delete<IBaseResponse<ProductResponse>>(url, {
       withCredentials: true,
     });
   }
