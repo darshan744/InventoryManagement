@@ -1,18 +1,14 @@
-<div
-  class="animate-fade-in min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16"
->
-  <div
-    class="w-full max-w-md sticky top-0 bg-purple-100 p-2 mb-4 rounded-lg z-10"
-  >
+<div class="animate-fade-in min-h-screen flex flex-col items-center">
+  <div class="w-full max-w-md sticky top-0 mb-4 rounded-lg z-10">
     <input
       pInputText
       [(ngModel)]="searchTerm"
       (ngModelChange)="filterProducts()"
       placeholder="Search products..."
-      class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        class="w-full p-2 border-0 border-b bg-transparent focus:border-teal-500 text-sm"
     />
   </div>
-  <div class="w-full max-w-md">
+  <div class="w-full">
     <h2 class="text-xl font-semibold text-gray-900 mb-4">Inventory</h2>
     <div class="space-y-4">
       <div

@@ -1,5 +1,4 @@
-<div
-  class="animate-fade-in min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center px-4 py-6 pb-16">
+<div class="animate-fade-in min-h-screen flex flex-col items-center">
   <div class="flex items-center mb-6">
     <span class="text-4xl text-teal-800">👤</span>
     <h1 class="text-2xl font-semibold text-gray-900 ml-2">{{ userName }}</h1>
@@ -13,7 +12,7 @@
           <span class="text-3xl text-gray-400 mr-3">📷</span>
           <p class="text-sm text-gray-700">Upload Photo</p>
         </div>
-        <p-button size="small" class="text-teal-600 text-xs hover:underline" (click)="onUploadPhoto()">
+        <p-button size="small" (click)="onUploadPhoto()" [outlined]="true">
           Change
         </p-button>
       </div>
@@ -23,7 +22,7 @@
           <div class="flex items-center justify-between gap-8">
             <input pInputText pSize="small" [(ngModel)]="userName" [disabled]="!isEditingName"
               placeholder="Enter your name" />
-            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
+            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline" [outlined]="true"
               (click)="toggleEditName()">
               {{ isEditingName ? "Cancel" : "Edit" }}
             </p-button>
@@ -36,8 +35,7 @@
           <div class="flex items-center justify-between gap-8">
             <input pInputText pSize="small" [disabled]="!isEditingEmail" [(ngModel)]="userEmail" type="email"
               placeholder="Enter your email" />
-            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
-              (click)="toggleEditEmail()">
+            <p-button size="small" [fluid]="true" [outlined]="true"  (click)="toggleEditEmail()">
               {{ isEditingEmail ? "Cancel" : "Edit" }}
             </p-button>
           </div>
@@ -58,13 +56,11 @@
           <label class="text-sm font-medium text-gray-900">Low Stock Threshold : <strong>{{ lowStockThreshold
               }}</strong>
           </label>
-          <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
-            (click)="toggleEditThreshold()">
+          <p-button size="small" [fluid]="true" [outlined]="true" (click)="toggleEditThreshold()">
             {{ isEditingThreshold ? "Cancel" : "Edit" }}
           </p-button>
         </div>
-        <input *ngIf="isEditingThreshold" [(ngModel)]="lowStockThreshold" type="number"
-          class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+        <input pInputText pSize="small" *ngIf="isEditingThreshold" [(ngModel)]="lowStockThreshold" type="number"
           placeholder="Enter threshold" />
         <div class="flex items-center justify-between">
           <label class="text-sm font-medium text-gray-900">Auto-Reorder</label>
@@ -73,7 +69,7 @@
         </div>
         <div class="flex items-center justify-between">
           <label class="text-sm font-medium text-gray-900">Notifications</label>
-          <p-select size="small" [(ngModel)]="notificationPreference" [options]="['email', 'push', 'both']">
+          <p-select size="small" [(ngModel)]="notificationPreference" [options]="notificationOptions">
           </p-select>
         </div>
       </div>
@@ -83,8 +79,16 @@
     <div class="mb-6">
       <h2 class="text-lg font-medium text-gray-900 mb-3">Appearance</h2>
       <div class="flex items-center justify-between">
-        <label class="text-sm font-medium text-gray-900">Theme</label>
-        <p-select size="small" (change)="onChangeTheme()" [(ngModel)]="theme" [options]="['light', 'dark']"></p-select>
+        <label class="text-sm font-medium text-gray-900">Theme {{ isDarkMode() ? "Dark Theme" : "Light Theme" }}</label>
+        <p-toggleswitch (onChange)="onChangeTheme()" size="small">
+          <ng-template #handle>
+            <i [ngClass]="[
+                'pi',
+                '!text-xs',
+                isDarkMode() ? 'pi-moon' : 'pi-sun',
+              ]"></i>
+          </ng-template>
+        </p-toggleswitch>
       </div>
     </div>
 

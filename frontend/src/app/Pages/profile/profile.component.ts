@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { LoginResponse } from '../../Types/Response';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'app-profile',
   imports: [
@@ -17,25 +19,34 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     CheckboxModule,
     SelectModule,
-    ButtonModule
+    ButtonModule,
+    ToggleSwitchModule,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+  notificationOptions: string[] = ['Email', 'SMS', 'Both'];
+  isDarkMode = signal(false);
   userName: string = 'John Doe';
   userEmail: string = 'john@example.com';
   totalProducts: number = 50;
   lowStockThreshold: number = 10;
   autoReorder: boolean = true;
-  notificationPreference: string = 'both';
+  notificationPreference: string = this.notificationOptions[0];
   theme: string = 'light';
   isEditingName: boolean = false;
   isEditingEmail: boolean = false;
   isEditingThreshold: boolean = false;
 
-  constructor(private router: Router) {}
-
+  constructor(private router: Router) { }
+  ngOnInit(): void {
+    const user: LoginResponse['user'] = JSON.parse(
+      localStorage.getItem('user') || '{}',
+    );
+    this.userName = user.name;
+    this.userEmail = user.email;
+  }
   toggleEditName() {
     this.isEditingName = !this.isEditingName;
     if (!this.isEditingName) {
@@ -69,7 +80,9 @@ export class ProfileComponent {
   }
 
   onChangeTheme() {
-    console.log('Theme updated:', this.theme);
+    this.isDarkMode.update((prev) => !prev);
+    const val = this.isDarkMode();
+    document.documentElement.classList.toggle('dark', val);
   }
 
   onChangePassword() {
