@@ -7,11 +7,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DataService } from '../../Service/data.service';
 import { ProductService } from '../../Service/Product/product.service';
 import { ProductResponse } from '../../Types/Response';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule],
+  imports: [CommonModule, FormsModule, NgSelectModule , InputTextModule],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
 })

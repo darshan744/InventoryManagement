@@ -7,11 +7,20 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { AuthService } from '../../Service/Auth/auth.service';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-auth',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    FloatLabelModule,
+    ButtonModule
+  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -51,7 +60,6 @@ export class AuthComponent {
   showError = false; // Placeholder for error state
 
   errorMessage: string = 'Invalid email or password';
-
 
   onForgotPassword() {
     console.log('Forgot Password clicked');

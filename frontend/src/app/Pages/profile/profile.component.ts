@@ -3,10 +3,22 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
 
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, CommonModule, NgSelectModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    NgSelectModule,
+    InputTextModule,
+    CheckboxModule,
+    SelectModule,
+    ButtonModule
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -22,7 +34,7 @@ export class ProfileComponent {
   isEditingEmail: boolean = false;
   isEditingThreshold: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   toggleEditName() {
     this.isEditingName = !this.isEditingName;

@@ -11,53 +11,44 @@
     (ngSubmit)="onSubmit()"
   >
     <div>
-      <label for="email" class="block text-base font-medium text-gray-900"
-        >Email</label
-      >
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        name="email"
-        class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 focus:outline-none text-sm transition-colors"
-        placeholder="Enter your email"
-        required
-      />
+      <p-floatlabel variant="on">
+        <input
+          id="email"
+          pInputText
+          type="email"
+          formControlName="email"
+          name="email"
+          required
+          [fluid]="true"
+        />
+        <label for="email">Email</label>
+      </p-floatlabel>
     </div>
-    <div class="relative flex flex-col">
-      <label for="password" class="block text-base font-medium text-gray-900">
-        Password
-      </label>
-
-      <div class="relative">
+    <div>
+      <p-floatlabel variant="on">
+        <label for="password"> Password </label>
         <input
           id="password"
           [type]="showPassword ? 'text' : 'password'"
           formControlName="password"
           name="password"
-          class="w-full pr-10 p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 focus:outline-none text-sm transition-colors"
-          placeholder="Enter your password"
           required
+          pInputText
+          [fluid]="true"
         />
-
-        <button
-          type="button"
-          class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-teal-600 focus:outline-none"
-          (click)="togglePasswordVisibility()"
-        >
-          {{ showPassword ? "🙈" : "👁️" }}
-        </button>
-      </div>
+      </p-floatlabel>
     </div>
     <p class="text-pink-500 text-xs text-center" *ngIf="showError">
       {{ errorMessage }}
     </p>
-    <button
+    <p-button
+      [rounded]="true"
       type="submit"
-      class="w-full bg-teal-600 text-white py-2 rounded-full hover:bg-teal-700 transition text-sm"
+      size="small"
+      [fluid]="true"
     >
       Log In
-    </button>
+    </p-button>
     <a
       href="#"
       class="text-teal-600 text-xs text-center hover:underline"

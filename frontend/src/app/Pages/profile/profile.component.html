@@ -13,31 +13,35 @@
           <span class="text-3xl text-gray-400 mr-3">📷</span>
           <p class="text-sm text-gray-700">Upload Photo</p>
         </div>
-        <button class="text-teal-600 text-xs hover:underline" (click)="onUploadPhoto()">
+        <p-button size="small" class="text-teal-600 text-xs hover:underline" (click)="onUploadPhoto()">
           Change
-        </button>
+        </p-button>
       </div>
       <div class="flex items-center justify-between mb-2">
-        <div>
+        <div class="w-full">
           <label class="block text-sm font-medium text-gray-900">Name</label>
-          <input [(ngModel)]="userName"
-            class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-            [disabled]="!isEditingName" placeholder="Enter your name" />
+          <div class="flex items-center justify-between gap-8">
+            <input pInputText pSize="small" [(ngModel)]="userName" [disabled]="!isEditingName"
+              placeholder="Enter your name" />
+            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
+              (click)="toggleEditName()">
+              {{ isEditingName ? "Cancel" : "Edit" }}
+            </p-button>
+          </div>
         </div>
-        <button class="text-teal-600 text-xs hover:underline" (click)="toggleEditName()">
-          {{ isEditingName ? "Cancel" : "Edit" }}
-        </button>
       </div>
-      <div class="flex items-center justify-between">
-        <div>
+      <div class="flex items-center justify-between w-full">
+        <div class="w-full">
           <label class="block text-sm font-medium text-gray-900">Email</label>
-          <input [disabled]="!isEditingEmail" [(ngModel)]="userEmail" type="email"
-            class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-            placeholder="Enter your email" />
+          <div class="flex items-center justify-between gap-8">
+            <input pInputText pSize="small" [disabled]="!isEditingEmail" [(ngModel)]="userEmail" type="email"
+              placeholder="Enter your email" />
+            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
+              (click)="toggleEditEmail()">
+              {{ isEditingEmail ? "Cancel" : "Edit" }}
+            </p-button>
+          </div>
         </div>
-        <button class="text-teal-600 text-xs hover:underline" (click)="toggleEditEmail()">
-          {{ isEditingEmail ? "Cancel" : "Edit" }}
-        </button>
       </div>
       <div class="mt-4">
         <p class="text-sm text-gray-700">
@@ -54,25 +58,23 @@
           <label class="text-sm font-medium text-gray-900">Low Stock Threshold : <strong>{{ lowStockThreshold
               }}</strong>
           </label>
-          <button class="text-teal-600 text-xs hover:underline" (click)="toggleEditThreshold()">
+          <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline"
+            (click)="toggleEditThreshold()">
             {{ isEditingThreshold ? "Cancel" : "Edit" }}
-          </button>
+          </p-button>
         </div>
         <input *ngIf="isEditingThreshold" [(ngModel)]="lowStockThreshold" type="number"
           class="w-full p-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
           placeholder="Enter threshold" />
         <div class="flex items-center justify-between">
           <label class="text-sm font-medium text-gray-900">Auto-Reorder</label>
-          <input type="checkbox" [(ngModel)]="autoReorder" class="h-4 w-4 text-teal-600 focus:ring-teal-500"
-            (change)="onToggleAutoReorder()" />
+          <p-checkbox size="small" [binary]="true" [(ngModel)]="autoReorder"
+            (change)="onToggleAutoReorder()"></p-checkbox>
         </div>
         <div class="flex items-center justify-between">
           <label class="text-sm font-medium text-gray-900">Notifications</label>
-          <ng-select [(ngModel)]="notificationPreference" (change)="onChangeNotification()">
-            <ng-option value="email">Email</ng-option>
-            <ng-option value="push">Push</ng-option>
-            <ng-option value="both">Both</ng-option>
-          </ng-select>
+          <p-select size="small" [(ngModel)]="notificationPreference" [options]="['email', 'push', 'both']">
+          </p-select>
         </div>
       </div>
     </div>
@@ -82,24 +84,21 @@
       <h2 class="text-lg font-medium text-gray-900 mb-3">Appearance</h2>
       <div class="flex items-center justify-between">
         <label class="text-sm font-medium text-gray-900">Theme</label>
-        <ng-select [(ngModel)]="theme" (change)="onChangeTheme()">
-          <ng-option value="light">Light</ng-option>
-          <ng-option value="dark">Dark</ng-option>
-        </ng-select>
+        <p-select size="small" (change)="onChangeTheme()" [(ngModel)]="theme" [options]="['light', 'dark']"></p-select>
       </div>
     </div>
 
     <!-- Account Actions -->
     <div>
       <h2 class="text-lg font-medium text-gray-900 mb-3">Account</h2>
-      <button class="w-full bg-teal-600 text-white py-2 px-4 rounded-full hover:bg-teal-700 transition text-sm mb-2"
-        (click)="onChangePassword()">
-        Change Password
-      </button>
-      <button class="w-full bg-pink-500 text-white py-2 px-4 rounded-full hover:bg-pink-600 transition text-sm"
-        (click)="onLogout()">
-        Log Out
-      </button>
+      <div class="flex flex-col gap-4">
+        <p-button [fluid]="true" size="small" (click)="onChangePassword()">
+          Change Password
+        </p-button>
+        <p-button [fluid]="true" size="small" severity="danger" (click)="onLogout()">
+          Log Out
+        </p-button>
+      </div>
     </div>
   </div>
 </div>

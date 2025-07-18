@@ -16,7 +16,7 @@ import {
   heroChartPieSolid,
   heroHomeSolid,
 } from '@ng-icons/heroicons/solid';
-
+import {} from 'primeng/sidebar'
 @Component({
   selector: 'app-navbar',
   imports: [NgIcon, RouterLink, RouterLinkActive, CommonModule],

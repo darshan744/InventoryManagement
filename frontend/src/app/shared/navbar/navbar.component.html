@@ -1,17 +1,17 @@
 <div class="flex justify-around items-center h-full p-3">
   <a routerLink="/user/inventory" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <ng-icon name="heroListBullet" size="1.5rem" class="text-gray-500 fill-current" [ngClass]="{ 'text-rose-500': isActive('/user/inventory') }"></ng-icon>
-  </a>
-  <a routerLink="/user/orders" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <ng-icon name="heroTruck" size="1.5rem" class="text-gray-500 fill-current" [ngClass]="{ 'text-rose-500': isActive('/user/orders') }"></ng-icon>
-  </a>
-  <a routerLink="/user/dashboard" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <ng-icon name="heroHome" size="1.5rem" class="text-gray-500 fill-current" [ngClass]="{ 'text-rose-500': isActive('/user/dashboard') }"></ng-icon>
-  </a>
-  <a routerLink="/user/profile" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <ng-icon name="heroUserCircle" size="1.5rem" class="text-gray-500 fill-current" [ngClass]="{ 'text-rose-500': isActive('/user/profile') }"></ng-icon>
+    <i class="pi pi-list"></i>
   </a>
   <a routerLink="/user/shop" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <ng-icon name="heroShoppingBag" size="1.5rem" class="text-gray-500 fill-current" [ngClass]="{ 'text-rose-500': isActive('/user/profile') }"></ng-icon>
+    <i class="pi pi-shop"></i>
+  </a>
+  <a routerLink="/user/dashboard" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+    <i class="pi pi-home"></i>
+  </a>
+  <a routerLink="/user/orders" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+    <i class="pi pi-truck"></i>
+  </a>
+  <a routerLink="/user/profile" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+    <i class="pi pi-user"></i>
   </a>
 </div>
