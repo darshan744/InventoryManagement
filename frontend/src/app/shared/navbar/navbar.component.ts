@@ -9,6 +9,7 @@ import {
   heroHome,
   heroListBullet,
   heroTruck,
+  heroShoppingBag,
 } from '@ng-icons/heroicons/outline';
 import {
   heroUserSolid,
@@ -31,7 +32,8 @@ import {
       heroChartPieSolid,
       heroHomeSolid,
       heroListBullet,
-      heroTruck
+      heroTruck,
+      heroShoppingBag,
     }),
   ],
 })

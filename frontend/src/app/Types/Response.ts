@@ -43,3 +43,15 @@ export class ProductResponse {
     this.userId = userId;
   }
 }
+export type OrderType = 'RESTOCK' | 'ISSUE';
+export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED';
+export type OrderResponse = {
+  id: string;
+  productId: string;
+  quantity: number;
+  type: OrderType;
+  status: OrderStatus;
+  date: Date;
+  notes: string | null;
+  userId: string;
+};

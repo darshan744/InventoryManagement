@@ -6,6 +6,7 @@ import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { MainComponent } from './Pages/main/main.component';
 import { OrdersComponent } from './Pages/orders/orders.component';
 import { ReportsComponent } from './Pages/reports/reports.component';
+import { ShopComponent } from './Pages/shop/shop.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
       {
         path: 'reports',
         component: ReportsComponent,
+      },
+      {
+        path: 'shop',
+        component: ShopComponent,
       },
     ],
   },

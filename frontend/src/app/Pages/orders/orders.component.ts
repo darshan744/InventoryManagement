@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../Service/data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { OrderService } from '../../Service/Order/order.service';
+import { OrderResponse } from '../../Types/Response';
 @Component({
   selector: 'app-orders',
   imports: [CommonModule, FormsModule, NgSelectModule],
@@ -10,7 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   styleUrl: './orders.component.css',
 })
 export class OrdersComponent {
-  orders: any;
+  orders: OrderResponse[] = new Array<OrderResponse>();
   filteredOrders: any;
   filterStatus: string = '';
   newOrder = { productName: '', quantity: 0, status: 'pending', date: '' };
@@ -20,11 +22,18 @@ export class OrdersComponent {
   errorMessage: string = '';
   isValid: boolean = true;
 
-  constructor(private dataService: DataService) {
-    this.orders = this.dataService.getOrders();
+  constructor(
+    private dataService: DataService,
+    private orderService: OrderService,
+  ) {
     this.filteredOrders = [...this.orders];
   }
 
+  ngOnInit() {
+    this.orderService.getOrders().subscribe((res) => {
+      this.orders = res.data;
+    });
+  }
   filterOrders() {
     this.filteredOrders = this.dataService
       .getOrders()
