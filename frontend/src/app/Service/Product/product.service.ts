@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { IBaseResponse, ProductResponse } from '../../Types/Response';
+import {
+  IBaseResponse,
+  ProductResponse,
+  ShopProductsResponse,
+} from '../../Types/Response';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +15,7 @@ export class ProductService {
 
   getAllAvailableProducts() {
     const url = `${environment.apiUrl}/api/products/all`;
-    return this.http.get<IBaseResponse<ProductResponse[]>>(url, {
+    return this.http.get<IBaseResponse<ShopProductsResponse[]>>(url, {
       withCredentials: true,
     });
   }

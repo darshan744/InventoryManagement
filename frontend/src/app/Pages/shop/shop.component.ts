@@ -4,7 +4,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../Service/Product/product.service';
-import { ProductResponse } from '../../Types/Response';
+import { ProductResponse, ShopProductsResponse } from '../../Types/Response';
 @Component({
   selector: 'app-shop',
   imports: [SelectModule, InputTextModule, FormsModule, CommonModule],
@@ -13,7 +13,7 @@ import { ProductResponse } from '../../Types/Response';
 })
 export class ShopComponent implements OnInit {
   searchBy: 'Product' | 'Supplier' = 'Product';
-  products: Array<ProductResponse> = new Array<ProductResponse>();
+  products = new Array<ShopProductsResponse>();
   constructor(private productService: ProductService) { }
   ngOnInit(): void {
     this.productService.getAllAvailableProducts().subscribe((response) => {

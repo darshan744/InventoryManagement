@@ -56,3 +56,15 @@ export type OrderResponse = {
   notes: string | null;
   userId: string;
 };
+export type ShopProductsResponse = {
+  user: {
+    name: string;
+  };
+  id: string;
+  name: string;
+  quantity: number;
+  threshold: number;
+  unit: UnitType;
+  category: string | null;
+  lastRestocked: Date;
+};
