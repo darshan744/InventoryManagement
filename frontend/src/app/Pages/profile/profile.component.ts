@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -39,13 +39,21 @@ export class ProfileComponent implements OnInit {
   isEditingEmail: boolean = false;
   isEditingThreshold: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    effect(() => { });
+  }
   ngOnInit(): void {
     const user: LoginResponse['user'] = JSON.parse(
       localStorage.getItem('user') || '{}',
     );
     this.userName = user.name;
     this.userEmail = user.email;
+    const localStorageTheme = localStorage.getItem('dark');
+    if (localStorageTheme) {
+      const localTheme = Boolean(JSON.parse(localStorageTheme));
+      this.isDarkMode.set(localTheme);
+    }
+    this.setTheme();
   }
   toggleEditName() {
     this.isEditingName = !this.isEditingName;
@@ -81,8 +89,12 @@ export class ProfileComponent implements OnInit {
 
   onChangeTheme() {
     this.isDarkMode.update((prev) => !prev);
-    const val = this.isDarkMode();
-    document.documentElement.classList.toggle('dark', val);
+    this.setTheme();
+  }
+
+  setTheme() {
+    localStorage.setItem('dark', JSON.stringify(this.isDarkMode()));
+    document.documentElement.classList.toggle('dark', this.isDarkMode());
   }
 
   onChangePassword() {
@@ -92,6 +104,7 @@ export class ProfileComponent implements OnInit {
   onLogout() {
     console.log('Logging out');
     this.router.navigate(['']);
+    localStorage.removeItem('user');
   }
 
   onUploadPhoto() {

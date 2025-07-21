@@ -1,9 +1,9 @@
-<div
-  class="min-h-screen bg-gradient-to-b from-purple-100 to-green-50 flex flex-col items-center justify-center px-4"
->
+<div class="min-h-screen flex flex-col items-center justify-center px-4">
   <div class="flex items-center mb-6 animate-fade-in">
     <span class="text-4xl text-teal-800">📦</span>
-    <h1 class="text-2xl font-semibold text-gray-900 ml-2">Smart Stock</h1>
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white ml-2">
+      Smart Stock
+    </h1>
   </div>
   <form
     class="w-full max-w-xs flex flex-col gap-4"
@@ -41,12 +41,7 @@
     <p class="text-pink-500 text-xs text-center" *ngIf="showError">
       {{ errorMessage }}
     </p>
-    <p-button
-      [rounded]="true"
-      type="submit"
-      size="small"
-      [fluid]="true"
-    >
+    <p-button [rounded]="true" type="submit" size="small" [fluid]="true">
       Log In
     </p-button>
     <a

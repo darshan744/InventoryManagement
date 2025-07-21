@@ -5,22 +5,24 @@
       [(ngModel)]="searchTerm"
       (ngModelChange)="filterProducts()"
       placeholder="Search products..."
-        class="w-full p-2 border-0 border-b bg-transparent focus:border-teal-500 text-sm"
+      class="w-full p-2 border-0 border-b bg-transparent focus:border-teal-500 text-sm"
     />
   </div>
   <div class="w-full">
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">Inventory</h2>
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Inventory</h2>
     <div class="space-y-4">
       <div
         *ngFor="let product of filteredProducts"
-        class="bg-white p-3 rounded-lg shadow-sm flex justify-between items-center"
+        class="bg-white dark:bg-gray-600 p-3 rounded-lg shadow-sm flex justify-between items-center"
         [ngClass]="{
           'border-l-4 border-pink-500': product.quantity < product.threshold,
         }"
       >
         <div>
-          <p class="text-sm font-medium text-gray-900">{{ product.name }}</p>
-          <p class="text-xs text-gray-600">
+          <p class="text-sm font-medium text-gray-900 dark:text-white">
+            {{ product.name }}
+          </p>
+          <p class="text-xs text-gray-600 dark:text-gray-200">
             Qty: {{ product.quantity }} / Threshold: {{ product.threshold }}
           </p>
           <span

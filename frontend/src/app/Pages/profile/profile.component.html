@@ -1,16 +1,18 @@
-<div class="animate-fade-in min-h-screen flex flex-col items-center">
+<div
+  class="animate-fade-in min-h-screen flex flex-col items-center text-gray-900 dark:text-white"
+>
   <div class="flex items-center mb-6">
-    <span class="text-4xl text-teal-800">👤</span>
-    <h1 class="text-2xl font-semibold text-gray-900 ml-2">{{ userName }}</h1>
+    <span class="text-4xl">👤</span>
+    <h1 class="text-2xl font-semibold ml-2">{{ userName }}</h1>
   </div>
   <div class="w-full max-w-md">
     <!-- Profile Info -->
     <div class="mb-6">
-      <h2 class="text-lg font-medium text-gray-900 mb-3">Profile Info</h2>
+      <h2 class="text-lg font-medium mb-3">Profile Info</h2>
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center">
-          <span class="text-3xl text-gray-400 mr-3">📷</span>
-          <p class="text-sm text-gray-700">Upload Photo</p>
+          <span class="text-3xl mr-3">📷</span>
+          <p class="text-sm">Upload Photo</p>
         </div>
         <p-button size="small" (click)="onUploadPhoto()" [outlined]="true">
           Change
@@ -18,12 +20,22 @@
       </div>
       <div class="flex items-center justify-between mb-2">
         <div class="w-full">
-          <label class="block text-sm font-medium text-gray-900">Name</label>
+          <label class="block text-sm font-medium">Name</label>
           <div class="flex items-center justify-between gap-8">
-            <input pInputText pSize="small" [(ngModel)]="userName" [disabled]="!isEditingName"
-              placeholder="Enter your name" />
-            <p-button size="small" [fluid]="true" class="text-teal-600 text-xs hover:underline" [outlined]="true"
-              (click)="toggleEditName()">
+            <input
+              pInputText
+              pSize="small"
+              [(ngModel)]="userName"
+              [disabled]="!isEditingName"
+              placeholder="Enter your name"
+            />
+            <p-button
+              size="small"
+              [fluid]="true"
+              class="text-xs hover:underline"
+              [outlined]="true"
+              (click)="toggleEditName()"
+            >
               {{ isEditingName ? "Cancel" : "Edit" }}
             </p-button>
           </div>
@@ -31,45 +43,73 @@
       </div>
       <div class="flex items-center justify-between w-full">
         <div class="w-full">
-          <label class="block text-sm font-medium text-gray-900">Email</label>
+          <label class="block text-sm font-medium">Email</label>
           <div class="flex items-center justify-between gap-8">
-            <input pInputText pSize="small" [disabled]="!isEditingEmail" [(ngModel)]="userEmail" type="email"
-              placeholder="Enter your email" />
-            <p-button size="small" [fluid]="true" [outlined]="true"  (click)="toggleEditEmail()">
+            <input
+              pInputText
+              pSize="small"
+              [disabled]="!isEditingEmail"
+              [(ngModel)]="userEmail"
+              type="email"
+              placeholder="Enter your email"
+            />
+            <p-button
+              size="small"
+              [fluid]="true"
+              [outlined]="true"
+              (click)="toggleEditEmail()"
+            >
               {{ isEditingEmail ? "Cancel" : "Edit" }}
             </p-button>
           </div>
         </div>
       </div>
       <div class="mt-4">
-        <p class="text-sm text-gray-700">
-          Total Products Managed: {{ totalProducts }}
-        </p>
+        <p class="text-sm">Total Products Managed: {{ totalProducts }}</p>
       </div>
     </div>
 
     <!-- Preferences -->
     <div class="mb-6">
-      <h2 class="text-lg font-medium text-gray-900 mb-3">Preferences</h2>
+      <h2 class="text-lg font-medium mb-3">Preferences</h2>
       <div class="flex flex-col gap-3">
         <div class="flex items-center justify-between">
-          <label class="text-sm font-medium text-gray-900">Low Stock Threshold : <strong>{{ lowStockThreshold
-              }}</strong>
+          <label class="text-sm font-medium"
+            >Low Stock Threshold : <strong>{{ lowStockThreshold }}</strong>
           </label>
-          <p-button size="small" [fluid]="true" [outlined]="true" (click)="toggleEditThreshold()">
+          <p-button
+            size="small"
+            [fluid]="true"
+            [outlined]="true"
+            (click)="toggleEditThreshold()"
+          >
             {{ isEditingThreshold ? "Cancel" : "Edit" }}
           </p-button>
         </div>
-        <input pInputText pSize="small" *ngIf="isEditingThreshold" [(ngModel)]="lowStockThreshold" type="number"
-          placeholder="Enter threshold" />
+        <input
+          pInputText
+          pSize="small"
+          *ngIf="isEditingThreshold"
+          [(ngModel)]="lowStockThreshold"
+          type="number"
+          placeholder="Enter threshold"
+        />
         <div class="flex items-center justify-between">
-          <label class="text-sm font-medium text-gray-900">Auto-Reorder</label>
-          <p-checkbox size="small" [binary]="true" [(ngModel)]="autoReorder"
-            (change)="onToggleAutoReorder()"></p-checkbox>
+          <label class="text-sm font-medium">Auto-Reorder</label>
+          <p-checkbox
+            size="small"
+            [binary]="true"
+            [(ngModel)]="autoReorder"
+            (change)="onToggleAutoReorder()"
+          ></p-checkbox>
         </div>
         <div class="flex items-center justify-between">
-          <label class="text-sm font-medium text-gray-900">Notifications</label>
-          <p-select size="small" [(ngModel)]="notificationPreference" [options]="notificationOptions">
+          <label class="text-sm font-medium">Notifications</label>
+          <p-select
+            size="small"
+            [(ngModel)]="notificationPreference"
+            [options]="notificationOptions"
+          >
           </p-select>
         </div>
       </div>
@@ -77,16 +117,20 @@
 
     <!-- Appearance -->
     <div class="mb-6">
-      <h2 class="text-lg font-medium text-gray-900 mb-3">Appearance</h2>
+      <h2 class="text-lg font-medium mb-3">Appearance</h2>
       <div class="flex items-center justify-between">
-        <label class="text-sm font-medium text-gray-900">Theme {{ isDarkMode() ? "Dark Theme" : "Light Theme" }}</label>
-        <p-toggleswitch (onChange)="onChangeTheme()" size="small">
-          <ng-template #handle>
-            <i [ngClass]="[
-                'pi',
-                '!text-xs',
-                isDarkMode() ? 'pi-moon' : 'pi-sun',
-              ]"></i>
+        <label class="text-sm font-medium"
+          >Theme {{ isDarkMode() ? "Dark Theme" : "Light Theme" }}</label
+        >
+        <p-toggleswitch
+          [ngModel]="isDarkMode()"
+          (onChange)="onChangeTheme()"
+          size="small"
+        >
+          <ng-template #handle let-checked="checked">
+            <i
+              [ngClass]="['pi', '!text-xs', checked ? 'pi-moon' : 'pi-sun']"
+            ></i>
           </ng-template>
         </p-toggleswitch>
       </div>
@@ -94,12 +138,17 @@
 
     <!-- Account Actions -->
     <div>
-      <h2 class="text-lg font-medium text-gray-900 mb-3">Account</h2>
+      <h2 class="text-lg font-medium mb-3">Account</h2>
       <div class="flex flex-col gap-4">
         <p-button [fluid]="true" size="small" (click)="onChangePassword()">
           Change Password
         </p-button>
-        <p-button [fluid]="true" size="small" severity="danger" (click)="onLogout()">
+        <p-button
+          [fluid]="true"
+          size="small"
+          severity="danger"
+          (click)="onLogout()"
+        >
           Log Out
         </p-button>
       </div>

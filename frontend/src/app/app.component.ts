@@ -7,5 +7,17 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Inventory Management System';
+
+  ngOnInit() {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const localStorageTheme = localStorage.getItem('dark');
+    if (localStorageTheme) {
+      const localTheme = Boolean(JSON.parse(localStorageTheme));
+      isDarkMode = localTheme;
+    }
+    console.log('Dark mode:', isDarkMode);
+    const html = document.querySelector('html');
+    html?.classList.toggle('dark', isDarkMode);
+  }
 }
