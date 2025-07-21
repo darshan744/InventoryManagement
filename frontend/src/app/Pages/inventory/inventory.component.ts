@@ -10,7 +10,12 @@ import { ProductResponse } from '../../Types/Response';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
-import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
+import {
+  FileSelectEvent,
+  FileUploadEvent,
+  FileUploadHandlerEvent,
+  FileUploadModule,
+} from 'primeng/fileupload';
 @Component({
   selector: 'app-inventory',
   standalone: true,
@@ -40,7 +45,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   searchTerm = '';
   newProduct: ProductResponse = this.getEmptyProduct();
   selectedProduct: ProductResponse = this.getEmptyProduct();
-
+  selectedFile = null as File | null;
   isAddModalOpen = false;
   isAddModalLoading = false;
   isEditModalOpen = false;
@@ -106,20 +111,26 @@ export class InventoryComponent implements OnInit, OnDestroy {
     return isValid;
   }
 
-  onUploadFile(event : FileUploadEvent) {
+  onFileSelect(event: FileSelectEvent) {
     const file = event.files[0];
     if (!file) return;
+    console.log('Selected file:', file);
+    this.selectedFile = file;
   }
 
   addProduct(): void {
     if (!this.validateProduct(this.newProduct)) return;
     this.isAddModalLoading = true;
-    this.productService.addProduct(this.newProduct).subscribe((res) => {
-      this.products.push(res.data);
-      this.isAddModalLoading = false;
-      this.filterProducts();
-      this.closeModal();
-    });
+    this.productService
+      .addProduct(this.newProduct, this.selectedFile ? [this.selectedFile] : [])
+      .subscribe((res) => {
+        console.log('Product added:', res);
+        // this.products.push(res.data);
+        this.isAddModalLoading = false;
+        this.filterProducts();
+        this.closeModal();
+        this.selectedFile = null;
+      });
   }
 
   saveProduct(): void {
@@ -190,7 +201,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.dataService.updateProduct(product);
     this.filterProducts();
   }
-
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

@@ -74,56 +74,82 @@
           Add Product
         </h3>
         <div class="flex flex-col space-y-2">
-          <input
-            pInputText
-            [(ngModel)]="newProduct.name"
-            placeholder="Product Name"
-            (ngModelChange)="validateInput()"
-            [fluid]="true"
-            pSize="small"
-          />
-          <input
-            pInputText
-            [fluid]="true"
-            [(ngModel)]="newProduct.quantity"
-            type="number"
-            placeholder="Quantity"
-            (ngModelChange)="validateInput()"
-            pSize="small"
-          />
-          <input
-            pInputText
-            [fluid]="true"
-            pSize="small"
-            [(ngModel)]="newProduct.threshold"
-            type="number"
-            placeholder="Threshold"
-            (ngModelChange)="validateInput()"
-          />
-          <input
-            pInputText
-            pSize="small"
-            [fluid]="true"
-            [(ngModel)]="newProduct.category"
-            placeholder="Category"
-            (ngModelChange)="validateInput()"
-          />
-          <p-select
-            size="small"
-            [fluid]="true"
-            [(ngModel)]="newProduct.unit"
-            [options]="unitTypes"
-          ></p-select>
-          <div class="flex justify-between">
-            <p>Add product Image</p>
-            <p-fileupload
-              [chooseButtonProps]="{ size: 'small' }"
-              mode="basic"
-              accept="image/*"
-              [auto]="true"
-              chooseIcon="pi pi-upload"
-              chooseLabel="Browse"
-            ></p-fileupload>
+          <div>
+            <label id="newProductName"> Product Name </label>
+            <input
+              pInputText
+              [(ngModel)]="newProduct.name"
+              placeholder="Product Name"
+              (ngModelChange)="validateInput()"
+              [fluid]="true"
+              pSize="small"
+              id="newProductName"
+            />
+          </div>
+          <div>
+            <label for="newProductQuantity"> Quantity </label>
+            <input
+              pInputText
+              [fluid]="true"
+              [(ngModel)]="newProduct.quantity"
+              type="number"
+              placeholder="Quantity"
+              (ngModelChange)="validateInput()"
+              pSize="small"
+              [min]="0"
+              id="newProductQuantity"
+            />
+          </div>
+          <div>
+            <div>
+              <label for="newProductThreshold"> Threshold </label>
+            </div>
+            <input
+              pInputText
+              [fluid]="true"
+              pSize="small"
+              [(ngModel)]="newProduct.threshold"
+              type="number"
+              placeholder="Threshold"
+              (ngModelChange)="validateInput()"
+              [min]="0"
+              id="newProductThreshold"
+            />
+          </div>
+          <div>
+            <label id="newProductCategory"> Category </label>
+            <input
+              id="newProductCategory"
+              pInputText
+              pSize="small"
+              [fluid]="true"
+              [(ngModel)]="newProduct.category"
+              placeholder="Category"
+              (ngModelChange)="validateInput()"
+            />
+          </div>
+          <div>
+            <label> Unit Type </label>
+            <p-select
+              size="small"
+              [fluid]="true"
+              [(ngModel)]="newProduct.unit"
+              [options]="unitTypes"
+            ></p-select>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label>Add product Image : {{ newProduct.image }}</label>
+            <div>
+              <p-fileupload
+                [chooseButtonProps]="{ size: 'small' }"
+                (onSelect)="onFileSelect($event)"
+                mode="basic"
+                accept="image/*"
+                [auto]="true"
+                chooseIcon="pi pi-upload"
+                chooseLabel="Browse"
+              ></p-fileupload>
+            </div>
           </div>
         </div>
         <p *ngIf="errorMessage" class="text-pink-500 text-xs">

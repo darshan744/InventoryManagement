@@ -57,6 +57,7 @@ export async function createProduct(
   threshold: number,
   unit: UnitType,
   category: string,
+  image: string | null,
   userId: string,
 ) {
   return await Prisma.product.create({
@@ -67,6 +68,7 @@ export async function createProduct(
       unit,
       category,
       userId,
+      image,
     },
   });
 }

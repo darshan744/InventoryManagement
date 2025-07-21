@@ -10,7 +10,7 @@ const multerStorage = multer.diskStorage({
     if (!userId) {
       return cb(new Error("User ID not found"), "");
     }
-    const destination = `uploads/${userId}`;
+    const destination = `uploads/`;
     cb(null, destination);
   },
   filename: (

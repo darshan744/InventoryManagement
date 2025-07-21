@@ -34,7 +34,10 @@ export async function createProduct(
   try {
     const fileName = req.file;
     console.log("File Name:", fileName);
-    const { name, quantity, threshold, unit, category }: Product = req.body;
+    const { name, quantity, threshold, unit, category }: Product = JSON.parse(
+      req.body.product,
+    );
+    const image = req.file?.filename ?? null;
     const userId = req.user?.id;
     if (!userId) {
       throw new AppError("User ID is required", 400);
@@ -49,6 +52,7 @@ export async function createProduct(
       threshold,
       unit,
       category,
+      image,
       userId,
     );
     res.status(201).json({ message: "Products Retrieved", data: product });

@@ -19,7 +19,13 @@ export class ProductService {
       withCredentials: true,
     });
   }
-
+  createFormData(nameToAppend: string = 'file', ...file: File[]) {
+    const formData = new FormData();
+    file.forEach((f) => {
+      formData.append(nameToAppend, f);
+    });
+    return formData;
+  }
   getProductOfUser() {
     const url = `${environment.apiUrl}/api/products`;
     return this.http.get<IBaseResponse<ProductResponse[]>>(url, {
@@ -32,10 +38,12 @@ export class ProductService {
       withCredentials: true,
     });
   }
-  addProduct(product: ProductResponse) {
+  addProduct(product: ProductResponse, files: File[] = []) {
     const url = `${environment.apiUrl}/api/product`;
-
-    return this.http.post<IBaseResponse<ProductResponse>>(url, product, {
+    console.log(files)
+    const formData = this.createFormData('productImage', ...files);
+    formData.append('product', JSON.stringify(product));
+    return this.http.post<IBaseResponse<ProductResponse>>(url, formData, {
       withCredentials: true,
     });
   }
