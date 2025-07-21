@@ -1,11 +1,14 @@
-<p-card>
+<p-card *ngIf="product() !== null">
   <ng-template #header>
-    <img />
+    <img [src]="productImage" />
   </ng-template>
+  <p>
+    <strong>{{ productGet?.name }}</strong>
+  </p>
   <p>Product description</p>
   <p>Price</p>
-  <p-footer>
-    <p-button label="Add to Cart" icon="pi pi-shopping-cart"></p-button>
-    <p-button labe="Buy now" icon="pi pi-money-bill"></p-button>
-  </p-footer>
+  <p>Quantity: {{ productGet?.quantity }}</p>
+  <ng-template #footer class="!w-full">
+    <ng-content></ng-content>
+  </ng-template>
 </p-card>

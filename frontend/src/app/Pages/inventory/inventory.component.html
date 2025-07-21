@@ -1,12 +1,25 @@
 <div class="animate-fade-in min-h-screen flex flex-col items-center">
-  <div class="w-full max-w-md sticky top-0 mb-4 rounded-lg z-10">
-    <input
-      pInputText
-      [(ngModel)]="searchTerm"
-      (ngModelChange)="filterProducts()"
-      placeholder="Search products..."
-      class="w-full p-2 border-0 border-b bg-transparent focus:border-teal-500 text-sm"
-    />
+  <div
+    class="md:flex space-x-2 gap-3 w-full max-w-md sticky top-0 mb-4 rounded-lg z-10"
+  >
+    <div>
+      <input
+        pInputText
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filterProducts()"
+        placeholder="Search products..."
+        class="w-full p-2 border-0 border-b bg-transparent focus:border-teal-500 text-sm"
+      />
+    </div>
+    <div class="mt-2 md:mt-0">
+      <p-button
+        (click)="openAddModal()"
+        [fluid]="true"
+        icon="pi pi-plus"
+        label="Add Product"
+      >
+      </p-button>
+    </div>
   </div>
   <div class="w-full">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -15,281 +28,293 @@
     <div class="space-y-4">
       <div
         *ngFor="let product of filteredProducts"
-        class="bg-white dark:bg-gray-600 p-3 rounded-lg shadow-sm flex justify-between items-center"
         [ngClass]="{
           'border-l-4 border-pink-500': product.quantity < product.threshold,
         }"
       >
-        <div>
-          <p class="text-sm font-medium text-gray-900 dark:text-white">
-            {{ product.name }}
-          </p>
-          <p class="text-xs text-gray-600 dark:text-gray-200">
-            Qty: {{ product.quantity }} / Threshold: {{ product.threshold }}
-          </p>
-          <span
-            *ngIf="product.quantity < product.threshold"
-            class="text-pink-500 text-xs"
-            >⚠️ Low Stock</span
-          >
+        <div class="flex items-center justify-between p-4 rounded-lg">
+          <app-productviewcard [product]="product">
+            <div class="flex space-x-2 mt-2 justify-end">
+              <p-button
+                size="small"
+                severity="secondary"
+                icon="pi pi-pencil"
+                label="Edit"
+              ></p-button>
+              <p-button
+                size="small"
+                severity="contrast"
+                icon="pi pi-shopping-cart"
+                label="Reorder"
+              ></p-button>
+            </div>
+          </app-productviewcard>
         </div>
-        <div class="flex space-x-2">
-          <button
-            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
-            (click)="openEditModal(product)"
-          >
-            Edit
-          </button>
-          <button
-            class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition"
-            (click)="reorderProduct(product)"
-          >
-            Reorder
-          </button>
-          <button
-            class="bg-pink-500 text-white py-1 px-2 rounded-full text-xs hover:bg-pink-600 transition"
-            (click)="deleteProduct(product)"
-          >
-            Delete
-          </button>
-        </div>
+        <!--   <div> -->
+        <!--     <p class="text-sm font-medium text-gray-900 dark:text-white"> -->
+        <!--       {{ product.name }} -->
+        <!--     </p> -->
+        <!--     <p class="text-xs text-gray-600 dark:text-gray-200"> -->
+        <!--       Qty: {{ product.quantity }} / Threshold: {{ product.threshold }} -->
+        <!--     </p> -->
+        <!--     <span -->
+        <!--       *ngIf="product.quantity < product.threshold" -->
+        <!--       class="text-pink-500 text-xs" -->
+        <!--       >⚠️ Low Stock</span -->
+        <!--     > -->
+        <!--   </div> -->
+        <!--   <div class="flex space-x-2"> -->
+        <!--     <button -->
+        <!--       class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition" -->
+        <!--       (click)="openEditModal(product)" -->
+        <!--     > -->
+        <!--       Edit -->
+        <!--     </button> -->
+        <!--     <button -->
+        <!--       class="bg-teal-600 text-white py-1 px-2 rounded-full text-xs hover:bg-teal-700 transition" -->
+        <!--       (click)="reorderProduct(product)" -->
+        <!--     > -->
+        <!--       Reorder -->
+        <!--     </button> -->
+        <!--     <button -->
+        <!--       class="bg-pink-500 text-white py-1 px-2 rounded-full text-xs hover:bg-pink-600 transition" -->
+        <!--       (click)="deleteProduct(product)" -->
+        <!--     > -->
+        <!--       Delete -->
+        <!--     </button> -->
+        <!--   </div> -->
+        <!-- </div> -->
       </div>
-      <button
-        class="w-full bg-teal-600 text-white py-2 px-4 rounded-full hover:bg-teal-700 transition text-sm mt-4"
-        (click)="openAddModal()"
-      >
-        Add Product 📦
-      </button>
-    </div>
 
-    <!-- Add Modal -->
-    <div
-      *ngIf="isAddModalOpen"
-      class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
-    >
+      <!-- Add Modal -->
       <div
-        class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md dark:bg-[#1a1818]"
+        *ngIf="isAddModalOpen"
+        class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50"
       >
-        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-          Add Product
-        </h3>
-        <div class="flex flex-col space-y-2">
-          <div>
-            <label id="newProductName"> Product Name </label>
-            <input
-              pInputText
-              [(ngModel)]="newProduct.name"
-              placeholder="Product Name"
-              (ngModelChange)="validateInput()"
-              [fluid]="true"
-              pSize="small"
-              id="newProductName"
-            />
-          </div>
-          <div>
-            <label for="newProductQuantity"> Quantity </label>
-            <input
-              pInputText
-              [fluid]="true"
-              [(ngModel)]="newProduct.quantity"
-              type="number"
-              placeholder="Quantity"
-              (ngModelChange)="validateInput()"
-              pSize="small"
-              [min]="0"
-              id="newProductQuantity"
-            />
-          </div>
-          <div>
+        <div
+          class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md dark:bg-[#1a1818]"
+        >
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            Add Product
+          </h3>
+          <div class="flex flex-col space-y-2">
             <div>
-              <label for="newProductThreshold"> Threshold </label>
+              <label id="newProductName"> Product Name </label>
+              <input
+                pInputText
+                [(ngModel)]="newProduct.name"
+                placeholder="Product Name"
+                (ngModelChange)="validateInput()"
+                [fluid]="true"
+                pSize="small"
+                id="newProductName"
+              />
             </div>
-            <input
-              pInputText
-              [fluid]="true"
-              pSize="small"
-              [(ngModel)]="newProduct.threshold"
-              type="number"
-              placeholder="Threshold"
-              (ngModelChange)="validateInput()"
-              [min]="0"
-              id="newProductThreshold"
-            />
+            <div>
+              <label for="newProductQuantity"> Quantity </label>
+              <input
+                pInputText
+                [fluid]="true"
+                [(ngModel)]="newProduct.quantity"
+                type="number"
+                placeholder="Quantity"
+                (ngModelChange)="validateInput()"
+                pSize="small"
+                [min]="0"
+                id="newProductQuantity"
+              />
+            </div>
+            <div>
+              <div>
+                <label for="newProductThreshold"> Threshold </label>
+              </div>
+              <input
+                pInputText
+                [fluid]="true"
+                pSize="small"
+                [(ngModel)]="newProduct.threshold"
+                type="number"
+                placeholder="Threshold"
+                (ngModelChange)="validateInput()"
+                [min]="0"
+                id="newProductThreshold"
+              />
+            </div>
+            <div>
+              <label id="newProductCategory"> Category </label>
+              <input
+                id="newProductCategory"
+                pInputText
+                pSize="small"
+                [fluid]="true"
+                [(ngModel)]="newProduct.category"
+                placeholder="Category"
+                (ngModelChange)="validateInput()"
+              />
+            </div>
+            <div>
+              <label> Unit Type </label>
+              <p-select
+                size="small"
+                [fluid]="true"
+                [(ngModel)]="newProduct.unit"
+                [options]="unitTypes"
+              ></p-select>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label>Add product Image : {{ newProduct.image }}</label>
+              <div>
+                <p-fileupload
+                  [chooseButtonProps]="{ size: 'small' }"
+                  (onSelect)="onFileSelect($event)"
+                  mode="basic"
+                  accept="image/*"
+                  [auto]="true"
+                  chooseIcon="pi pi-upload"
+                  chooseLabel="Browse"
+                ></p-fileupload>
+              </div>
+            </div>
           </div>
-          <div>
-            <label id="newProductCategory"> Category </label>
-            <input
-              id="newProductCategory"
-              pInputText
-              pSize="small"
-              [fluid]="true"
-              [(ngModel)]="newProduct.category"
-              placeholder="Category"
-              (ngModelChange)="validateInput()"
-            />
-          </div>
-          <div>
-            <label> Unit Type </label>
-            <p-select
+          <p *ngIf="errorMessage" class="text-pink-500 text-xs">
+            {{ errorMessage }}
+          </p>
+          <div class="flex justify-end mt-5 space-x-2">
+            <p-button size="small" severity="secondary" (click)="closeModal()">
+              Cancel
+            </p-button>
+            <p-button
               size="small"
-              [fluid]="true"
-              [(ngModel)]="newProduct.unit"
-              [options]="unitTypes"
-            ></p-select>
+              severity="contrast"
+              [disabled]="!isValid || isAddModalLoading"
+              (click)="addProduct()"
+            >
+              <ng-container *ngIf="isAddModalLoading">
+                <svg
+                  class="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                  ></path>
+                </svg>
+              </ng-container>
+              Save
+            </p-button>
           </div>
-          <div class="flex flex-col gap-2">
-            <label>Add product Image : {{ newProduct.image }}</label>
-            <div>
-              <p-fileupload
-                [chooseButtonProps]="{ size: 'small' }"
-                (onSelect)="onFileSelect($event)"
-                mode="basic"
-                accept="image/*"
-                [auto]="true"
-                chooseIcon="pi pi-upload"
-                chooseLabel="Browse"
-              ></p-fileupload>
-            </div>
-          </div>
-        </div>
-        <p *ngIf="errorMessage" class="text-pink-500 text-xs">
-          {{ errorMessage }}
-        </p>
-        <div class="flex justify-end mt-5 space-x-2">
-          <p-button size="small" severity="secondary" (click)="closeModal()">
-            Cancel
-          </p-button>
-          <p-button
-            size="small"
-            severity="contrast"
-            [disabled]="!isValid || isAddModalLoading"
-            (click)="addProduct()"
-          >
-            <ng-container *ngIf="isAddModalLoading">
-              <svg
-                class="animate-spin h-5 w-5 mr-2 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
-                ></path>
-              </svg>
-            </ng-container>
-            Save
-          </p-button>
         </div>
       </div>
-    </div>
 
-    <!-- Edit Modal -->
-    <!-- Edit Modal -->
-    <div
-      *ngIf="isEditModalOpen"
-      class="fixed inset-0 backdrop-blur-2xl bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
-        <h3 class="text-lg font-medium text-gray-900 mb-2">Edit Product</h3>
+      <!-- Edit Modal -->
+      <!-- Edit Modal -->
+      <div
+        *ngIf="isEditModalOpen"
+        class="fixed inset-0 backdrop-blur-2xl bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 max-w-md">
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Edit Product</h3>
 
-        <!-- Name -->
-        <input
-          [(ngModel)]="selectedProduct.name"
-          placeholder="Product Name"
-          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-          (ngModelChange)="validateInput('edit')"
-        />
+          <!-- Name -->
+          <input
+            [(ngModel)]="selectedProduct.name"
+            placeholder="Product Name"
+            class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            (ngModelChange)="validateInput('edit')"
+          />
 
-        <!-- Quantity -->
-        <input
-          [(ngModel)]="selectedProduct.quantity"
-          type="number"
-          placeholder="Quantity"
-          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-          (ngModelChange)="validateInput('edit')"
-        />
+          <!-- Quantity -->
+          <input
+            [(ngModel)]="selectedProduct.quantity"
+            type="number"
+            placeholder="Quantity"
+            class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            (ngModelChange)="validateInput('edit')"
+          />
 
-        <!-- Threshold -->
-        <input
-          [(ngModel)]="selectedProduct.threshold"
-          type="number"
-          placeholder="Threshold"
-          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-          (ngModelChange)="validateInput('edit')"
-        />
+          <!-- Threshold -->
+          <input
+            [(ngModel)]="selectedProduct.threshold"
+            type="number"
+            placeholder="Threshold"
+            class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            (ngModelChange)="validateInput('edit')"
+          />
 
-        <!-- Unit Type -->
-        <select
-          [(ngModel)]="selectedProduct.unit"
-          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-          (ngModelChange)="validateInput('edit')"
-        >
-          <option [ngValue]="null" disabled>Select Unit</option>
-          <option *ngFor="let unit of unitTypes" [ngValue]="unit">
-            {{ unit }}
-          </option>
-        </select>
-
-        <!-- Category -->
-        <input
-          [(ngModel)]="selectedProduct.category"
-          placeholder="Category"
-          class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
-          (ngModelChange)="validateInput('edit')"
-        />
-
-        <!-- Validation Error -->
-        <p *ngIf="errorMessage" class="text-pink-500 text-xs mb-2">
-          {{ errorMessage }}
-        </p>
-
-        <!-- Action Buttons -->
-        <div class="flex justify-end space-x-2">
-          <button
-            class="bg-gray-500 text-white py-1 px-2 rounded-full text-md hover:bg-gray-600 transition"
-            (click)="closeModal()"
+          <!-- Unit Type -->
+          <select
+            [(ngModel)]="selectedProduct.unit"
+            class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            (ngModelChange)="validateInput('edit')"
           >
-            Cancel
-          </button>
-          <button
-            class="bg-teal-600 text-white py-1 px-2 rounded-full text-md hover:bg-teal-700 transition"
-            [disabled]="!isValid || isEditModalLoading"
-            (click)="saveProduct()"
-          >
-            <ng-container *ngIf="isEditModalLoading">
-              <svg
-                class="animate-spin h-5 w-5 mr-2 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
-                ></path>
-              </svg>
-            </ng-container>
-            Save
-          </button>
+            <option [ngValue]="null" disabled>Select Unit</option>
+            <option *ngFor="let unit of unitTypes" [ngValue]="unit">
+              {{ unit }}
+            </option>
+          </select>
+
+          <!-- Category -->
+          <input
+            [(ngModel)]="selectedProduct.category"
+            placeholder="Category"
+            class="w-full p-2 mb-2 border-0 border-b border-gray-300 bg-transparent focus:border-teal-500 text-sm"
+            (ngModelChange)="validateInput('edit')"
+          />
+
+          <!-- Validation Error -->
+          <p *ngIf="errorMessage" class="text-pink-500 text-xs mb-2">
+            {{ errorMessage }}
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex justify-end space-x-2">
+            <button
+              class="bg-gray-500 text-white py-1 px-2 rounded-full text-md hover:bg-gray-600 transition"
+              (click)="closeModal()"
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-teal-600 text-white py-1 px-2 rounded-full text-md hover:bg-teal-700 transition"
+              [disabled]="!isValid || isEditModalLoading"
+              (click)="saveProduct()"
+            >
+              <ng-container *ngIf="isEditModalLoading">
+                <svg
+                  class="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                  ></path>
+                </svg>
+              </ng-container>
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>

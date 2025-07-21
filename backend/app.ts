@@ -16,6 +16,8 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(Express.static("uploads"));
 app.use(cookieParser());
 app.use(Express.json());
 app.use("/api", authMiddleware);

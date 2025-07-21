@@ -12,10 +12,9 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import {
   FileSelectEvent,
-  FileUploadEvent,
-  FileUploadHandlerEvent,
   FileUploadModule,
 } from 'primeng/fileupload';
+import { ProductviewcardComponent } from '../../shared/productviewcard/productviewcard.component';
 @Component({
   selector: 'app-inventory',
   standalone: true,
@@ -27,6 +26,7 @@ import {
     SelectModule,
     ButtonModule,
     FileUploadModule,
+    ProductviewcardComponent,
   ],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
