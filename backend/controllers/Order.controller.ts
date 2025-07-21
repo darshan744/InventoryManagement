@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 import * as db from "../Database";
-import { OrderType } from "../generated/prisma";
 export async function getOrders(
   req: Request,
   res: Response,
@@ -24,24 +23,65 @@ export async function getOrders(
   }
 }
 
-export async function createOrder(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) { }
-
-export async function updateOrder(
+export async function orderProduct(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  // Implement logic to update an order
+  try {
+    const { productId, quantity } = req.body;
+    if (!productId || !quantity) {
+      throw new AppError("Product ID and quantity are required", 400);
+    }
+    if (quantity <= 0) {
+      throw new AppError("Quantity must be greater than zero", 400);
+    }
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new AppError("User ID is required", 400);
+    }
+    const order = await db.orderProduct(productId, quantity, userId);
+    res.status(201).json({
+      message: "Order placed Successfully",
+      data: order,
+    });
+  } catch (error: any) {
+    next(error instanceof AppError ? error : new AppError(error.message, 500));
+  }
 }
-
-export async function deleteOrder(
+export async function orderMultipleProducts(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  // Implement logic to delete an order
+  try {
+    const { orders } = req.body;
+    if (!orders || !Array.isArray(orders) || orders.length === 0) {
+      throw new AppError("Orders array is required and cannot be empty", 400);
+    }
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new AppError("User ID is required", 400);
+    }
+    const createdOrders = [] as any;
+    for await (const order of orders) {
+      const { productId, quantity } = order;
+      if (!productId || !quantity) {
+        throw new AppError(
+          "Product ID and quantity are required for each order",
+          400,
+        );
+      }
+      if (quantity <= 0) {
+        throw new AppError("Quantity must be greater than zero", 400);
+      }
+      createdOrders.push(await db.orderProduct(productId, quantity, userId));
+    }
+    res.status(201).json({
+      message: "Orders placed successfully",
+      data: createdOrders,
+    });
+  } catch (error: any) {
+    next(error instanceof AppError ? error : new AppError(error.message, 500));
+  }
 }

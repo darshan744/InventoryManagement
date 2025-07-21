@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule , InputTextModule],
+  imports: [CommonModule, FormsModule, NgSelectModule, InputTextModule],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
 })
@@ -46,7 +46,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const sub = this.productService.getProducts().subscribe((res) => {
+    const sub = this.productService.getProductOfUser().subscribe((res) => {
       if (!res?.data) {
         console.error('Failed to fetch products:', res);
         return;

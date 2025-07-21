@@ -8,10 +8,6 @@ generator client {
   output   = "../generated/prisma"
 }
 
-enum OrderType {
-  RESTOCK
-  ISSUE
-}
 
 enum OrderStatus {
   PENDING
@@ -50,7 +46,6 @@ model Order {
   product   Product     @relation(fields: [productId], references: [id])
   productId String
   quantity  Int         @default(0)
-  type      OrderType   @default(RESTOCK)
   status    OrderStatus @default(PENDING)
   date      DateTime    @default(now())
   notes     String?

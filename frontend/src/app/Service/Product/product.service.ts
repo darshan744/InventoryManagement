@@ -9,7 +9,14 @@ import { IBaseResponse, ProductResponse } from '../../Types/Response';
 export class ProductService {
   constructor(private http: HttpClient) { }
 
-  getProducts() {
+  getAllAvailableProducts() {
+    const url = `${environment.apiUrl}/api/products/all`;
+    return this.http.get<IBaseResponse<ProductResponse[]>>(url, {
+      withCredentials: true,
+    });
+  }
+
+  getProductOfUser() {
     const url = `${environment.apiUrl}/api/products`;
     return this.http.get<IBaseResponse<ProductResponse[]>>(url, {
       withCredentials: true,

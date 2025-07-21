@@ -1,6 +1,10 @@
-<div class="min-h-screen flex flex-col">
+<div class="animate-fade-in min-h-screen flex flex-col">
   <div class="flex items-center gap-4 justify-between mb-4">
     <input [fluid]="true" pSize="small" pInputText placeholder="Search" />
-    <p-select [fluid]="true" size="small" [options]="['Product', 'Supplier']"></p-select>
+    <p-select [fluid]="true" [(ngModel)]="searchBy" size="small" [options]="['Product', 'Supplier']"></p-select>
+  </div>
+
+  <div>
+    <p>Search Result for : {{ searchBy }}</p>
   </div>
 </div>

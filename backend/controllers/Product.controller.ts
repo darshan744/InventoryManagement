@@ -13,7 +13,7 @@ export async function getUserProducts(
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-    const products = await db.getProducts(userId);
+    const products = await db.getProductsForUser(userId);
 
     if (!products || products.length === 0) {
       throw new AppError("No products found for this user", 404);
@@ -93,8 +93,31 @@ export async function deleteProduct(
     res.status(200).json({
       message: "Product deleted successfully",
       data: deletedProduct,
-    })
+    });
   } catch (err: any) {
     next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}
+
+export async function getAllProducts(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.user?.id; // Assuming user ID is stored in req.user
+    if (!userId) {
+      throw new AppError("User ID is required", 400);
+    }
+    const products = await db.getAllProducts(userId);
+    if (!products || products.length === 0) {
+      throw new AppError("No products found", 404);
+    }
+    res.status(200).json({
+      message: "Products retrieved successfully",
+      data: products,
+    });
+  } catch (error: any) {
+    next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
 }

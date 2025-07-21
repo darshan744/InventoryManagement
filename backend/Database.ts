@@ -23,8 +23,25 @@ export const createUser = async (
     },
   });
 };
-
-export async function getProducts(userId: string) {
+export async function getAllProducts(userId: string) {
+  return await Prisma.product.findMany({
+    where: {
+      quantity: { gt: 0 },
+      userId: { not: userId },
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    omit: {
+      userId: true,
+    },
+  });
+}
+export async function getProductsForUser(userId: string) {
   if (!userId) {
     throw new Error("User ID is required");
   }
@@ -80,4 +97,19 @@ export async function getOrders(userId: string) {
     },
   });
 }
-export async function createOrder() { }
+export async function orderProduct(
+  productId: string,
+  quantity: number,
+  userId: string,
+) {
+  if (!productId || !quantity || !userId) {
+    throw new Error("Product ID, quantity, and user ID are required");
+  }
+  return await Prisma.order.create({
+    data: {
+      productId,
+      quantity,
+      userId,
+    },
+  });
+}
