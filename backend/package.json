@@ -4,8 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "p:g": "npx prisma generate",
-    "p:m": "npx prisma migrate dev"
+    "pg": "npx prisma generate",
+    "pm": "npx prisma migrate dev",
+    "ps": "npx prisma studio"
   },
   "keywords": [],
   "author": "",

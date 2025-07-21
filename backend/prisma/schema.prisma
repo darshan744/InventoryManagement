@@ -31,6 +31,7 @@ model Product {
   id            String   @id @default(uuid())
   image         String?
   name          String
+  description   String
   quantity      Int      @default(0)
   threshold     Int      @default(0)
   unit          UnitType @default(PCS)
