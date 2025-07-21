@@ -32,17 +32,13 @@ export async function createProduct(
   next: NextFunction,
 ) {
   try {
-    const fileName = req.file;
-    console.log("File Name:", fileName);
-    const { name, quantity, threshold, unit, category }: Product = JSON.parse(
-      req.body.product,
-    );
+    const { name, quantity, threshold, unit, category, description }: Product =
+      JSON.parse(req.body.product);
     const image = req.file?.filename ?? null;
     const userId = req.user?.id;
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-
     if (!name || !quantity || !threshold || !unit || !category) {
       throw new AppError("All product fields are required", 400);
     }
@@ -54,6 +50,7 @@ export async function createProduct(
       category,
       image,
       userId,
+      description,
     );
     res.status(201).json({ message: "Products Retrieved", data: product });
   } catch (error: any) {

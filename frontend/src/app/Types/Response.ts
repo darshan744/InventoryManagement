@@ -24,7 +24,7 @@ export class ProductResponse {
   category: string | null;
   lastRestocked: Date;
   userId: string;
-
+  description: string;
   constructor(
     id: string,
     name: string,
@@ -43,6 +43,7 @@ export class ProductResponse {
     this.category = category;
     this.lastRestocked = lastRestocked;
     this.userId = userId;
+    this.description = '';
   }
 }
 export type OrderType = 'RESTOCK' | 'ISSUE';
@@ -64,6 +65,8 @@ export type ShopProductsResponse = {
   id: string;
   name: string;
   quantity: number;
+  image: string | null;
+  description: string;
   threshold: number;
   unit: UnitType;
   category: string | null;

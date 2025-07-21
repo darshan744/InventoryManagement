@@ -1,13 +1,16 @@
-<p-card *ngIf="product() !== null">
-  <ng-template #header>
-    <img [src]="productImage" />
+<p-card [style]="{
+  width:'300px'
+}" *ngIf="product() !== null">
+  <ng-template #header class="w-full!"> <img class="w-md object-cover" [src]="productImage" />
   </ng-template>
-  <p>
-    <strong>{{ productGet?.name }}</strong>
-  </p>
-  <p>Product description</p>
-  <p>Price</p>
-  <p>Quantity: {{ productGet?.quantity }}</p>
+  <ng-template #content>
+    <p>
+      <strong>{{ productGet?.name }}</strong>
+    </p>
+    <p class="break-words text-sm" style="max-width: 100%">
+      {{ productGet?.description }}
+    </p>
+  </ng-template>
   <ng-template #footer class="!w-full">
     <ng-content></ng-content>
   </ng-template>

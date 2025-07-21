@@ -76,6 +76,19 @@
               />
             </div>
             <div>
+              <label id="newProductDescription"> Product Description </label>
+              <textarea
+                pTextarea
+                rows="3"
+                [(ngModel)]="newProduct.description"
+                placeholder="Product Name"
+                (ngModelChange)="validateInput()"
+                [fluid]="true"
+                pSize="small"
+                id="newProductDescription"
+              ></textarea>
+            </div>
+            <div>
               <label for="newProductQuantity"> Quantity </label>
               <input
                 pInputText

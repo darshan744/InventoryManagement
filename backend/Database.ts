@@ -59,6 +59,7 @@ export async function createProduct(
   category: string,
   image: string | null,
   userId: string,
+  description: string,
 ) {
   return await Prisma.product.create({
     data: {
@@ -69,6 +70,7 @@ export async function createProduct(
       category,
       userId,
       image,
+      description,
     },
   });
 }

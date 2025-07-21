@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { DataService } from '../../Service/data.service';
-import { ProductService } from '../../Service/Product/product.service';
-import { ProductResponse } from '../../Types/Response';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
-import {
-  FileSelectEvent,
-  FileUploadModule,
-} from 'primeng/fileupload';
+import { TextareaModule } from 'primeng/textarea';
+import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
+
 import { ProductviewcardComponent } from '../../shared/productviewcard/productviewcard.component';
+import { ProductResponse } from '../../Types/Response';
+import { DataService } from '../../Service/data.service';
+import { ProductService } from '../../Service/Product/product.service';
+
 @Component({
   selector: 'app-inventory',
   standalone: true,
@@ -27,6 +27,7 @@ import { ProductviewcardComponent } from '../../shared/productviewcard/productvi
     ButtonModule,
     FileUploadModule,
     ProductviewcardComponent,
+    TextareaModule,
   ],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
@@ -124,8 +125,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.productService
       .addProduct(this.newProduct, this.selectedFile ? [this.selectedFile] : [])
       .subscribe((res) => {
-        console.log('Product added:', res);
-        // this.products.push(res.data);
+        this.products.push(res.data);
         this.isAddModalLoading = false;
         this.filterProducts();
         this.closeModal();

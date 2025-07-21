@@ -7,4 +7,7 @@
   <div>
     <p>Search Result for : {{ searchBy }}</p>
   </div>
+  <div *ngFor="let product of products">
+    <app-productviewcard [product]="product"></app-productviewcard>
+  </div>
 </div>
