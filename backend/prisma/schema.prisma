@@ -8,7 +8,6 @@ generator client {
   output   = "../generated/prisma"
 }
 
-
 enum OrderStatus {
   PENDING
   COMPLETED
@@ -30,6 +29,7 @@ enum UnitType {
 
 model Product {
   id            String   @id @default(uuid())
+  image         String?
   name          String   @unique
   quantity      Int      @default(0)
   threshold     Int      @default(0)
