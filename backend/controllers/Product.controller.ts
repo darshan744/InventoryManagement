@@ -32,6 +32,8 @@ export async function createProduct(
   next: NextFunction,
 ) {
   try {
+    const fileName = req.file;
+    console.log("File Name:", fileName);
     const { name, quantity, threshold, unit, category }: Product = req.body;
     const userId = req.user?.id;
     if (!userId) {

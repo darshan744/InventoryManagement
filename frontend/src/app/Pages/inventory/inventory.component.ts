@@ -8,11 +8,21 @@ import { DataService } from '../../Service/data.service';
 import { ProductService } from '../../Service/Product/product.service';
 import { ProductResponse } from '../../Types/Response';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule, InputTextModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgSelectModule,
+    InputTextModule,
+    SelectModule,
+    ButtonModule,
+    FileUploadModule,
+  ],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
 })
@@ -28,7 +38,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
   products: ProductResponse[] = [];
   filteredProducts: ProductResponse[] = [];
   searchTerm = '';
-
   newProduct: ProductResponse = this.getEmptyProduct();
   selectedProduct: ProductResponse = this.getEmptyProduct();
 
@@ -95,6 +104,11 @@ export class InventoryComponent implements OnInit, OnDestroy {
       ? ''
       : 'Please enter valid values (name required, quantity/threshold >= 0).';
     return isValid;
+  }
+
+  onUploadFile(event : FileUploadEvent) {
+    const file = event.files[0];
+    if (!file) return;
   }
 
   addProduct(): void {
@@ -176,6 +190,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.dataService.updateProduct(product);
     this.filterProducts();
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

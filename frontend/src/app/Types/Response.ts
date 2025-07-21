@@ -19,6 +19,7 @@ export class ProductResponse {
   name: string;
   quantity: number;
   threshold: number;
+  image: string | null = null;
   unit: UnitType;
   category: string | null;
   lastRestocked: Date;

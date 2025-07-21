@@ -20,7 +20,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       const refreshTokenUrl = `${environment.apiUrl}/auth/refresh-token`;
       // If the request is for the refresh token endpoint, we don't want to retry it
       if (req.url === refreshTokenUrl) {
-        console.log('Refresh token endpoint called, redirecting to login');
         return next(req);
       }
       // If the request is not for the refresh token endpoint, we will try to refresh the token
