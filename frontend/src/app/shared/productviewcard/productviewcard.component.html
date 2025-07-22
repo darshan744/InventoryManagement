@@ -1,6 +1,6 @@
 <p-card class="w-[300px]" *ngIf="product() !== null">
-  <ng-template #header class="w-full!">
-    <img class="w-md object-cover" [src]="productImage" />
+  <ng-template #header>
+    <img class="w-full object-cover" [src]="productImage" />
   </ng-template>
   <ng-template #content>
     <div class="flex flex-col gap-2">
