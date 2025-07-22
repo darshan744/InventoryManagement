@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProductResponse } from '../../Types/Response';
+import { ProductService } from '../../Service/Product/product.service';
 interface Product {
   id: number;
   name: string;
@@ -14,36 +16,17 @@ interface Product {
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
+  constructor(private productService: ProductService) { }
+
   totalProducts: number = 50; // Mock data
   lowStockCount: number = 3; // Mock data
   salesToday: number = 10; // Mock data
-  lowStockProducts: Product[] = [
-    {
-      id: 1,
-      name: 'Laptop',
-      quantity: 5,
-      minStockThreshold: 10,
-      prediction: 'Restock 50',
-    },
-    {
-      id: 2,
-      name: 'T-Shirt',
-      quantity: 2,
-      minStockThreshold: 5,
-      prediction: 'Restock 30',
-    },
-    {
-      id: 3,
-      name: 'Phone',
-      quantity: 8,
-      minStockThreshold: 15,
-      prediction: 'Restock 40',
-    },
-  ];
+  productsData: ProductResponse[] = new Array();
 
   ngOnInit() {
-    // Placeholder for fetching real data later
-    console.log('Dashboard initialized');
+    this.productService.getProductOfUser().subscribe((res) => {
+      this.productsData = res.data;
+    });
   }
 
   // Boilerplate function for reordering
@@ -51,7 +34,15 @@ export class DashboardComponent {
     // Placeholder for reorder logic
     console.log(`Reorder initiated for ${product.name}: ${product.prediction}`);
   }
-
+  lowStockProducts() {
+    let count : number = 0;
+    for (let product of this.productsData) {
+      if (product.quantity < product.threshold) {
+        count++;
+      }
+    }
+    return count;
+  }
   // Boilerplate function for adding product
   onAddProduct() {
     // Placeholder for navigation to Add Product page

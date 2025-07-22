@@ -7,17 +7,35 @@
   </div>
   <div class="w-full">
     <div class="flex flex-col sm:flex-row gap-4 mb-6">
-      <div class="flex-1 bg-white border border-gray-400 dark:bg-gray-600 p-3 rounded-lg shadow-sm">
-        <h2 class="text-base font-medium text-gray-900 dark:text-white">Total Products</h2>
-        <p class="text-2xl font-bold text-teal-600 dark:text-white">{{ totalProducts }}</p>
+      <div
+        class="flex-1 bg-white border border-gray-400 dark:bg-gray-600 p-3 rounded-lg shadow-sm"
+      >
+        <h2 class="text-base font-medium text-gray-900 dark:text-white">
+          Total Products
+        </h2>
+        <p class="text-2xl font-bold text-teal-600 dark:text-white">
+          {{ productsData.length }}
+        </p>
       </div>
-      <div class="flex-1 border border-gray-400 bg-white dark:bg-gray-600 p-3 rounded-lg shadow-sm">
-        <h2 class="text-base font-medium text-gray-900 dark:text-white">Low Stock</h2>
-        <p class="text-2xl font-bold text-pink-500 dark:text-white">{{ lowStockCount }}</p>
+      <div
+        class="flex-1 border border-gray-400 bg-white dark:bg-gray-600 p-3 rounded-lg shadow-sm"
+      >
+        <h2 class="text-base font-medium text-gray-900 dark:text-white">
+          Low Stock
+        </h2>
+        <p class="text-2xl font-bold text-pink-500 dark:text-white">
+          {{ lowStockProducts() }}
+        </p>
       </div>
-      <div class="flex-1 bg-white dark:bg-gray-600 border border-gray-400 p-3 rounded-lg shadow-sm">
-        <h2 class="text-base font-medium text-gray-900 dark:text-white">Sales Today</h2>
-        <p class="text-2xl font-bold text-teal-600 dark:text-white">{{ salesToday }}</p>
+      <div
+        class="flex-1 bg-white dark:bg-gray-600 border border-gray-400 p-3 rounded-lg shadow-sm"
+      >
+        <h2 class="text-base font-medium text-gray-900 dark:text-white">
+          Sales Today
+        </h2>
+        <p class="text-2xl font-bold text-teal-600 dark:text-white">
+          {{ salesToday }}
+        </p>
       </div>
     </div>
     <h2 class="text-lg font-medium text-gray-900 mb-4">Low Stock Alerts</h2>
@@ -33,23 +51,22 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let product of lowStockProducts"
+            *ngFor="let product of productsData"
             class="border-b border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
             <td class="p-2">{{ product.name }}</td>
             <td class="p-2">
               {{ product.quantity }}
               <span
-                *ngIf="product.quantity < product.minStockThreshold"
+                *ngIf="product.quantity < product.threshold"
                 class="text-pink-500"
                 >⚠️</span
               >
             </td>
-            <td class="p-2">{{ product.prediction }}</td>
+            <td class="p-2">{{ "N/A" }}</td>
             <td class="p-2">
               <button
                 class="bg-teal-600 text-white py-1 px-3 rounded-full hover:bg-teal-700 transition text-xs"
-                (click)="onReorder(product)"
               >
                 Reorder
               </button>
