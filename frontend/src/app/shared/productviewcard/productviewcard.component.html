@@ -1,15 +1,24 @@
-<p-card [style]="{
-  width:'300px'
-}" *ngIf="product() !== null">
-  <ng-template #header class="w-full!"> <img class="w-md object-cover" [src]="productImage" />
+<p-card
+  [style]="{
+    width: '300px',
+  }"
+  *ngIf="product() !== null"
+>
+  <ng-template #header class="w-full!">
+    <img class="w-md object-cover" [src]="productImage" />
   </ng-template>
   <ng-template #content>
-    <p>
-      <strong>{{ productGet?.name }}</strong>
-    </p>
-    <p class="break-words text-sm" style="max-width: 100%">
-      {{ productGet?.description }}
-    </p>
+    <div class="flex flex-col gap-2">
+      <p>
+        <strong>{{ productGet?.name }}</strong>
+      </p>
+      <p class="break-words text-sm" style="max-width: 100%">
+        {{ productGet?.description }}
+      </p>
+      <p class="text-gray-600" *ngIf="productType(productGet)">
+        {{ productGet.user.name }}
+      </p>
+    </div>
   </ng-template>
   <ng-template #footer class="!w-full">
     <ng-content></ng-content>

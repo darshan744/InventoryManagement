@@ -11,15 +11,20 @@ import { CommonModule } from '@angular/common';
 export class ProductviewcardComponent {
   product = input.required<ProductResponse | null | ShopProductsResponse>();
 
-  get productGet(){
+  get productGet() {
     return this.product() ?? null;
   }
   get productImage() {
-  if (this.productGet?.image) {
-    return this.productGet.image.startsWith('http')
-      ? this.productGet.image
-      : `http://localhost:3000/${this.productGet.image}`;
+    if (this.productGet?.image) {
+      return this.productGet.image.startsWith('http')
+        ? this.productGet.image
+        : `http://localhost:3000/${this.productGet.image}`;
+    }
+    return null;
   }
-  return null;
-}
+  productType(
+    prod: ProductResponse | ShopProductsResponse | null,
+  ): prod is ShopProductsResponse {
+    return prod !== null && 'user' in prod;
+  }
 }

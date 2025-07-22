@@ -1,13 +1,39 @@
 <div class="animate-fade-in min-h-screen flex flex-col">
   <div class="flex items-center gap-4 justify-between mb-4">
     <input [fluid]="true" pSize="small" pInputText placeholder="Search" />
-    <p-select [fluid]="true" [(ngModel)]="searchBy" size="small" [options]="['Product', 'Supplier']"></p-select>
+    <p-select
+      [fluid]="true"
+      [(ngModel)]="searchBy"
+      size="small"
+      [options]="['Product', 'Supplier']"
+    ></p-select>
   </div>
 
-  <div>
+  <div class="mb-2">
     <p>Search Result for : {{ searchBy }}</p>
   </div>
-  <div *ngFor="let product of products">
-    <app-productviewcard [product]="product"></app-productviewcard>
+  <div *ngFor="let product of products" class="flex justify-center">
+    <app-productviewcard [product]="product">
+      <div class="flex gap-3 justify-end w-full">
+        <p-button label="Buy Now" severity="success" size="small"></p-button>
+        @let inCart = alreadyInCart(product);
+        <p-button
+          *ngIf="!inCart"
+          label="Add to Cart"
+          size="small"
+          icon="pi pi-cart-plus"
+          severity="secondary"
+          (onClick)="addToCart(product)"
+        ></p-button>
+        <p-button
+          *ngIf="inCart"
+          label="Go to Cart"
+          icon="pi pi-external-link"
+          size="small"
+          severity="secondary"
+          (onClick)="goToCart()"
+        ></p-button>
+      </div>
+    </app-productviewcard>
   </div>
 </div>

@@ -16,6 +16,9 @@
   </a>
 
   <a routerLink="/user/cart" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
-    <i class="pi pi-shopping-cart"></i>
+    <p-overlaybadge [badgeDisabled]="(cartLen | async) == 0" severity="danger" [value]="cartLen | async"
+      badgeSize="small">
+      <i class="pi pi-shopping-cart"></i>
+    </p-overlaybadge>
   </a>
 </div>

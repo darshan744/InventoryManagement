@@ -85,3 +85,19 @@ export async function orderMultipleProducts(
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
 }
+
+export async function storeCart(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new AppError("User ID is required", 400);
+    }
+    
+  } catch (err: any) {
+    next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}
