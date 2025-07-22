@@ -1,9 +1,4 @@
-<p-card
-  [style]="{
-    width: '300px',
-  }"
-  *ngIf="product() !== null"
->
+<p-card class="w-[300px]" *ngIf="product() !== null">
   <ng-template #header class="w-full!">
     <img class="w-md object-cover" [src]="productImage" />
   </ng-template>

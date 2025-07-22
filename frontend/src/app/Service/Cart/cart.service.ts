@@ -17,6 +17,7 @@ export class CartService {
   addToCart(product: ProductResponse | ShopProductsResponse) {
     const currentCart = this.cart.getValue();
     this.cartLen.next(currentCart.length + 1);
+    product.quantity = 1;
     this.cart.next([...currentCart, product]);
   }
 

@@ -3,8 +3,6 @@
     <p class="text-xl font-bold">Total Amount :</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <app-cart-item class="inline-block"></app-cart-item>
-    <app-cart-item></app-cart-item>
-    <app-cart-item></app-cart-item>
+    <app-cart-item *ngFor="let cartItem of cart | async" [product]="cartItem"></app-cart-item>
   </div>
 </div>

@@ -12,7 +12,10 @@
   <div class="mb-2">
     <p>Search Result for : {{ searchBy }}</p>
   </div>
-  <div *ngFor="let product of products" class="flex justify-center">
+  <div
+    *ngFor="let product of products"
+    class="flex md:grid md:grid-cols-4 gap-3 justify-center"
+  >
     <app-productviewcard [product]="product">
       <div class="flex gap-3 justify-end w-full">
         <p-button label="Buy Now" severity="success" size="small"></p-button>

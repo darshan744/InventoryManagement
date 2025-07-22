@@ -8,7 +8,10 @@
   </main>
 
   <!-- Bottom Nav (Fixed) -->
-  <footer class="fixed bottom-0 left-0 right-0 z-50 rounded-t-lg shadow-sm h-16">
+  <div class="fixed left-0 z-50 rounded-t-lg shadow-sm h-16" [ngClass]="{
+      'bottom-0 right-0 ': !utilService.isWeb(),
+      'top-0 flex': utilService.isWeb(),
+    }">
     <app-navbar></app-navbar>
-  </footer>
+  </div>
 </div>
