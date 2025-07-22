@@ -1,5 +1,5 @@
 <div class="min-h-screen flex flex-col items-center dark:bg-black">
-  <header>
+  <header class="w-full flex-shrink-0 bg-white dark:bg-[#1a1818] shadow-sm">
     <app-toolbar></app-toolbar>
   </header>
   <!-- Main Content -->
@@ -8,10 +8,7 @@
   </main>
 
   <!-- Bottom Nav (Fixed) -->
-  <div class="fixed left-0 z-50 rounded-t-lg shadow-sm h-16" [ngClass]="{
-      'bottom-0 right-0 ': !utilService.isWeb(),
-      'top-0 flex': utilService.isWeb(),
-    }">
+  <div class="fixed bottom-0 right-0 left-0 z-50 rounded-t-lg shadow-sm h-16" *ngIf="!utilService.isWeb()">
     <app-navbar></app-navbar>
   </div>
 </div>

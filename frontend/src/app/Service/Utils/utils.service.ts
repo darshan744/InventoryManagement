@@ -7,9 +7,8 @@ export class UtilsService {
   constructor() { }
 
   isWeb() {
-    return true;
-    // const isWeb = Capacitor.getPlatform() === 'web';
-    // console.log(isWeb);
-    // return isWeb;
+    const isWeb = Capacitor.getPlatform() === 'web';
+    console.log(isWeb);
+    return isWeb;
   }
 }

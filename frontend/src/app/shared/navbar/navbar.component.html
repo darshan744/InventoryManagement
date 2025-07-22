@@ -1,26 +1,36 @@
-<div class="flex justify-around items-center h-full p-3  bg-white dark:bg-[#1a1818]" [ngClass]="{
-    'flex-col': util.isWeb(),
+<div class="flex justify-around items-center h-full p-3 bg-white dark:bg-[#1a1818]" [ngClass]="{
+    'gap-10': util.isWeb(),
   }">
-  <a routerLink="/user/inventory" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/inventory" routerLinkActive="active-icon"
+    class="cursor-pointer p-2 relative flex items-center gap-1">
     <i class="pi pi-list"></i>
+    <p *ngIf="util.isWeb()">Inventory</p>
   </a>
-  <a routerLink="/user/shop" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/shop" routerLinkActive="active-icon" class="cursor-pointer p-2 relative flex items-center gap-1">
     <i class="pi pi-shop"></i>
+    <p *ngIf="util.isWeb()">Shop</p>
   </a>
-  <a routerLink="/user/dashboard" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/dashboard" routerLinkActive="active-icon"
+    class="cursor-pointer p-2 relative flex items-center gap-1">
     <i class="pi pi-home"></i>
+    <p *ngIf="util.isWeb()">Dashboard</p>
   </a>
-  <a routerLink="/user/orders" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/orders" routerLinkActive="active-icon"
+    class="cursor-pointer p-2 relative flex items-center gap-1">
     <i class="pi pi-truck"></i>
+    <p *ngIf="util.isWeb()">Orders</p>
   </a>
-  <a routerLink="/user/profile" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/profile" routerLinkActive="active-icon"
+    class="cursor-pointer p-2 relative flex items-center gap-1">
     <i class="pi pi-user"></i>
+    <p *ngIf="util.isWeb()">Profile</p>
   </a>
 
-  <a routerLink="/user/cart" routerLinkActive="active-icon" class="cursor-pointer p-2 relative">
+  <a routerLink="/user/cart" routerLinkActive="active-icon" class="cursor-pointer p-2 relative flex items-center gap-1">
     <p-overlaybadge [badgeDisabled]="(cartLen | async) == 0" severity="danger" [value]="cartLen | async"
       badgeSize="small">
       <i class="pi pi-shopping-cart"></i>
     </p-overlaybadge>
+    <p *ngIf="util.isWeb()">Cart</p>
   </a>
 </div>
