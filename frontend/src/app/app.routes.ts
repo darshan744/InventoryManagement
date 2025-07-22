@@ -7,6 +7,7 @@ import { MainComponent } from './Pages/main/main.component';
 import { OrdersComponent } from './Pages/orders/orders.component';
 import { ReportsComponent } from './Pages/reports/reports.component';
 import { ShopComponent } from './Pages/shop/shop.component';
+import { CartComponent } from './Pages/cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,10 @@ export const routes: Routes = [
       {
         path: 'shop',
         component: ShopComponent,
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
       },
     ],
   },

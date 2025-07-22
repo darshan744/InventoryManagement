@@ -1,20 +1,27 @@
-<div class="shadow bg-white dark:bg-[#1a1818]">
+<div class="flex gap-4 w-150 p-4 rounded-xl shadow bg-white dark:bg-[#1a1818]">
   <div>
-    <img />
+    <img src="https://placehold.co/200" />
   </div>
   <div>
     <p>NAME :</p>
     <p>PRICE :</p>
-    <div>
-      Quantity:
-      <p-inputgroup>
-        <p-inputgroup-addon>
-          <p-button label="-" severity="secondary"> </p-button>
-        </p-inputgroup-addon>
-        <p-inputgroup-addon>
-          <p-button label="+" severity="secondary"> </p-button>
-        </p-inputgroup-addon>
-      </p-inputgroup>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <p>Quantity:</p>
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            <p-button icon="pi pi-minus" size="small" severity="secondary"> </p-button>
+          </p-inputgroup-addon>
+          <input pInputText [value]="0" pSize="small" />
+          <p-inputgroup-addon>
+            <p-button icon="pi pi-plus" size="small" severity="secondary"> </p-button>
+          </p-inputgroup-addon>
+        </p-inputgroup>
+      </div>
+      <div>
+        <p-button icon="pi pi-trash" label="Remove" severity="secondary">
+        </p-button>
+      </div>
     </div>
   </div>
 </div>

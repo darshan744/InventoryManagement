@@ -28,18 +28,19 @@ enum UnitType {
 }
 
 model Product {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   image         String?
   name          String
   description   String
-  quantity      Int      @default(0)
-  threshold     Int      @default(0)
-  unit          UnitType @default(PCS)
+  quantity      Int        @default(0)
+  threshold     Int        @default(0)
+  unit          UnitType   @default(PCS)
   category      String?
-  lastRestocked DateTime @default(now())
-  user          User     @relation(fields: [userId], references: [id])
+  lastRestocked DateTime   @default(now())
+  user          User       @relation(fields: [userId], references: [id])
   userId        String
   orders        Order[]
+  CartItem      CartItem[]
 }
 
 model Order {
@@ -54,6 +55,22 @@ model Order {
   userId    String
 }
 
+model Cart {
+  id        String     @id @default(uuid())
+  cartItems CartItem[]
+  user      User?      @relation("cart", fields: [userId], references: [id])
+  userId    String?    @unique
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int     @default(1)
+  Cart      Cart?   @relation(fields: [cartId], references: [id])
+  cartId    String?
+}
+
 model User {
   id          String    @id @default(uuid())
   name        String
@@ -63,4 +80,6 @@ model User {
   preferences Json?
   orders      Order[]
   Product     Product[]
+  cart        Cart?     @relation("cart")
+  cartId      String?   @unique
 }
