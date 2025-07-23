@@ -31,21 +31,16 @@ export class DashboardComponent {
 
   // Boilerplate function for reordering
   onReorder(product: Product) {
-    // Placeholder for reorder logic
     console.log(`Reorder initiated for ${product.name}: ${product.prediction}`);
   }
+
   lowStockProducts() {
-    let count : number = 0;
+    let count: number = 0;
     for (let product of this.productsData) {
       if (product.quantity < product.threshold) {
         count++;
       }
     }
     return count;
-  }
-  // Boilerplate function for adding product
-  onAddProduct() {
-    // Placeholder for navigation to Add Product page
-    console.log('Add Product clicked');
   }
 }

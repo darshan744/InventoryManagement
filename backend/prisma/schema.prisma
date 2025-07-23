@@ -32,6 +32,7 @@ model Product {
   image         String?
   name          String
   description   String
+  price         Int
   quantity      Int        @default(0)
   threshold     Int        @default(0)
   unit          UnitType   @default(PCS)

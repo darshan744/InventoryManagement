@@ -32,14 +32,21 @@ export async function createProduct(
   next: NextFunction,
 ) {
   try {
-    const { name, quantity, threshold, unit, category, description }: Product =
-      JSON.parse(req.body.product);
+    const {
+      name,
+      quantity,
+      threshold,
+      unit,
+      category,
+      description,
+      price,
+    }: Product = JSON.parse(req.body.product);
     const image = req.file?.filename ?? null;
     const userId = req.user?.id;
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-    if (!name || !quantity || !threshold || !unit || !category) {
+    if (!name || !quantity || !threshold || !unit || !category || !price) {
       throw new AppError("All product fields are required", 400);
     }
     const product = await db.createProduct(
@@ -51,6 +58,7 @@ export async function createProduct(
       image,
       userId,
       description,
+      price,
     );
     res.status(201).json({ message: "Products Retrieved", data: product });
   } catch (error: any) {

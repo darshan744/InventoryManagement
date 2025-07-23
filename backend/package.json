@@ -6,7 +6,8 @@
     "dev": "nodemon",
     "pg": "npx prisma generate",
     "pm": "npx prisma migrate dev",
-    "ps": "npx prisma studio"
+    "ps": "npx prisma studio",
+    "pr": "npx prisma migrate reset"
   },
   "keywords": [],
   "author": "",

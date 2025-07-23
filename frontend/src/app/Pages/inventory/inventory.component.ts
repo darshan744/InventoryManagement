@@ -73,7 +73,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   }
 
   getEmptyProduct(): ProductResponse {
-    return new ProductResponse('', '', 0, 0, 'PCS', '', new Date(), '');
+    return new ProductResponse();
   }
 
   filterProducts(): void {
@@ -157,12 +157,13 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
     if (
       (newOrEdit === 'new' && !this.newProduct.name) ||
-      this.newProduct.quantity < 0 ||
-      this.newProduct.threshold < 0
+      this.newProduct.quantity <= 0 ||
+      this.newProduct.threshold <= 0 ||
+      this.newProduct.price <= 0
     ) {
       this.isValid = false;
       this.errorMessage =
-        'Please enter valid values (name required, quantity/threshold >= 0).';
+        'Please enter valid values (name required, quantity/threshold/Price >= 0).';
     }
     if (
       this.isEditModalOpen &&
@@ -178,7 +179,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   deleteProduct(product: ProductResponse): void {
     const index = this.products.findIndex((p) => p.id === product.id);
     if (index !== -1) {
-      this.productService.deleteProduct(product.id).subscribe((res) => {
+      this.productService.deleteProduct(product.id).subscribe((_res) => {
         this.products.splice(index, 1);
         this.filterProducts();
       });

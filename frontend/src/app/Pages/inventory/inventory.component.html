@@ -131,6 +131,18 @@
               />
             </div>
             <div>
+              <label id="newProductPrice"> Product Price</label>
+              <input
+                pInputText
+                [(ngModel)]="newProduct.price"
+                placeholder="Product Price"
+                (ngModelChange)="validateInput()"
+                [fluid]="true"
+                pSize="small"
+                id="newProductPrice"
+              />
+            </div>
+            <div>
               <label> Unit Type </label>
               <p-select
                 size="small"

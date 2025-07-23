@@ -25,25 +25,18 @@ export class ProductResponse {
   lastRestocked: Date;
   userId: string;
   description: string;
-  constructor(
-    id: string,
-    name: string,
-    quantity: number,
-    threshold: number,
-    unit: UnitType,
-    category: string | null,
-    lastRestocked: Date,
-    userId: string,
-  ) {
-    this.id = id;
-    this.name = name;
-    this.quantity = quantity;
-    this.threshold = threshold;
-    this.unit = unit;
-    this.category = category;
-    this.lastRestocked = lastRestocked;
-    this.userId = userId;
+  price: number;
+  constructor() {
+    this.id = '';
+    this.name = '';
+    this.quantity = 0;
+    this.threshold = 0;
+    this.unit = 'PCS';
+    this.category = '';
+    this.lastRestocked = new Date();
+    this.userId = '';
     this.description = '';
+    this.price = 0;
   }
 }
 export type OrderType = 'RESTOCK' | 'ISSUE';
