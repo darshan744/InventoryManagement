@@ -1,8 +1,14 @@
 <div>
-  <div class="m-2">
-    <p class="text-xl font-bold">Total Amount :</p>
+  <div class="sticky bottom-0 mb-3 bg-white dark:bg-[#1a1818] p-4 shadow z-10">
+    <div class="flex justify-between items-center">
+      <p class="text-xl font-bold">Total Amount : {{ totalPrice | async }}</p>
+      <p-button label="Buy Now" severity="contrast" size="small"></p-button>
+    </div>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <app-cart-item *ngFor="let cartItem of cart | async" [product]="cartItem"></app-cart-item>
+    <app-cart-item
+      *ngFor="let cartItem of cart | async"
+      [product]="cartItem"
+    ></app-cart-item>
   </div>
 </div>

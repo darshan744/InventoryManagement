@@ -3,14 +3,16 @@
     <img [src]="image" />
   </div>
   <div class="flex flex-col flex-1 min-w-0 gap-2">
-    <p>NAME : {{ name }}</p>
+    <p>{{ name }}</p>
     <p class="line-clamp-5 min-w-0 max-w-full text-gray-600">
       {{ description }}
     </p>
     <p class="text-gray-400">{{ user }}</p>
-    <p class="font-bold">PRICE :</p>
-
-    <div class="flex items-center gap-4">
+    <p class="font-bold">
+      <i class="pi pi-indian-rupee" style="font-size: 15px"></i>
+      {{ price * product().quantity }}
+    </p>
+    <div class="flex lg:flex-col items-center gap-4">
       <div class="flex items-center gap-3">
         <p>Quantity:</p>
         <p-inputgroup>
@@ -19,7 +21,8 @@
               severity="secondary">
             </p-button>
           </p-inputgroup-addon>
-          <input [(ngModel)]="product().quantity" pInputText [value]="product().quantity" pSize="small" type="number" />
+          <input [(ngModel)]="product().quantity" pInputText [value]="product().quantity" pSize="small" type="number"
+            [min]="1" />
           <p-inputgroup-addon>
             <p-button (onClick)="increaseQuantity()" icon="pi pi-plus" size="small" [fluid]="true" severity="secondary">
             </p-button>

@@ -132,3 +132,12 @@ export async function getAllProducts(
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
 }
+
+export async function addCart(req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new AppError("User ID is required", 400);
+    }
+  } catch (err: any) { }
+}

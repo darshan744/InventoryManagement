@@ -33,22 +33,7 @@
         }"
       >
         <div class="flex items-center justify-between p-4 rounded-lg">
-          <app-productviewcard [product]="product">
-            <div class="flex space-x-2 mt-2 justify-end">
-              <p-button
-                size="small"
-                severity="secondary"
-                icon="pi pi-pencil"
-                label="Edit"
-              ></p-button>
-              <p-button
-                size="small"
-                severity="contrast"
-                icon="pi pi-shopping-cart"
-                label="Reorder"
-              ></p-button>
-            </div>
-          </app-productviewcard>
+          <app-productviewcard [product]="product"> </app-productviewcard>
         </div>
       </div>
       <!-- Add Modal -->
@@ -140,6 +125,8 @@
                 [fluid]="true"
                 pSize="small"
                 id="newProductPrice"
+                type="number"
+                [min]="0"
               />
             </div>
             <div>

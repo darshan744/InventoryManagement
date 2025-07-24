@@ -50,6 +50,7 @@ export type OrderResponse = {
   date: Date;
   notes: string | null;
   userId: string;
+  price: number;
 };
 export type ShopProductsResponse = {
   user: {
@@ -64,4 +65,5 @@ export type ShopProductsResponse = {
   unit: UnitType;
   category: string | null;
   lastRestocked: Date;
+  price: number;
 };

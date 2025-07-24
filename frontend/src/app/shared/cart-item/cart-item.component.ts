@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProductResponse, ShopProductsResponse } from '../../Types/Response';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
+import { CartService } from '../../Service/Cart/cart.service';
 @Component({
   selector: 'app-cart-item',
   imports: [
@@ -21,7 +22,7 @@ export class CartItemComponent {
   product = input<ProductResponse | ShopProductsResponse>(
     {} as ProductResponse | ShopProductsResponse,
   );
-
+  constructor(private cartService: CartService) { }
   get name() {
     return this.product().name;
   }
@@ -38,11 +39,19 @@ export class CartItemComponent {
     const product = this.product();
     return product && 'user' in product ? product.user.name : '';
   }
+  get price() {
+    return this.product().price;
+  }
 
   increaseQuantity() {
     this.product().quantity++;
+    this.cartService.updateTotalPrice();
   }
+
   decreaseQuantity() {
-    this.product().quantity--;
+    if (this.product().quantity > 1) {
+      this.product().quantity--;
+      this.cartService.updateTotalPrice();
+    }
   }
 }

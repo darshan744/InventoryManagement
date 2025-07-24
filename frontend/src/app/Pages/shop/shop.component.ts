@@ -31,7 +31,6 @@ export class ShopComponent implements OnInit {
     private productService: ProductService,
     private cart: CartService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
   ) { }
   ngOnInit(): void {
     this.productService.getAllAvailableProducts().subscribe((response) => {
@@ -45,6 +44,6 @@ export class ShopComponent implements OnInit {
     return this.cart.alreadyAddedToCart(product);
   }
   goToCart() {
-    this.router.navigate(['/cart'], { relativeTo: this.activatedRoute });
+    this.router.navigateByUrl('user/cart');
   }
 }
