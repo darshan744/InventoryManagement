@@ -41,7 +41,16 @@ export class ProductResponse {
 }
 export type OrderType = 'RESTOCK' | 'ISSUE';
 export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED';
-export type OrderResponse = {
+type OrderItem = {
+  product: {
+    name: string;
+    image: string | null;
+    description: string;
+  };
+  quantity: number;
+  productPrice: number;
+};
+export type Order = {
   id: string;
   quantity: number;
   status: OrderStatus;
@@ -50,6 +59,7 @@ export type OrderResponse = {
   userId: string;
   price: number;
   paymentMethod: PaymentMethod;
+  OrderItem: OrderItem[];
 };
 export type ShopProductsResponse = {
   user: {

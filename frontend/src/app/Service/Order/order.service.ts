@@ -1,11 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import {
-  IBaseResponse,
-  OrderResponse,
-  PaymentMethod,
-} from '../../Types/Response';
+import { IBaseResponse, Order, PaymentMethod } from '../../Types/Response';
 import { CartService } from '../Cart/cart.service';
 
 @Injectable({
@@ -19,7 +15,7 @@ export class OrderService {
 
   getOrders() {
     const url = `${environment.apiUrl}/api/orders`;
-    return this.http.get<IBaseResponse<OrderResponse[]>>(url, {
+    return this.http.get<IBaseResponse<Order[]>>(url, {
       withCredentials: true,
     });
   }
@@ -36,7 +32,7 @@ export class OrderService {
     };
     console.log('Placing order with body:', body);
     const url = `${environment.apiUrl}/api/order`;
-    return this.http.post<IBaseResponse<OrderResponse>>(url, body, {
+    return this.http.post<IBaseResponse<Order>>(url, body, {
       withCredentials: true,
     });
   }

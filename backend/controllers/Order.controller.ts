@@ -50,40 +50,6 @@ export async function orderProduct(
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
 }
-export async function orderMultipleProducts(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  try {
-    const { orders } = req.body;
-    if (!orders || !Array.isArray(orders) || orders.length === 0) {
-      throw new AppError("Orders array is required and cannot be empty", 400);
-    }
-    const userId = req.user?.id;
-    if (!userId) {
-      throw new AppError("User ID is required", 400);
-    }
-    const createdOrders = [] as any;
-    for await (const order of orders) {
-      const { productId, quantity } = order;
-      if (!productId || !quantity) {
-        throw new AppError(
-          "Product ID and quantity are required for each order",
-          400,
-        );
-      }
-      if (quantity <= 0) {
-        throw new AppError("Quantity must be greater than zero", 400);
-      }
-    }
-    res.status(201).json({
-      message: "Orders placed successfully",
-    });
-  } catch (error: any) {
-    next(error instanceof AppError ? error : new AppError(error.message, 500));
-  }
-}
 
 export async function storeCart(
   req: Request,
