@@ -35,6 +35,6 @@ export class CartService {
   }
   alreadyAddedToCart(product: ProductResponse | ShopProductsResponse) {
     const currentCart = this.cart.getValue();
-    return currentCart.includes(product);
+    return currentCart.some((ele) => ele.id === product.id);
   }
 }
