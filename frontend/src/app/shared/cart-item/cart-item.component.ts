@@ -54,4 +54,7 @@ export class CartItemComponent {
       this.cartService.updateTotalPrice();
     }
   }
+  removeItem(product: ProductResponse | ShopProductsResponse) {
+    this.cartService.removeItem(product);
+  }
 }

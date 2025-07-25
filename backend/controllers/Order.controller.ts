@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 import * as db from "../Database";
+import getUser from "../utils/GetUser";
+import { PaymentMethod } from "../generated/prisma";
 export async function getOrders(
   req: Request,
   res: Response,
@@ -29,22 +31,9 @@ export async function orderProduct(
   next: NextFunction,
 ) {
   try {
-    const { productId, quantity } = req.body;
-    if (!productId || !quantity) {
-      throw new AppError("Product ID and quantity are required", 400);
-    }
-    if (quantity <= 0) {
-      throw new AppError("Quantity must be greater than zero", 400);
-    }
-    const userId = req.user?.id;
-    if (!userId) {
-      throw new AppError("User ID is required", 400);
-    }
-    const order = await db.orderProduct(productId, quantity, userId);
-    res.status(201).json({
-      message: "Order placed Successfully",
-      data: order,
-    });
+    const userId = getUser(req);
+    const { productId, totalPrice, paymentMethod } = req.body;
+    db.orderProduct(productId, userId, paymentMethod, totalPrice);
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
@@ -75,11 +64,9 @@ export async function orderMultipleProducts(
       if (quantity <= 0) {
         throw new AppError("Quantity must be greater than zero", 400);
       }
-      createdOrders.push(await db.orderProduct(productId, quantity, userId));
     }
     res.status(201).json({
       message: "Orders placed successfully",
-      data: createdOrders,
     });
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
@@ -96,8 +83,13 @@ export async function storeCart(
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-    
   } catch (err: any) {
     next(err instanceof AppError ? err : new AppError(err.message, 500));
   }
+}
+
+type Order = {
+  productIds : string[],
+  userId:string,
+  paymentMethod:PaymentMethod
 }

@@ -37,4 +37,11 @@ export class CartService {
     const currentCart = this.cart.getValue();
     return currentCart.some((ele) => ele.id === product.id);
   }
+
+  removeItem(product: ProductResponse | ShopProductsResponse) {
+    const currentCart = this.cart.getValue();
+    const updatedCart = currentCart.filter((item) => item.id !== product.id);
+    this.cart.next(updatedCart);
+  }
+
 }

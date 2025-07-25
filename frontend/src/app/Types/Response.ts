@@ -67,3 +67,7 @@ export type ShopProductsResponse = {
   lastRestocked: Date;
   price: number;
 };
+
+// -------------------------------------- Frontend Types --------------------------------------
+export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';
+

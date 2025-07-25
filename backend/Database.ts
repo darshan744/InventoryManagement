@@ -1,7 +1,7 @@
 import { Product, UnitType } from "./generated/prisma";
 import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
-
+import { PaymentMethod } from "./generated/prisma/index";
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -60,7 +60,7 @@ export async function createProduct(
   image: string | null,
   userId: string,
   description: string,
-  price : number
+  price: number,
 ) {
   return await Prisma.product.create({
     data: {
@@ -72,7 +72,7 @@ export async function createProduct(
       userId,
       image,
       description,
-      price
+      price,
     },
   });
 }
@@ -104,17 +104,18 @@ export async function getOrders(userId: string) {
   });
 }
 export async function orderProduct(
-  productId: string,
-  quantity: number,
+  productId: string[],
   userId: string,
+  paymentMethod: PaymentMethod,
+  totalPrice: number,
 ) {
-  if (!productId || !quantity || !userId) {
-    throw new Error("Product ID, quantity, and user ID are required");
-  }
   return await Prisma.order.create({
     data: {
-      productId,
-      quantity,
+      products: {
+        connect: productId.map((id) => ({ id })),
+      },
+      paymentMethod,
+      price: totalPrice,
       userId,
     },
   });
