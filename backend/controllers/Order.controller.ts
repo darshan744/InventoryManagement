@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 import * as db from "../Database";
 import getUser from "../utils/GetUser";
-import { PaymentMethod } from "../generated/prisma";
+import { PaymentMethod, Product } from "../generated/prisma";
 export async function getOrders(
   req: Request,
   res: Response,
@@ -15,9 +15,11 @@ export async function getOrders(
       throw new AppError("UserId is required", 400);
     }
     const orders = await db.getOrders(userId);
+    console.log("Orders retrieved successfully:", orders);
     if (!orders || orders.length === 0) {
       throw new AppError("No orders found", 404);
     }
+    console.log("Orders retrieved successfully:", orders);
     res.status(200).json({ message: "Orders retrieved", data: orders });
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
@@ -32,8 +34,18 @@ export async function orderProduct(
 ) {
   try {
     const userId = getUser(req);
-    const { productId, totalPrice, paymentMethod } = req.body;
-    db.orderProduct(productId, userId, paymentMethod, totalPrice);
+    const orders: Order = req.body;
+    const newOrders = await db.orderProduct(
+      orders.products,
+      orders.paymentMethod,
+      orders.price,
+      userId,
+    );
+    res.status(201).json({
+      message: "Order placed successfully",
+      data: newOrders,
+    });
+    console.log("Order placed successfully:", newOrders);
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
   }
@@ -89,7 +101,7 @@ export async function storeCart(
 }
 
 type Order = {
-  productIds : string[],
-  userId:string,
-  paymentMethod:PaymentMethod
-}
+  products: Product[];
+  paymentMethod: PaymentMethod;
+  price: number;
+};

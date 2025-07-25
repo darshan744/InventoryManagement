@@ -1,17 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { IBaseResponse, OrderResponse } from '../../Types/Response';
+import {
+  IBaseResponse,
+  OrderResponse,
+  PaymentMethod,
+} from '../../Types/Response';
+import { CartService } from '../Cart/cart.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private cart: CartService,
+  ) { }
 
   getOrders() {
-    const url = `${environment.apiUrl}/orders`;
+    const url = `${environment.apiUrl}/api/orders`;
     return this.http.get<IBaseResponse<OrderResponse[]>>(url, {
+      withCredentials: true,
+    });
+  }
+  placeOrderUsingCart(paymentMethod: PaymentMethod) {
+    const cartItems = this.cart.cartItems;
+    if (cartItems.length === 0) {
+      return;
+    }
+    const totalPrice = this.cart.totalPriceValue;
+    const body = {
+      products: cartItems,
+      paymentMethod: paymentMethod,
+      price: totalPrice,
+    };
+    console.log('Placing order with body:', body);
+    const url = `${environment.apiUrl}/api/order`;
+    return this.http.post<IBaseResponse<OrderResponse>>(url, body, {
       withCredentials: true,
     });
   }

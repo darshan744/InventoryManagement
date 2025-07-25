@@ -101,18 +101,28 @@ export async function getOrders(userId: string) {
     where: {
       userId: userId,
     },
+    include : {
+      products : {
+        select : {
+          image:true ,
+          name:true ,
+          price : true,
+          quantity:true,
+        }
+      }
+    }
   });
 }
 export async function orderProduct(
-  productId: string[],
-  userId: string,
+  products: Product[],
   paymentMethod: PaymentMethod,
   totalPrice: number,
+  userId: string,
 ) {
   return await Prisma.order.create({
     data: {
       products: {
-        connect: productId.map((id) => ({ id })),
+        connect: products.map((item) => ({ id: item.id })),
       },
       paymentMethod,
       price: totalPrice,

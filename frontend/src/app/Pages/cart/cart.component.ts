@@ -7,6 +7,7 @@ import { SelectModule } from 'primeng/select';
 import { PaymentMethod } from '../../Types/Response';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../Service/Toast/toast.service';
+import { OrderService } from '../../Service/Order/order.service';
 @Component({
   selector: 'app-cart',
   imports: [
@@ -41,6 +42,7 @@ export class CartComponent {
   constructor(
     private cartService: CartService,
     private toastService: ToastService,
+    private orderService: OrderService,
   ) { }
   get totalPrice() {
     return this.cartService.totalPrice$;
@@ -57,5 +59,10 @@ export class CartComponent {
       );
       return;
     }
+    this.orderService
+      .placeOrderUsingCart(this.selectedPaymentMethod)
+      ?.subscribe((res) => {
+        this.toastService.success(res.message, 'Order Placed');
+      });
   }
 }

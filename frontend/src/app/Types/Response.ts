@@ -43,14 +43,13 @@ export type OrderType = 'RESTOCK' | 'ISSUE';
 export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED';
 export type OrderResponse = {
   id: string;
-  productId: string;
   quantity: number;
-  type: OrderType;
   status: OrderStatus;
   date: Date;
   notes: string | null;
   userId: string;
   price: number;
+  paymentMethod: PaymentMethod;
 };
 export type ShopProductsResponse = {
   user: {
@@ -70,4 +69,3 @@ export type ShopProductsResponse = {
 
 // -------------------------------------- Frontend Types --------------------------------------
 export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';
-

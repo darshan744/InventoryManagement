@@ -44,4 +44,11 @@ export class CartService {
     this.cart.next(updatedCart);
   }
 
+  get cartItems() {
+    return this.cart.getValue();
+  }
+
+  get totalPriceValue() {
+    return this.totalPrice.getValue();
+  }
 }
