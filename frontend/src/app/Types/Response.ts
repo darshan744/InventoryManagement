@@ -1,8 +1,17 @@
+import * as types from '../../../../BackendType';
+
+export type PaymentMethod = types.$Enums.PaymentMethod;
+export type OrderStatus = types.$Enums.OrderStatus;
+export type UnitType = types.$Enums.UnitType;
+
+export type Product = types.Product;
+export type Order = types.Order;
+export type OrderItem = types.OrderItem;
+export type OrderResponse = types.GetOrdersResponse;
 export type IBaseResponse<T> = {
   message: string;
   data: T;
 };
-
 export type LoginResponse = {
   user: {
     id: string;
@@ -10,10 +19,7 @@ export type LoginResponse = {
     name: string;
   };
 };
-
-export type UnitType = 'PCS' | 'KG' | 'LITERS' | 'BOX' | 'OTHER';
 export const UnitTypes: UnitType[] = ['PCS', 'KG', 'LITERS', 'BOX', 'OTHER'];
-
 export class ProductResponse {
   id: string;
   name: string;
@@ -39,28 +45,6 @@ export class ProductResponse {
     this.price = 0;
   }
 }
-export type OrderType = 'RESTOCK' | 'ISSUE';
-export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED';
-type OrderItem = {
-  product: {
-    name: string;
-    image: string | null;
-    description: string;
-  };
-  quantity: number;
-  productPrice: number;
-};
-export type Order = {
-  id: string;
-  quantity: number;
-  status: OrderStatus;
-  date: Date;
-  notes: string | null;
-  userId: string;
-  price: number;
-  paymentMethod: PaymentMethod;
-  OrderItem: OrderItem[];
-};
 export type ShopProductsResponse = {
   user: {
     name: string;
@@ -76,6 +60,6 @@ export type ShopProductsResponse = {
   lastRestocked: Date;
   price: number;
 };
-
-// -------------------------------------- Frontend Types --------------------------------------
-export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';
+//
+// // -------------------------------------- Frontend Types --------------------------------------
+// export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';

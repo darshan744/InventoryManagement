@@ -96,7 +96,9 @@ export async function deleteProduct(productId: string) {
   });
 }
 
-export async function getOrders(userId: string) {
+export async function getOrders(userId: string): Promise<(
+{ OrderItem: { productPrice: number; quantity: number; product: { image: string | null; name: string; description: string; }; }[]; } & { id: string; status: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.OrderStatus; date: Date; notes: string | null; price: number; paymentMethod: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.PaymentMethod; buyerId: string; })[]
+> {
   return await Prisma.order.findMany({
     where: {
       buyerId: userId,
@@ -131,6 +133,7 @@ export async function orderProduct(
           productId: product.id,
           quantity: product.quantity,
           productPrice: product.price,
+          sellerId: product.userId,
         })),
       },
       paymentMethod,

@@ -3,6 +3,7 @@ import AppError from "../utils/AppError";
 import * as db from "../Database";
 import getUser from "../utils/GetUser";
 import { PaymentMethod, Product } from "../generated/prisma";
+
 export async function getOrders(
   req: Request,
   res: Response,
@@ -23,7 +24,6 @@ export async function getOrders(
     res.status(200).json({ message: "Orders retrieved", data: orders });
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
-    1;
   }
 }
 

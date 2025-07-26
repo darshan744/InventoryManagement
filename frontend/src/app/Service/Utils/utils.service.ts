@@ -38,6 +38,9 @@ export class UtilsService {
       case 'CANCELLED': {
         return 'danger';
       }
+      default: {
+        return 'secondary';
+      }
     }
   }
 }
