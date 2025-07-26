@@ -59,9 +59,7 @@ model Order {
   price         Int
   paymentMethod PaymentMethod
   buyer         User          @relation("bought", fields: [buyerId], references: [id])
-  seller        User          @relation("sold", fields: [sellerId], references: [id])
   buyerId       String
-  sellerId      String
 }
 
 model OrderItem {
@@ -72,6 +70,8 @@ model OrderItem {
   productId    String
   productPrice Int
   quantity     Int
+  seller       User    @relation("sold", fields: [sellerId], references: [id])
+  sellerId     String
 }
 
 model Cart {
@@ -91,15 +91,15 @@ model CartItem {
 }
 
 model User {
-  id           String    @id @default(uuid())
-  name         String
-  email        String    @unique
-  password     String
-  role         UserRole  @default(STAFF)
-  preferences  Json?
-  Product      Product[]
-  cart         Cart?     @relation("cart")
-  cartId       String?   @unique
-  buyingOrder  Order[]   @relation("bought")
-  sellingOrder Order[]   @relation("sold")
+  id             String      @id @default(uuid())
+  name           String
+  email          String      @unique
+  password       String
+  role           UserRole    @default(STAFF)
+  preferences    Json?
+  Product        Product[]
+  cart           Cart?       @relation("cart")
+  cartId         String?     @unique
+  buyingOrder    Order[]     @relation("bought")
+  soldOrderItems OrderItem[] @relation("sold")
 }

@@ -99,7 +99,7 @@ export async function deleteProduct(productId: string) {
 export async function getOrders(userId: string) {
   return await Prisma.order.findMany({
     where: {
-      userId: userId,
+      buyerId: userId,
     },
     include: {
       OrderItem: {
@@ -135,7 +135,7 @@ export async function orderProduct(
       },
       paymentMethod,
       price: totalPrice,
-      userId,
+      buyerId: userId,
     },
   });
 }
