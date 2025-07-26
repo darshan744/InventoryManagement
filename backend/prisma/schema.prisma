@@ -56,10 +56,12 @@ model Order {
   status        OrderStatus   @default(PENDING)
   date          DateTime      @default(now())
   notes         String?
-  user          User          @relation(fields: [userId], references: [id])
-  userId        String
   price         Int
   paymentMethod PaymentMethod
+  buyer         User          @relation("bought", fields: [buyerId], references: [id])
+  seller        User          @relation("sold", fields: [sellerId], references: [id])
+  buyerId       String
+  sellerId      String
 }
 
 model OrderItem {
@@ -89,14 +91,15 @@ model CartItem {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  name        String
-  email       String    @unique
-  password    String
-  role        UserRole  @default(STAFF)
-  preferences Json?
-  orders      Order[]
-  Product     Product[]
-  cart        Cart?     @relation("cart")
-  cartId      String?   @unique
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
+  password     String
+  role         UserRole  @default(STAFF)
+  preferences  Json?
+  Product      Product[]
+  cart         Cart?     @relation("cart")
+  cartId       String?   @unique
+  buyingOrder  Order[]   @relation("bought")
+  sellingOrder Order[]   @relation("sold")
 }
