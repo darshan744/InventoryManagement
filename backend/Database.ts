@@ -2,6 +2,7 @@ import { Product, UnitType } from "./generated/prisma";
 import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
 import { PaymentMethod } from "./generated/prisma/index";
+import { AllProductResponse } from "./types/Types";
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -23,7 +24,9 @@ export const createUser = async (
     },
   });
 };
-export async function getAllProducts(userId: string) {
+export async function getAllProducts(
+  userId: string,
+): Promise<AllProductResponse[]> {
   return await Prisma.product.findMany({
     where: {
       quantity: { gt: 0 },
@@ -33,6 +36,7 @@ export async function getAllProducts(userId: string) {
       user: {
         select: {
           name: true,
+          id: true,
         },
       },
     },
@@ -96,8 +100,22 @@ export async function deleteProduct(productId: string) {
   });
 }
 
-export async function getOrders(userId: string): Promise<(
-{ OrderItem: { productPrice: number; quantity: number; product: { image: string | null; name: string; description: string; }; }[]; } & { id: string; status: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.OrderStatus; date: Date; notes: string | null; price: number; paymentMethod: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.PaymentMethod; buyerId: string; })[]
+export async function getOrders(userId: string): Promise<
+  ({
+    OrderItem: {
+      productPrice: number;
+      quantity: number;
+      product: { image: string | null; name: string; description: string };
+    }[];
+  } & {
+    id: string;
+    status: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.OrderStatus;
+    date: Date;
+    notes: string | null;
+    price: number;
+    paymentMethod: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.PaymentMethod;
+    buyerId: string;
+  })[]
 > {
   return await Prisma.order.findMany({
     where: {
@@ -120,8 +138,15 @@ export async function getOrders(userId: string): Promise<(
     },
   });
 }
+
+// create: products.map((product) => ({
+//   productId: product.id,
+//   quantity: product.quantity,
+//   productPrice: product.price,
+//   sellerId: product.userId,
+// })),
 export async function orderProduct(
-  products: Product[],
+  products: AllProductResponse[],
   paymentMethod: PaymentMethod,
   totalPrice: number,
   userId: string,
@@ -129,12 +154,14 @@ export async function orderProduct(
   return await Prisma.order.create({
     data: {
       OrderItem: {
-        create: products.map((product) => ({
-          productId: product.id,
-          quantity: product.quantity,
-          productPrice: product.price,
-          sellerId: product.userId,
-        })),
+        createMany: {
+          data: products.map((product) => ({
+            productId: product.id,
+            quantity: product.quantity,
+            productPrice: product.price,
+            sellerId: product.user.id,
+          })),
+        },
       },
       paymentMethod,
       price: totalPrice,

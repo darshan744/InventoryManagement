@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { BadgeModule } from 'primeng/badge';
 import { DataService } from '../../Service/data.service';
 import { OrderService } from '../../Service/Order/order.service';
-import { Order, OrderStatus } from '../../Types/Response';
+import { Order, OrderResponse, OrderStatus } from '../../Types/Response';
 import { UtilsService } from '../../Service/Utils/utils.service';
-import { ButtonSeverity } from 'primeng/button';
 
 @Component({
   selector: 'app-orders',
@@ -16,7 +15,7 @@ import { ButtonSeverity } from 'primeng/button';
   styleUrl: './orders.component.css',
 })
 export class OrdersComponent {
-  orders: Order[] = new Array<Order>();
+  orders: OrderResponse[] = new Array<OrderResponse>();
   filteredOrders: any;
   filterStatus: string = '';
   newOrder = { productName: '', quantity: 0, status: 'pending', date: '' };

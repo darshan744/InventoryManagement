@@ -13,4 +13,21 @@ export type GetOrdersResponse = {
   price: number;
   paymentMethod: PrismaTypes.$Enums.PaymentMethod;
   buyerId: string;
-}[];
+};
+export type AllProductResponse = {
+  user: {
+    id: string;
+    name: string;
+  };
+} & {
+  id: string;
+  name: string;
+  image: string | null;
+  description: string;
+  price: number;
+  quantity: number;
+  threshold: number;
+  unit: PrismaTypes.$Enums.UnitType;
+  category: string | null;
+  lastRestocked: Date;
+};

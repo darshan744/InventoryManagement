@@ -3,6 +3,7 @@ import AppError from "../utils/AppError";
 import * as db from "../Database";
 import getUser from "../utils/GetUser";
 import { PaymentMethod, Product } from "../generated/prisma";
+import { AllProductResponse } from "../types/Types";
 
 export async function getOrders(
   req: Request,
@@ -15,6 +16,7 @@ export async function getOrders(
     if (!userId) {
       throw new AppError("UserId is required", 400);
     }
+
     const orders = await db.getOrders(userId);
     console.log("Orders retrieved successfully:", orders);
     if (!orders || orders.length === 0) {
@@ -67,7 +69,7 @@ export async function storeCart(
 }
 
 type Order = {
-  products: Product[];
+  products: AllProductResponse[];
   paymentMethod: PaymentMethod;
   price: number;
 };

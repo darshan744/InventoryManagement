@@ -45,21 +45,7 @@ export class ProductResponse {
     this.price = 0;
   }
 }
-export type ShopProductsResponse = {
-  user: {
-    name: string;
-  };
-  id: string;
-  name: string;
-  quantity: number;
-  image: string | null;
-  description: string;
-  threshold: number;
-  unit: UnitType;
-  category: string | null;
-  lastRestocked: Date;
-  price: number;
-};
+export type ShopProductsResponse = types.AllProductResponse;
 //
 // // -------------------------------------- Frontend Types --------------------------------------
 // export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';
