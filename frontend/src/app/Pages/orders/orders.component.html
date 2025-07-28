@@ -3,7 +3,7 @@
   <div class="flex justify-center space-x-4 mb-6">
     <button
       (click)="switchTab('myOrders')"
-      class="px-6 py-2 rounded-full font-medium border transition-all duration-200"
+      class="md:px-6 md:py-2 px-4 py-1 rounded-full font-medium border transition-all duration-200"
       [ngClass]="{
         'bg-blue-600 text-white border-blue-600 shadow-md':
           currentTab === 'myOrders',
@@ -16,7 +16,7 @@
 
     <button
       (click)="switchTab('requestedOrders')"
-      class="px-6 py-2 rounded-full font-medium border transition-all duration-200"
+      class="md:px-6 px-4 md:py-2 py-1 rounded-full font-medium border transition-all duration-200"
       [ngClass]="{
         'bg-blue-600 text-white border-blue-600 shadow-md':
           currentTab === 'requestedOrders',

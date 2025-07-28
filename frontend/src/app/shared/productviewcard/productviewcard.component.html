@@ -1,15 +1,12 @@
 <p-card
-  class="w-[300px] h-[520px] flex flex-col justify-between"
+  class="w-[300px] flex flex-col justify-between"
   *ngIf="product() !== null"
 >
   <ng-template #header>
     <div
       class="w-full h-[250px] flex items-center justify-center overflow-hidden"
     >
-      <img
-        [src]="productImage"
-        alt="product image"
-      />
+      <img [src]="productImage" alt="product image" />
     </div>
   </ng-template>
 

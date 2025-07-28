@@ -120,7 +120,8 @@ export async function getAllProducts(
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-    const products = await db.getAllProducts(userId);
+    let products = await db.getAllProducts(userId);
+    products.filter((product) => product.quantity > product.threshold);
     if (!products || products.length === 0) {
       throw new AppError("No products found", 404);
     }
@@ -139,5 +140,7 @@ export async function addCart(req: Request, res: Response, next: NextFunction) {
     if (!userId) {
       throw new AppError("User ID is required", 400);
     }
-  } catch (err: any) { }
+  } catch (error: any) {
+    next(error instanceof AppError ? error : new AppError(error.message, 500));
+  }
 }

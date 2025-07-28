@@ -127,28 +127,54 @@ export async function getOrders(userId: string) {
     },
   });
 }
+
 export async function orderProduct(
   products: AllProductResponse[],
   paymentMethod: PaymentMethod,
   totalPrice: number,
   userId: string,
 ) {
-  return await Prisma.order.create({
-    data: {
-      OrderItem: {
-        createMany: {
-          data: products.map((product) => ({
-            productId: product.id,
-            quantity: product.quantity,
-            productPrice: product.price,
-            sellerId: product.user.id,
-          })),
+  return Prisma.$transaction(async (tx) => {
+    for (const product of products) {
+      const productData = await tx.product.findFirst({
+        where: { id: product.id },
+      });
+      if (!productData) {
+        throw new Error(`Product with ID ${product.id} not found`);
+      }
+
+      if (productData.quantity < product.quantity) {
+        throw new Error(
+          `Insufficient stock for product ${product.name}. Available: ${productData.quantity}, Requested: ${product.quantity}`,
+        );
+      }
+
+      await tx.product.update({
+        where: { id: product.id },
+        data: {
+          quantity: {
+            decrement: product.quantity,
+          },
         },
+      });
+    }
+    return await Prisma.order.create({
+      data: {
+        OrderItem: {
+          createMany: {
+            data: products.map((product) => ({
+              productId: product.id,
+              quantity: product.quantity,
+              productPrice: product.price,
+              sellerId: product.user.id,
+            })),
+          },
+        },
+        paymentMethod,
+        price: totalPrice,
+        buyerId: userId,
       },
-      paymentMethod,
-      price: totalPrice,
-      buyerId: userId,
-    },
+    });
   });
 }
 

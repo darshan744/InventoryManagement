@@ -25,9 +25,10 @@
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
       Inventory
     </h2>
-    <div class="grid grid-cols-5">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 justify-center">
       <div
         *ngFor="let product of filteredProducts"
+        class="flex justify-center"
         [ngClass]="{
           'border-l-4 border-pink-500': product.quantity < product.threshold,
         }"
