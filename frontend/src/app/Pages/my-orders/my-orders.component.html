@@ -1,7 +1,24 @@
 <div class="animate-fade-in px-2 sm:px-4 md:px-6 py-4">
   <div>
+    <div class="flex justify-center space-x-2 mb-4">
+      <button
+        *ngFor="let status of statuses"
+        (click)="selectedStatus.set(status.value)"
+        class="transition-all duration-500"
+        [ngClass]="{
+          'bg-blue-600 text-white': selectedStatus() === status.value,
+          'bg-gray-100 text-gray-700': selectedStatus() !== status.value,
+        }"
+        class="px-4 py-1 rounded-full text-sm border"
+      >
+        {{ status.label }}
+      </button>
+    </div>
     <div>
-      <div *ngFor="let order of orders" class="gap-4 p-4 border-b items-center">
+      <div
+        *ngFor="let order of filteredOrders()"
+        class="gap-4 p-4 border-b items-center"
+      >
         <div
           class="flex justify-between items-center bg-gray-100 dark:bg-[#262626] p-4 rounded-md mb-2 shadow"
         >
