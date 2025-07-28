@@ -92,30 +92,30 @@ export async function getRequestedOrders(
   }
 }
 
-type OrderItemChange = {
-  orderItemId: string;
-  status: "ACCEPTED" | "CANCELLED";
-};
-
 export async function modifyStatusOfOrderItem(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
   try {
-    const { orderItemId, status }: OrderItemChange = req.body;
-
+    const orderItemId = req.params.id;
+    const { status } = req.body;
     if (!orderItemId || !status) {
       throw new AppError("Order item ID and status are required", 400);
     }
 
-    if (status !== "ACCEPTED" && status !== "CANCELLED") {
+    if (status !== "COMPLETED" && status !== "CANCELLED") {
       throw new AppError(
         "Invalid status. Must be 'ACCEPTED' or 'CANCELLED'",
         400,
       );
     }
-    
+    const updates = await db.updateOrderItemStatus(orderItemId, status);
+
+    res.json({
+      message: "Order item status updated successfully",
+      data: updates,
+    });
   } catch (err: any) {
     next(err instanceof AppError ? err : new AppError(err.message, 500));
   }

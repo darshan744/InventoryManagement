@@ -2,7 +2,11 @@ import { Product, UnitType } from "./generated/prisma";
 import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
 import { PaymentMethod } from "./generated/prisma/index";
-import { AllProductResponse, RequestOrders } from "./types/Types";
+import {
+  AllProductResponse,
+  GetOrdersResponse,
+  RequestOrders,
+} from "./types/Types";
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -100,23 +104,7 @@ export async function deleteProduct(productId: string) {
   });
 }
 
-export async function getOrders(userId: string): Promise<
-  ({
-    OrderItem: {
-      productPrice: number;
-      quantity: number;
-      product: { image: string | null; name: string; description: string };
-    }[];
-  } & {
-    id: string;
-    status: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.OrderStatus;
-    date: Date;
-    notes: string | null;
-    price: number;
-    paymentMethod: import("/home/darshan/Projects/S7_Project/project/backend/generated/prisma/index").$Enums.PaymentMethod;
-    buyerId: string;
-  })[]
-> {
+export async function getOrders(userId: string) {
   return await Prisma.order.findMany({
     where: {
       buyerId: userId,
@@ -126,6 +114,7 @@ export async function getOrders(userId: string): Promise<
         select: {
           quantity: true,
           productPrice: true,
+          status: true,
           product: {
             select: {
               name: true,
@@ -163,9 +152,7 @@ export async function orderProduct(
   });
 }
 
-export async function requestedOrders(
-  sellerId: string,
-): Promise<RequestOrders[]> {
+export async function requestedOrders(sellerId: string) {
   return await Prisma.orderItem.findMany({
     where: {
       sellerId,
@@ -182,13 +169,18 @@ export async function requestedOrders(
   });
 }
 
-export async function updateOrderItem(orderItemId : string , status : "ACCEPTED" | "CANCELLED") {
-  // return await Prisma.orderItem.update({
-  //   where : {
-  //     id : orderItemId
-  //   },
-  //   data : {
-  //
-  //   }
-  // });
+export async function updateOrderItemStatus(
+  orderItemId: string,
+  status: "COMPLETED" | "CANCELLED",
+) {
+  return await Prisma.orderItem.update({
+    where: { id: orderItemId },
+    data: {
+      status,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
 }

@@ -36,8 +36,11 @@
     </ng-container>
 
     <!-- Requested Orders Tab -->
+
     <ng-container *ngIf="currentTab === 'requestedOrders'">
-      <app-requested-orders />
+      <div *ngFor="let order of requestOrders; let i = index">
+        <app-requested-orders [requestOrder]="order" />
+      </div>
     </ng-container>
   </div>
 

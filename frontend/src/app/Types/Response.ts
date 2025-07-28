@@ -9,6 +9,7 @@ export type Order = types.Order;
 export type OrderItem = types.OrderItem;
 export type OrderResponse = types.GetOrdersResponse;
 export type RequestOrderResponse = types.RequestOrders;
+export type RequestOrderStatusChange = types.UpdateRequestOrderStatus;
 export type IBaseResponse<T> = {
   message: string;
   data: T;

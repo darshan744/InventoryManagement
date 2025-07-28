@@ -2,7 +2,9 @@
   <div>
     <div>
       <div *ngFor="let order of orders" class="gap-4 p-4 border-b items-center">
-        <div class="flex justify-between items-center bg-gray-100 dark:bg-[#262626] p-4 rounded-md mb-2 shadow">
+        <div
+          class="flex justify-between items-center bg-gray-100 dark:bg-[#262626] p-4 rounded-md mb-2 shadow"
+        >
           <div>
             <h2 class="text-lg font-bold">Order ID: {{ order.id }}</h2>
             <p class="text-gray-500 text-sm">
@@ -12,15 +14,23 @@
               Total Amount: {{ order.price | currency: "INR" }}
             </p>
           </div>
-          <p-badge [severity]="getSeverity(order.status)" [value]="order.status"></p-badge>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
-          <div *ngFor="let orderItem of order.OrderItem"
-            class="flex bg-white dark:bg-[#1a1818] items-center gap-4 shadow-xl p-4 rounded-lg flex-col sm:flex-row">
+        <div
+          class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4"
+        >
+          <div
+            *ngFor="let orderItem of order.OrderItem"
+            class="flex bg-white dark:bg-[#1a1818] items-center gap-4 shadow-xl p-4 rounded-lg flex-col sm:flex-row"
+          >
             <!-- IMAGE FIXED -->
-            <div class="flex-shrink-0 flex items-center justify-center w-full sm:w-32 h-32">
-              <img [src]="getImage(orderItem.product.image)" alt="{{ orderItem.product.name }}"
-                class="max-h-full max-w-full object-contain rounded-md" />
+            <div
+              class="flex-shrink-0 flex items-center justify-center w-full sm:w-32 h-32"
+            >
+              <img
+                [src]="getImage(orderItem.product.image)"
+                alt="{{ orderItem.product.name }}"
+                class="max-h-full max-w-full object-contain rounded-md"
+              />
             </div>
 
             <!-- TEXT INFO -->
@@ -40,9 +50,14 @@
               <p class="font-semibold text-sm">
                 Total:
                 {{
-                orderItem.productPrice * orderItem.quantity | currency: "INR"
+                  orderItem.productPrice * orderItem.quantity | currency: "INR"
                 }}
               </p>
+              <p-badge
+                [severity]="getSeverity(orderItem.status)"
+                [value]="orderItem.status"
+              >
+              </p-badge>
             </div>
           </div>
         </div>

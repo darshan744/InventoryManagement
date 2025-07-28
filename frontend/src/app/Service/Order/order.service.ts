@@ -6,6 +6,8 @@ import {
   Order,
   OrderResponse,
   PaymentMethod,
+  RequestOrderResponse,
+  RequestOrderStatusChange,
 } from '../../Types/Response';
 import { CartService } from '../Cart/cart.service';
 import { RequestOrders } from '../../../../../BackendType';
@@ -45,8 +47,18 @@ export class OrderService {
 
   getRequestOrders() {
     const url = `${environment.apiUrl}/api/request`;
-    return this.http.get<IBaseResponse<RequestOrders[]>>(url, {
+    return this.http.get<IBaseResponse<RequestOrderResponse[]>>(url, {
       withCredentials: true,
     });
+  }
+  updateStatus(id: string, status: 'COMPLETED' | 'CANCELLED') {
+    const url = `${environment.apiUrl}/api/request/${id}`;
+    return this.http.patch<IBaseResponse<RequestOrderStatusChange>>(
+      url,
+      { status },
+      {
+        withCredentials: true,
+      },
+    );
   }
 }

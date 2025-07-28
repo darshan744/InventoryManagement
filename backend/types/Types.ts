@@ -1,16 +1,18 @@
+import { updateOrderItemStatus } from "../Database";
 import * as PrismaTypes from "../generated/prisma/index";
+
 export type GetOrdersResponse = {
   OrderItem: {
-    productPrice: number;
+    product: { name: string; image: string | null; description: string };
     quantity: number;
-    product: { image: string | null; name: string; description: string };
+    productPrice: number;
+    status: PrismaTypes.$Enums.OrderStatus;
   }[];
 } & {
   id: string;
-  status: PrismaTypes.$Enums.OrderStatus;
+  price: number;
   date: Date;
   notes: string | null;
-  price: number;
   paymentMethod: PrismaTypes.$Enums.PaymentMethod;
   buyerId: string;
 };
@@ -45,4 +47,10 @@ export type RequestOrders = {
   productId: string;
   productPrice: number;
   sellerId: string;
+  status: PrismaTypes.$Enums.OrderStatus;
+};
+
+export type UpdateRequestOrderStatus = {
+  id: string;
+  status: PrismaTypes.$Enums.OrderStatus;
 };
