@@ -2,7 +2,7 @@ import { Product, UnitType } from "./generated/prisma";
 import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
 import { PaymentMethod } from "./generated/prisma/index";
-import { AllProductResponse } from "./types/Types";
+import { AllProductResponse, RequestOrders } from "./types/Types";
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -163,11 +163,9 @@ export async function orderProduct(
   });
 }
 
-export async function requestedOrders(sellerId: string): Promise<
-(
-{ product: { name: string; image: string | null; description: string; }; } & { id: string; quantity: number; orderId: string; productId: string; productPrice: number; sellerId: string; }
-)[]
-> {
+export async function requestedOrders(
+  sellerId: string,
+): Promise<RequestOrders[]> {
   return await Prisma.orderItem.findMany({
     where: {
       sellerId,
@@ -182,4 +180,15 @@ export async function requestedOrders(sellerId: string): Promise<
       },
     },
   });
+}
+
+export async function updateOrderItem(orderItemId : string , status : "ACCEPTED" | "CANCELLED") {
+  // return await Prisma.orderItem.update({
+  //   where : {
+  //     id : orderItemId
+  //   },
+  //   data : {
+  //
+  //   }
+  // });
 }

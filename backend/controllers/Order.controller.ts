@@ -83,11 +83,39 @@ export async function getRequestedOrders(
     const userId = getUser(req);
 
     const requestedOrders = await db.requestedOrders(userId);
-
     res.json({
       message: "Requested orders retrieved successfully",
       data: requestedOrders,
     });
+  } catch (err: any) {
+    next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}
+
+type OrderItemChange = {
+  orderItemId: string;
+  status: "ACCEPTED" | "CANCELLED";
+};
+
+export async function modifyStatusOfOrderItem(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { orderItemId, status }: OrderItemChange = req.body;
+
+    if (!orderItemId || !status) {
+      throw new AppError("Order item ID and status are required", 400);
+    }
+
+    if (status !== "ACCEPTED" && status !== "CANCELLED") {
+      throw new AppError(
+        "Invalid status. Must be 'ACCEPTED' or 'CANCELLED'",
+        400,
+      );
+    }
+    
   } catch (err: any) {
     next(err instanceof AppError ? err : new AppError(err.message, 500));
   }
