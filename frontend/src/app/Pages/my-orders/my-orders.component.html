@@ -1,41 +1,49 @@
-<div>
+<div class="px-2 sm:px-4 md:px-6 py-4">
   <div>
-    <div *ngFor="let order of orders" class="gap-4 p-4 border-b items-center">
-      <div class="flex justify-center">
-        <div>
-          <h2 class="text-2xl font-bold">Order ID: {{ order.id }}</h2>
-          <p class="text-gray-500">Date: {{ order.date | date: "short" }}</p>
-          <p class="text-gray-500">
-            Total Amount: {{ order.price | currency: "INR" }}
-          </p>
-          <p-badge
-            [severity]="getSeverity(order.status)"
-            [value]="order.status"
-          >
-          </p-badge>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 items-center">
-        <div
-          *ngFor="let orderItem of order.OrderItem"
-          class="md:flex bg-white dark:bg-[#1a1818] items-center gap-4 shadow-xl p-4 rounded-lg lg:flex-row md:flex-col"
-        >
-          <div class="w-50 h-50 shrink-0 mb-3 flex items-center justify-center">
-            <img [src]="getImage(orderItem.product.image)" />
-          </div>
+    <div>
+      <div *ngFor="let order of orders" class="gap-4 p-4 border-b items-center">
+        <div class="flex justify-between items-center bg-gray-100 dark:bg-[#262626] p-4 rounded-md mb-2 shadow">
           <div>
-            <h3 class="font-bold">{{ orderItem.product.name }}</h3>
-            <p class="line-clamp-2 text-sm min-w-full text-gray-500">
-              {{ orderItem.product.description }}
+            <h2 class="text-lg font-bold">Order ID: {{ order.id }}</h2>
+            <p class="text-gray-500 text-sm">
+              Date: {{ order.date | date: "short" }}
             </p>
-            <p>Price: {{ orderItem.productPrice | currency: "INR" }}</p>
-            <p>Quantity: {{ orderItem.quantity }}</p>
-            <p>
-              Total:
-              {{
+            <p class="text-gray-500 text-sm">
+              Total Amount: {{ order.price | currency: "INR" }}
+            </p>
+          </div>
+          <p-badge [severity]="getSeverity(order.status)" [value]="order.status"></p-badge>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
+          <div *ngFor="let orderItem of order.OrderItem"
+            class="flex bg-white dark:bg-[#1a1818] items-center gap-4 shadow-xl p-4 rounded-lg flex-col sm:flex-row">
+            <!-- IMAGE FIXED -->
+            <div class="flex-shrink-0 flex items-center justify-center w-full sm:w-32 h-32">
+              <img [src]="getImage(orderItem.product.image)" alt="{{ orderItem.product.name }}"
+                class="max-h-full max-w-full object-contain rounded-md" />
+            </div>
+
+            <!-- TEXT INFO -->
+            <div class="w-full">
+              <h3 class="font-semibold text-base text-gray-800 dark:text-white">
+                {{ orderItem.product.name }}
+              </h3>
+              <p class="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                {{ orderItem.product.description }}
+              </p>
+              <p class="text-sm font-medium text-green-600">
+                Price: {{ orderItem.productPrice | currency: "INR" }}
+              </p>
+              <p class="text-sm text-gray-500">
+                Quantity: {{ orderItem.quantity }}
+              </p>
+              <p class="font-semibold text-sm">
+                Total:
+                {{
                 orderItem.productPrice * orderItem.quantity | currency: "INR"
-              }}
-            </p>
+                }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
