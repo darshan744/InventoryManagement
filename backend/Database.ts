@@ -199,14 +199,39 @@ export async function updateOrderItemStatus(
   orderItemId: string,
   status: "COMPLETED" | "CANCELLED",
 ) {
-  return await Prisma.orderItem.update({
-    where: { id: orderItemId },
-    data: {
-      status,
-    },
-    select: {
-      id: true,
-      status: true,
-    },
+  return Prisma.$transaction(async (tx) => {
+    const orderItem = await tx.orderItem.findUnique({
+      where: { id: orderItemId },
+      include: {
+        product: true,
+      },
+    });
+    if (!orderItem) {
+      throw new Error(`Order item with ID ${orderItemId} not found`);
+    }
+    if (orderItem.status === "COMPLETED" || orderItem.status === "CANCELLED") {
+      throw new Error(
+        `Order item with ID ${orderItemId} is already ${orderItem.status}`,
+      );
+    }
+    if (orderItem.product.quantity < orderItem.quantity) {
+      throw new Error(
+        `Insufficient stock for product ${orderItem.product.name}. Available: ${orderItem.product.quantity}, Requested: ${orderItem.quantity}`,
+      );
+    }
+    return await tx.orderItem.update({
+      where: { id: orderItemId },
+      data: {
+        status: status,
+        product: {
+          update: {
+            quantity: {
+              increment: status === "CANCELLED" ? orderItem.quantity : 0,
+            },
+          },
+        },
+      },
+      select: { id: true, status: true },
+    });
   });
 }
