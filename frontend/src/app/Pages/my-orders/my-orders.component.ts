@@ -45,7 +45,6 @@ export class MyOrdersComponent {
   ngOnInit() {
     this.orderService.getOrders().subscribe((res) => {
       this.orders = res.data;
-      console.log('Orders fetched:', this.orders);
     });
   }
 }

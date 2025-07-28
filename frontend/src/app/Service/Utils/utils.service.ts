@@ -13,7 +13,6 @@ export class UtilsService {
   web$ = this.web.asObservable();
   constructor(private observer: BreakpointObserver) {
     this.observer.observe([Breakpoints.Handset]).subscribe((result) => {
-      console.log('BreakpointObserver result:', result);
       this.web.next(result.matches);
     });
   }

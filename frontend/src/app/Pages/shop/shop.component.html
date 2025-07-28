@@ -13,7 +13,7 @@
     <p>Search Result for : {{ searchBy }}</p>
   </div>
 
-  <div class="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-3 justify-center">
+  <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-3 justify-center">
     <div *ngFor="let product of products">
       <app-productviewcard [product]="product">
         <div class="flex gap-3 justify-end w-full">

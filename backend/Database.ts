@@ -2,11 +2,7 @@ import { Product, UnitType } from "./generated/prisma";
 import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
 import { PaymentMethod } from "./generated/prisma/index";
-import {
-  AllProductResponse,
-  GetOrdersResponse,
-  RequestOrders,
-} from "./types/Types";
+import { AllProductResponse } from "./types/Types";
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -209,6 +205,12 @@ export async function updateOrderItemStatus(
     if (!orderItem) {
       throw new Error(`Order item with ID ${orderItemId} not found`);
     }
+    const order = await tx.order.findUnique({
+      where: { id: orderItem.orderId },
+    });
+    if (!order) {
+      throw new Error(`Order with ID ${orderItem.orderId} not found`);
+    }
     if (orderItem.status === "COMPLETED" || orderItem.status === "CANCELLED") {
       throw new Error(
         `Order item with ID ${orderItemId} is already ${orderItem.status}`,
@@ -219,6 +221,21 @@ export async function updateOrderItemStatus(
         `Insufficient stock for product ${orderItem.product.name}. Available: ${orderItem.product.quantity}, Requested: ${orderItem.quantity}`,
       );
     }
+    const select = { id: true, status: true };
+    if (status === "COMPLETED") {
+      const product = orderItem.product;
+      const { id, userId, lastRestocked, ...rest } = product;
+      await tx.product.create({
+        data: { ...rest, quantity: orderItem.quantity, userId: order.buyerId },
+      });
+      return await tx.orderItem.update({
+        where: { id: orderItemId },
+        data: {
+          status: status,
+        },
+        select,
+      });
+    }
     return await tx.orderItem.update({
       where: { id: orderItemId },
       data: {
@@ -226,12 +243,12 @@ export async function updateOrderItemStatus(
         product: {
           update: {
             quantity: {
-              increment: status === "CANCELLED" ? orderItem.quantity : 0,
+              increment: orderItem.quantity,
             },
           },
         },
       },
-      select: { id: true, status: true },
+      select,
     });
   });
 }
