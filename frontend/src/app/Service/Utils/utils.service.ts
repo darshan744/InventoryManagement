@@ -18,11 +18,6 @@ export class UtilsService {
     });
   }
 
-  // isWeb() {
-  //   return this.web;
-  //   // return Capacitor.getPlatform() === 'web';
-  // }
-  //
   constructImage(image: string): string {
     return `${environment.apiUrl}/${image}`;
   }
@@ -42,5 +37,12 @@ export class UtilsService {
         return 'secondary';
       }
     }
+  }
+
+  getImageUrl(imagename: string | null): string {
+    if (!imagename) {
+      return 'assets/images/no-image.png';
+    }
+    return `${environment.apiUrl}/${imagename}`;
   }
 }

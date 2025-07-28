@@ -73,3 +73,22 @@ type Order = {
   paymentMethod: PaymentMethod;
   price: number;
 };
+
+export async function getRequestedOrders(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = getUser(req);
+
+    const requestedOrders = await db.requestedOrders(userId);
+
+    res.json({
+      message: "Requested orders retrieved successfully",
+      data: requestedOrders,
+    });
+  } catch (err: any) {
+    next(err instanceof AppError ? err : new AppError(err.message, 500));
+  }
+}

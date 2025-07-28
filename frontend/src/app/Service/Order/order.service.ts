@@ -8,6 +8,7 @@ import {
   PaymentMethod,
 } from '../../Types/Response';
 import { CartService } from '../Cart/cart.service';
+import { RequestOrders } from '../../../../../BackendType';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,13 @@ export class OrderService {
     const url = `${environment.apiUrl}/api/order`;
     console.log(body);
     return this.http.post<IBaseResponse<Order>>(url, body, {
+      withCredentials: true,
+    });
+  }
+
+  getRequestOrders() {
+    const url = `${environment.apiUrl}/api/request`;
+    return this.http.get<IBaseResponse<RequestOrders[]>>(url, {
       withCredentials: true,
     });
   }

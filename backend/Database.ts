@@ -138,13 +138,6 @@ export async function getOrders(userId: string): Promise<
     },
   });
 }
-
-// create: products.map((product) => ({
-//   productId: product.id,
-//   quantity: product.quantity,
-//   productPrice: product.price,
-//   sellerId: product.userId,
-// })),
 export async function orderProduct(
   products: AllProductResponse[],
   paymentMethod: PaymentMethod,
@@ -166,6 +159,27 @@ export async function orderProduct(
       paymentMethod,
       price: totalPrice,
       buyerId: userId,
+    },
+  });
+}
+
+export async function requestedOrders(sellerId: string): Promise<
+(
+{ product: { name: string; image: string | null; description: string; }; } & { id: string; quantity: number; orderId: string; productId: string; productPrice: number; sellerId: string; }
+)[]
+> {
+  return await Prisma.orderItem.findMany({
+    where: {
+      sellerId,
+    },
+    include: {
+      product: {
+        select: {
+          description: true,
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 }

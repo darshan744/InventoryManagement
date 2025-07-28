@@ -31,3 +31,18 @@ export type AllProductResponse = {
   category: string | null;
   lastRestocked: Date;
 };
+
+export type RequestOrders = {
+  product: {
+    name: string;
+    image: string | null;
+    description: string;
+  };
+} & {
+  id: string;
+  quantity: number;
+  orderId: string;
+  productId: string;
+  productPrice: number;
+  sellerId: string;
+};

@@ -8,6 +8,7 @@ export type Product = types.Product;
 export type Order = types.Order;
 export type OrderItem = types.OrderItem;
 export type OrderResponse = types.GetOrdersResponse;
+export type RequestOrderResponse = types.RequestOrders;
 export type IBaseResponse<T> = {
   message: string;
   data: T;
@@ -46,6 +47,3 @@ export class ProductResponse {
   }
 }
 export type ShopProductsResponse = types.AllProductResponse;
-//
-// // -------------------------------------- Frontend Types --------------------------------------
-// export type PaymentMethod = 'CARD' | 'CASH_ON_DELIVERY' | 'UPI';
