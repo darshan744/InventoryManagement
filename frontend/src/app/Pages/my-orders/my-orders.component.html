@@ -1,0 +1,44 @@
+<div>
+  <div>
+    <div *ngFor="let order of orders" class="gap-4 p-4 border-b items-center">
+      <div class="flex justify-center">
+        <div>
+          <h2 class="text-2xl font-bold">Order ID: {{ order.id }}</h2>
+          <p class="text-gray-500">Date: {{ order.date | date: "short" }}</p>
+          <p class="text-gray-500">
+            Total Amount: {{ order.price | currency: "INR" }}
+          </p>
+          <p-badge
+            [severity]="getSeverity(order.status)"
+            [value]="order.status"
+          >
+          </p-badge>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 items-center">
+        <div
+          *ngFor="let orderItem of order.OrderItem"
+          class="md:flex bg-white dark:bg-[#1a1818] items-center gap-4 shadow-xl p-4 rounded-lg lg:flex-row md:flex-col"
+        >
+          <div class="w-50 h-50 shrink-0 mb-3 flex items-center justify-center">
+            <img [src]="getImage(orderItem.product.image)" />
+          </div>
+          <div>
+            <h3 class="font-bold">{{ orderItem.product.name }}</h3>
+            <p class="line-clamp-2 text-sm min-w-full text-gray-500">
+              {{ orderItem.product.description }}
+            </p>
+            <p>Price: {{ orderItem.productPrice | currency: "INR" }}</p>
+            <p>Quantity: {{ orderItem.quantity }}</p>
+            <p>
+              Total:
+              {{
+                orderItem.productPrice * orderItem.quantity | currency: "INR"
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
