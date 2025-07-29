@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 import * as db from "../Database";
 import getUser from "../utils/GetUser";
-import { PaymentMethod, Product } from "../generated/prisma";
+import { PaymentMethod } from "../generated/prisma";
 import { AllProductResponse } from "../types/Types";
 
 export async function getOrders(
@@ -18,7 +18,6 @@ export async function getOrders(
     }
 
     const orders = await db.getOrders(userId);
-    console.log("Orders retrieved successfully:", orders);
     if (!orders || orders.length === 0) {
       throw new AppError("No orders found", 404);
     }

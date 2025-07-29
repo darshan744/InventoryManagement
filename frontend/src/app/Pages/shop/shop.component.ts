@@ -10,7 +10,8 @@ import { ShopProductsResponse } from '../../Types/Response';
 import { ProductviewcardComponent } from '../../shared/productviewcard/productviewcard.component';
 import { ButtonModule } from 'primeng/button';
 import { CartService } from '../../Service/Cart/cart.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-shop',
   imports: [
@@ -26,7 +27,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ShopComponent implements OnInit {
   searchBy: 'Product' | 'Supplier' = 'Product';
-  products = new Array<ShopProductsResponse>();
+  searchValue: string = '';
+  private products = new Array<ShopProductsResponse>();
+  filteredProducts = new Array<ShopProductsResponse>();
   constructor(
     private productService: ProductService,
     private cart: CartService,
@@ -35,15 +38,31 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAllAvailableProducts().subscribe((response) => {
       this.products = response.data;
+      this.filteredProducts = response.data;
     });
   }
-  addToCart(product: ShopProductsResponse) {
+  addToCart(product: ShopProductsResponse): void {
     this.cart.addToCart(product);
   }
-  alreadyInCart(product: ShopProductsResponse) {
+  alreadyInCart(product: ShopProductsResponse): boolean {
     return this.cart.alreadyAddedToCart(product);
   }
-  goToCart() {
+  goToCart(): void {
     this.router.navigateByUrl('user/cart');
+  }
+  filterProducts(event: string): void {
+    if (event === '') {
+      this.filteredProducts = this.products;
+      return;
+    }
+    if (this.searchBy === 'Product') {
+      this.filteredProducts = this.products.filter((product) =>
+        product.name.includes(event),
+      );
+      return;
+    }
+    this.filteredProducts = this.products.filter((product) =>
+      product.user.name.includes(event),
+    );
   }
 }

@@ -1,4 +1,3 @@
-import { updateOrderItemStatus } from "../Database";
 import * as PrismaTypes from "../generated/prisma/index";
 
 export type GetOrdersResponse = {

@@ -1,6 +1,13 @@
 <div class="animate-fade-in min-h-screen flex flex-col">
   <div class="flex items-center gap-4 justify-between mb-4 sticky top-4">
-    <input [fluid]="true" pSize="small" pInputText placeholder="Search" />
+    <input
+      [fluid]="true"
+      [(ngModel)]="searchValue"
+      (ngModelChange)="filterProducts($event)"
+      pSize="small"
+      pInputText
+      placeholder="Search"
+    />
     <p-select
       [fluid]="true"
       [(ngModel)]="searchBy"
@@ -14,7 +21,7 @@
   </div>
 
   <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-3 justify-center">
-    <div *ngFor="let product of products">
+    <div *ngFor="let product of filteredProducts">
       <app-productviewcard [product]="product">
         <div class="flex gap-3 justify-end w-full">
           <p-button label="Buy Now" severity="success" size="small"></p-button>
