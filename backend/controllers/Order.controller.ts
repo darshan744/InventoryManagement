@@ -10,7 +10,6 @@ export async function getOrders(
   res: Response,
   next: NextFunction,
 ) {
-  // Implement logic to fetch orders
   try {
     const userId = req.user?.id;
     if (!userId) {
@@ -21,7 +20,6 @@ export async function getOrders(
     if (!orders || orders.length === 0) {
       throw new AppError("No orders found", 404);
     }
-    console.log("Orders retrieved successfully:", orders);
     res.status(200).json({ message: "Orders retrieved", data: orders });
   } catch (error: any) {
     next(error instanceof AppError ? error : new AppError(error.message, 500));
