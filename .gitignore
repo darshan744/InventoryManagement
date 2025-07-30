@@ -47,6 +47,11 @@ frontend/.output.js
 frontend/.turbo/
 frontend/.cache/
 
+
+# Python environments
+Ml/.venv/
+Ml/__pycache__/
+
 # ===== OS / Misc =====
 *.bak
 *.tmp
