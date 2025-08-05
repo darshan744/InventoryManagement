@@ -65,9 +65,7 @@ export const login = async (
       });
   } catch (error: any) {
     const er =
-      error instanceof AppError
-        ? error
-        : new AppError("Internal server error", 500);
+      error instanceof AppError ? error : new AppError(error.message, 500);
     next(er);
   }
 };

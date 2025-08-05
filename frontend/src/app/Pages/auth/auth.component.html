@@ -1,55 +1,59 @@
 <div class="min-h-screen flex flex-col items-center justify-center px-4">
-  <div class="flex items-center mb-6 animate-fade-in">
-    <span class="text-4xl text-teal-800">📦</span>
-    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white ml-2">
-      Smart Stock
-    </h1>
-  </div>
-  <form
-    class="w-full max-w-xs flex flex-col gap-4"
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
+  <div
+    class="flex flex-col items-center p-7 shadow-2xl rounded-xl dark:shadow-gray-700"
   >
-    <div>
-      <p-floatlabel variant="on">
-        <input
-          id="email"
-          pInputText
-          type="email"
-          formControlName="email"
-          name="email"
-          required
-          [fluid]="true"
-        />
-        <label for="email">Email</label>
-      </p-floatlabel>
+    <div class="flex items-center mb-6 animate-fade-in">
+      <span class="text-4xl text-teal-800">📦</span>
+      <h1 class="text-2xl font-semibold text-gray-900 dark:text-white ml-2">
+        Smart Stock
+      </h1>
     </div>
-    <div>
-      <p-floatlabel variant="on">
-        <label for="password"> Password </label>
-        <input
-          id="password"
-          [type]="showPassword ? 'text' : 'password'"
-          formControlName="password"
-          name="password"
-          required
-          pInputText
-          [fluid]="true"
-        />
-      </p-floatlabel>
-    </div>
-    <p class="text-pink-500 text-xs text-center" *ngIf="showError">
-      {{ errorMessage }}
-    </p>
-    <p-button [rounded]="true" type="submit" size="small" [fluid]="true">
-      Log In
-    </p-button>
-    <a
-      href="#"
-      class="text-teal-600 text-xs text-center hover:underline"
-      (click)="onForgotPassword()"
+    <form
+      class="w-full flex flex-col min-w-md gap-4"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
     >
-      Forgot Password?
-    </a>
-  </form>
+      <div>
+        <p-floatlabel variant="on">
+          <input
+            id="email"
+            pInputText
+            type="email"
+            formControlName="email"
+            name="email"
+            required
+            [fluid]="true"
+          />
+          <label for="email">Email</label>
+        </p-floatlabel>
+      </div>
+      <div>
+        <p-floatlabel variant="on">
+          <label for="password"> Password </label>
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            name="password"
+            required
+            pInputText
+            [fluid]="true"
+          />
+        </p-floatlabel>
+      </div>
+      <p class="text-pink-500 text-xs text-center" *ngIf="showError">
+        {{ errorMessage }}
+      </p>
+      <p-button type="submit" size="small" [fluid]="true" severity="contrast">
+        Log In
+      </p-button>
+      <a
+        href="#"
+        class="font-bold text-xs text-center hover:underline"
+        (click)="onForgotPassword()"
+      >
+        Forgot Password?
+      </a>
+    </form>
+  </div>
 </div>
