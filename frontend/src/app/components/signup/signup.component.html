@@ -1,0 +1,73 @@
+<div class="shadow-2xl shadow-gray-500">
+  <p-card [style]="{ width: '25rem' }" class="shadow-2xl shadow-gray-600">
+    <ng-template #title>Login to your account</ng-template>
+    <ng-template #subtitle>Enter your details to login</ng-template>
+    <form (ngSubmit)="onSubmit()" class="flex flex-col gap-3 mb-3">
+      <div class="flex flex-col gap-1">
+        <label for="name"> Name </label>
+        <input
+          id="name"
+          formControlName="name"
+          name="name"
+          required
+          pInputText
+          [fluid]="true"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          pInputText
+          type="email"
+          formControlName="email"
+          name="email"
+          required
+          [fluid]="true"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="password"> Password </label>
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          name="password"
+          required
+          pInputText
+          [fluid]="true"
+        />
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <p
+        class="text-pink-500 text-xs text-center"
+        *ngIf="errorMessage !== null"
+      >
+        {{ errorMessage }}
+      </p>
+      <p-button
+        type="submit"
+        size="small"
+        [fluid]="true"
+        severity="contrast"
+        class="mt-11"
+      >
+        Sign up
+      </p-button>
+      <div class="flex justify-center mt-4 items-center">
+        <p>
+          Already have an account
+          <p-button
+            [text]="true"
+            (onClick)="switchToLoginPage()"
+            severity="contrast"
+          >
+            Login
+          </p-button>
+        </p>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
