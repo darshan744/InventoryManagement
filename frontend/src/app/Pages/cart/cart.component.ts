@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CartItemComponent } from '../../shared/cart-item/cart-item.component';
+import { CartItemComponent } from '../../components/cart-item/cart-item.component';
 import { CartService } from '../../Service/Cart/cart.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';

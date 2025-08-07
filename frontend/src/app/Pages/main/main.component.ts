@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
-import { ToolbarComponent } from '../../shared/toolbar/toolbar.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../Service/Utils/utils.service';
 

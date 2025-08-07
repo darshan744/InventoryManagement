@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AuthService } from '../../Service/Auth/auth.service';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-auth',
   imports: [
@@ -19,7 +20,8 @@ import { ButtonModule } from 'primeng/button';
     ReactiveFormsModule,
     InputTextModule,
     FloatLabelModule,
-    ButtonModule
+    ButtonModule,
+    CardModule
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',

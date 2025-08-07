@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
 
-import { ProductviewcardComponent } from '../../shared/productviewcard/productviewcard.component';
+import { ProductviewcardComponent } from '../../components/productviewcard/productviewcard.component';
 import { ProductResponse } from '../../Types/Response';
 import { DataService } from '../../Service/data.service';
 import { ProductService } from '../../Service/Product/product.service';

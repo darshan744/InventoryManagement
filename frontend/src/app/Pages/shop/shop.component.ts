@@ -7,7 +7,7 @@ import { SelectModule } from 'primeng/select';
 
 import { ProductService } from '../../Service/Product/product.service';
 import { ShopProductsResponse } from '../../Types/Response';
-import { ProductviewcardComponent } from '../../shared/productviewcard/productviewcard.component';
+import { ProductviewcardComponent } from '../../components/productviewcard/productviewcard.component';
 import { ButtonModule } from 'primeng/button';
 import { CartService } from '../../Service/Cart/cart.service';
 import { Router } from '@angular/router';
