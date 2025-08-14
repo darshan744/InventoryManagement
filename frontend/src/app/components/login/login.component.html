@@ -1,4 +1,4 @@
-<div class="shadow-2xl shadow-gray-600">
+<div class="shadow-2xl shadow-gray-600 rounded-xl">
   <p-card [style]="{ width: '25rem' }">
     <ng-template #title>Login to your account</ng-template>
     <ng-template #subtitle>Enter your details to login</ng-template>
@@ -43,6 +43,7 @@
         [fluid]="true"
         severity="contrast"
         class="mt-11"
+        (onClick)="onSubmit()"
       >
         Log In
       </p-button>
