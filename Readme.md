@@ -51,6 +51,6 @@ Backend Setup
     npm run dev
 ```
 
-#### Note
+### Note
 
 Environment Variables are releavent from `Environment.ts` file in backend
