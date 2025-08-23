@@ -10,7 +10,6 @@ import {
   RequestOrderStatusChange,
 } from '../../Types/Response';
 import { CartService } from '../Cart/cart.service';
-import { RequestOrders } from '../../../../../BackendType';
 
 @Injectable({
   providedIn: 'root',

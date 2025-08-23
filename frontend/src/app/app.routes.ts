@@ -25,11 +25,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'inventory',
-        component: InventoryComponent,
+        loadComponent:() => import("./Pages/inventory/inventory.component").then(c => c.InventoryComponent)
       },
       {
         path: 'profile',
-        component: ProfileComponent,
+        loadComponent:()=> import("./Pages/profile/profile.component").then( c => c.ProfileComponent)  
       },
       {
         path: 'dashboard',
@@ -37,19 +37,19 @@ export const routes: Routes = [
       },
       {
         path: 'orders',
-        component: OrdersComponent,
+        loadComponent: () => import("./Pages/orders/orders.component").then(c => c.OrdersComponent)
       },
       {
         path: 'reports',
-        component: ReportsComponent,
+        loadComponent:() => import("./Pages/reports/reports.component").then(c => c.ReportsComponent),
       },
       {
         path: 'shop',
-        component: ShopComponent,
+        loadComponent:() => import("./Pages/shop/shop.component").then(c => c.ShopComponent)
       },
       {
         path: 'cart',
-        component: CartComponent,
+        loadComponent:() => import('./Pages/cart/cart.component').then(c => c.CartComponent),
       },
     ],
   },

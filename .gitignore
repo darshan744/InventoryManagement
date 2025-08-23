@@ -59,3 +59,4 @@ Ml/__pycache__/
 *.log
 *.tgz
 
+.database-env

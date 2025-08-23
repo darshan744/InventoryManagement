@@ -1,0 +1,24 @@
+version: '3.9'
+name: "Smart Stock alert System"
+services:
+  backend:
+    container_name: StockSystemBackend
+    build: ./backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  frontend:
+    container_name: StockSystemFrontend
+    build: ./frontend
+    ports:
+      - 3001:8080
+    depends_on:
+      - backend
+    
+  db:
+    image: postgres:alpine
+    env_file:
+      - ./.env-database
+    container_name: StockSystemDatabase
+
