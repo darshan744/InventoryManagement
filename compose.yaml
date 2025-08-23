@@ -1,13 +1,26 @@
-version: '3.9'
+
 name: "Smart Stock alert System"
 services:
+
+  db:
+    image: postgres:alpine
+    env_file:
+      - ./.env-database
+    container_name: StockSystemDatabase
+    healthcheck:
+      test: ["CMD-SHELL" , "pg_isready -U darshan -d inventory"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 3s
+
   backend:
     container_name: StockSystemBackend
     build: ./backend
-    ports:
-      - 3000:3000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    
   frontend:
     container_name: StockSystemFrontend
     build: ./frontend
@@ -15,10 +28,5 @@ services:
       - 3001:8080
     depends_on:
       - backend
-    
-  db:
-    image: postgres:alpine
-    env_file:
-      - ./.env-database
-    container_name: StockSystemDatabase
+
 

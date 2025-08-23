@@ -25,13 +25,18 @@
               }
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/@ng-select/ng-select/themes/ant.design.theme.css"
+              "src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "./src/environments/environment.development.ts",
+                  "with": "./src/environments/environment.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

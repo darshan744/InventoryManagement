@@ -13,12 +13,11 @@ COPY . .
 
 RUN npm run build
 
-COPY ./prisma ./dist/prisma
-
 RUN npm run pg
 
 RUN mv /app/generated /app/dist
 
 EXPOSE 3000
 
-ENTRYPOINT [ "npm" , "start" ]
+
+ENTRYPOINT [ "./entrypoint.sh" ]

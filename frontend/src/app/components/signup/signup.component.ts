@@ -55,7 +55,7 @@ export class SignupComponent {
     this.switchPage.emit();
   }
   onSubmit() {
-    if (!this.formValue.invalid) {
+    if (this.formValue.invalid) {
       this.toast.error('Please enter all values', 'Error');
       return;
     }
