@@ -6,8 +6,11 @@
     "dev": "nodemon",
     "pg": "npx prisma generate",
     "pm": "npx prisma migrate dev",
+    "pd":"npx prisma migrate deploy",
     "ps": "npx prisma studio",
-    "pr": "npx prisma migrate reset"
+    "pr": "npx prisma migrate reset",
+    "build": "tsc",
+    "start":"node ./dist/server.js"
   },
   "keywords": [],
   "author": "",

@@ -3,6 +3,7 @@ import Prisma from "./PrismaClient";
 import { hashPassword } from "./utils/Hash";
 import { PaymentMethod } from "./generated/prisma/index";
 import { AllProductResponse } from "./types/Types";
+
 export const getUserByEmail = async (email: string) => {
   return await Prisma.user.findUnique({
     where: { email: email },
@@ -202,26 +203,34 @@ export async function updateOrderItemStatus(
         product: true,
       },
     });
+
     if (!orderItem) {
       throw new Error(`Order item with ID ${orderItemId} not found`);
     }
+    
     const order = await tx.order.findUnique({
       where: { id: orderItem.orderId },
     });
+    
     if (!order) {
       throw new Error(`Order with ID ${orderItem.orderId} not found`);
     }
+    
     if (orderItem.status === "COMPLETED" || orderItem.status === "CANCELLED") {
       throw new Error(
         `Order item with ID ${orderItemId} is already ${orderItem.status}`,
       );
     }
+    
     if (orderItem.product.quantity < orderItem.quantity) {
       throw new Error(
         `Insufficient stock for product ${orderItem.product.name}. Available: ${orderItem.product.quantity}, Requested: ${orderItem.quantity}`,
       );
     }
+    
     const select = { id: true, status: true };
+    
+    
     if (status === "COMPLETED") {
       const product = orderItem.product;
       const { id, userId, lastRestocked, ...rest } = product;
@@ -236,6 +245,7 @@ export async function updateOrderItemStatus(
         select,
       });
     }
+    
     return await tx.orderItem.update({
       where: { id: orderItemId },
       data: {
